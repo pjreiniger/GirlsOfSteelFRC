@@ -1,0 +1,19 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "commands",
+    srcs = glob(["*.java"]),
+    visibility = ["//y2019/2019DeepSpace:__subpackages__"],
+    deps = [
+        "//y2019/2019DeepSpace/src/main/java/com/gos/deep_space:RobotMap",
+        "//y2019/2019DeepSpace/src/main/java/com/gos/deep_space/subsystems",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bazelrio//libraries/java/wpilib/cscore",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "//libraries/GirlsOfSteelLib",
+    ],
+)
