@@ -1,6 +1,10 @@
 name: Bazel
 
-on: [pull_request, push]
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -69,11 +73,36 @@ jobs:
           cd $(mktemp -d)
           GO111MODULE=on go get github.com/bazelbuild/buildtools/unused_deps@5.0.1
 
+      - name: Install Buildozer
+        run: |
+          cd $(mktemp -d)
+          GO111MODULE=on go get github.com/bazelbuild/buildtools/buildozer@5.0.1
+
+      - name: Prep unused deps
+        run:  bazel query --tool_tag=unused_deps --keep_going "kind('(kt|java|android)_*', //...)" && bazel build --tool_tag=unused_deps --keep_going //... --config=remote
+
       - name: Run unused deps
         run: unused_deps //... > buildozer-cmds.sh
 
+      - name: Show unused deps
+        run: cat buildozer-cmds.sh
+
       - uses: actions/upload-artifact@v2
         with:
-          name: Upload Unused Deps
+          name: Upload Unused Deps Script
           path: buildozer-cmds.sh
+
+      - name: Fix unused deps
+        run: chmod +x buildozer-cmds.sh && ./buildozer-cmds.sh
+
+      - name: Generate diff
+        run: git diff > bazel-lint-fixes.patch
+
+      - name: Check Output
+        run: git --no-pager diff --exit-code HEAD
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload Unused Deps Patch
+          path: bazel-lint-fixes.patch
         if: ${{ failure() }}
