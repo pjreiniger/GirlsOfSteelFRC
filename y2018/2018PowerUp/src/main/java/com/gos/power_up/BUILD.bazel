@@ -35,6 +35,7 @@ gos_java_robot(
     deps = [
         "//libraries/GirlsOfSteelLib",
         "//y2018/2018PowerUp/src/main/java/com/gos/power_up/commands",
+        "//y2018/2018PowerUp/src/main/java/com/gos/power_up/commands/autonomous",
         "//y2018/2018PowerUp/src/main/java/com/gos/power_up/subsystems",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/cameraserver",
@@ -42,5 +43,6 @@ gos_java_robot(
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/opencv",
     ],
 )
