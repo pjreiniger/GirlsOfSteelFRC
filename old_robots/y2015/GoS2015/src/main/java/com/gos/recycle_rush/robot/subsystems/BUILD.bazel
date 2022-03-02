@@ -10,6 +10,7 @@ gos_java_library(
         "//libraries/GirlsOfSteelLibRev",
         "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot:RobotMap",
         "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/kauailabs/navx",
         "@bazelrio//libraries/java/rev/revlib",
         "@bazelrio//libraries/java/wpilib/cameraserver",
         "@bazelrio//libraries/java/wpilib/cscore",
@@ -17,7 +18,6 @@ gos_java_library(
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
         "@bazelrio//libraries/java/wpilib/wpimath",
-        "@bazelrio//libraries/java/kauailabs/navx",
         "@snobot_sim//jar",
     ],
 )

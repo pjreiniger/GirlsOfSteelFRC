@@ -6,6 +6,8 @@ gos_java_library(
     visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
     deps = [
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist:RobotMap",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:Camera",
+        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:LspbPidPlanner",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/subsystems",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/cameraserver",
@@ -14,7 +16,5 @@ gos_java_library(
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
         "@bazelrio//libraries/java/wpilib/wpimath",
-        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:Camera",
-        "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:LspbPidPlanner",
     ],
 )

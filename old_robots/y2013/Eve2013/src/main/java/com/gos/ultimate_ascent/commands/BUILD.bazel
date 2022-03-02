@@ -6,6 +6,7 @@ gos_java_library(
     visibility = ["//old_robots/y2013/Eve2013:__subpackages__"],
     deps = [
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent:Constants",
+        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/subsystems",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/cameraserver",
@@ -14,6 +15,5 @@ gos_java_library(
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
         "@bazelrio//libraries/java/wpilib/wpimath",
-        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects",
     ],
 )

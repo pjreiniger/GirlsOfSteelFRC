@@ -20,6 +20,8 @@ gos_java_robot(
     deps = [
         "//libraries/GirlsOfSteelLib",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/commands",
+        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects",
+        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects:AutonomousChooser",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/subsystems",
         "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/tests",
         "@bazelrio//libraries/java/ctre/phoenix",
@@ -28,7 +30,5 @@ gos_java_robot(
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects",
-        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects:AutonomousChooser",
     ],
 )

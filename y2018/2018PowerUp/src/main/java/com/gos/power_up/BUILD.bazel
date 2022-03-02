@@ -8,13 +8,18 @@ gos_java_library(
 
 gos_java_library(
     name = "Vision",
-    srcs = ["Pipeline.java", "PipelineListener.java", "Blob.java", "Blobs.java"],
+    srcs = [
+        "Blob.java",
+        "Blobs.java",
+        "Pipeline.java",
+        "PipelineListener.java",
+    ],
     visibility = ["//y2018/2018PowerUp:__subpackages__"],
     deps = [
         "@bazelrio//libraries/java/opencv",
         "@bazelrio//libraries/java/wpilib/cameraserver",
         "@bazelrio//libraries/java/wpilib/cscore",
-    ]
+    ],
 )
 
 gos_java_library(
@@ -24,7 +29,7 @@ gos_java_library(
     deps = [
         ":RobotMap",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-    ]
+    ],
 )
 
 gos_java_robot(
@@ -38,11 +43,11 @@ gos_java_robot(
         "//y2018/2018PowerUp/src/main/java/com/gos/power_up/commands/autonomous",
         "//y2018/2018PowerUp/src/main/java/com/gos/power_up/subsystems",
         "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/opencv",
         "@bazelrio//libraries/java/wpilib/cameraserver",
         "@bazelrio//libraries/java/wpilib/cscore",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/opencv",
     ],
 )
