@@ -1,0 +1,34 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+
+gos_java_library(
+    name = "RobotMap",
+    srcs = ["RobotMap.java"],
+    visibility = ["//old_robots/y2013/Eve2013:__subpackages__"],
+)
+
+gos_java_library(
+    name = "Constants",
+    srcs = ["Constants.java"],
+    visibility = ["//old_robots/y2013/Eve2013:__subpackages__"],
+)
+
+gos_java_robot(
+    name = "ultimate_ascent",
+    srcs = glob(["*.java"]),
+    main_class = "com.gos.ultimate_ascent.Main",
+    visibility = ["//old_robots/y2013/Eve2013:__subpackages__"],
+    deps = [
+        "//libraries/GirlsOfSteelLib",
+        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/commands",
+        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/subsystems",
+        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/tests",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bazelrio//libraries/java/wpilib/cscore",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects",
+        "//old_robots/y2013/Eve2013/src/main/java/com/gos/ultimate_ascent/objects:AutonomousChooser",
+    ],
+)

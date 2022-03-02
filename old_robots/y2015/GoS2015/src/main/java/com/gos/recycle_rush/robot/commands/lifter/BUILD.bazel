@@ -1,0 +1,23 @@
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
+
+gos_java_library(
+    name = "lifter",
+    srcs = glob(["*.java"]),
+    visibility = ["//old_robots/y2015/GoS2015:__subpackages__"],
+    deps = [
+        "//libraries/GirlsOfSteelLib",
+        "//libraries/GirlsOfSteelLibNavx",
+        "//libraries/GirlsOfSteelLibRev",
+        "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot:RobotMap",
+        "//old_robots/y2015/GoS2015/src/main/java/com/gos/recycle_rush/robot/subsystems",
+        "@bazelrio//libraries/java/ctre/phoenix",
+        "@bazelrio//libraries/java/rev/revlib",
+        "@bazelrio//libraries/java/wpilib/cameraserver",
+        "@bazelrio//libraries/java/wpilib/cscore",
+        "@bazelrio//libraries/java/wpilib/new_commands",
+        "@bazelrio//libraries/java/wpilib/ntcore",
+        "@bazelrio//libraries/java/wpilib/wpilibj",
+        "@bazelrio//libraries/java/wpilib/wpimath",
+        "@snobot_sim//jar",
+    ],
+)
