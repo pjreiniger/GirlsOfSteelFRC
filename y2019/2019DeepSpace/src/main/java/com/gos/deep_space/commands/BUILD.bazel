@@ -6,14 +6,8 @@ gos_java_library(
     visibility = ["//y2019/2019DeepSpace:__subpackages__"],
     deps = [
         "//libraries/GirlsOfSteelLib",
-        "//y2019/2019DeepSpace/src/main/java/com/gos/deep_space:RobotMap",
         "//y2019/2019DeepSpace/src/main/java/com/gos/deep_space/subsystems",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
         "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
     ],
 )

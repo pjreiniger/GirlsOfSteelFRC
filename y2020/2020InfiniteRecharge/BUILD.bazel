@@ -7,7 +7,6 @@ gos_java_robot(
     main_class = "com.gos.infinite_recharge.Main",
     deps = [
         "//libraries/GirlsOfSteelLib",
-        "//libraries/GirlsOfSteelLibCtre",
         "//libraries/GirlsOfSteelLibNavx",
         "//libraries/GirlsOfSteelLibRev",
         "@bazelrio//libraries/java/ctre/phoenix",

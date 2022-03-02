@@ -12,15 +12,11 @@ gos_java_robot(
     main_class = "com.gos.deep_space.Main",
     visibility = ["//y2019/2019DeepSpace:__subpackages__"],
     deps = [
-        "//libraries/GirlsOfSteelLib",
         "//y2019/2019DeepSpace/src/main/java/com/gos/deep_space/commands",
         "//y2019/2019DeepSpace/src/main/java/com/gos/deep_space/subsystems",
-        "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/opencv",
         "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
         "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
     ],
 )

@@ -18,17 +18,12 @@ gos_java_robot(
     main_class = "com.gos.aerial_assist.Main",
     visibility = ["//old_robots/y2014/GOS2014:__subpackages__"],
     deps = [
-        "//libraries/GirlsOfSteelLib",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/commands",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:AutonomousChooser",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:Camera",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/subsystems",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/tests",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
         "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
     ],
 )

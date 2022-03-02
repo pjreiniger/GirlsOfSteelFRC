@@ -5,18 +5,10 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//y2019/OffenseBot:__subpackages__"],
     deps = [
-        "//libraries/GirlsOfSteelLib",
-        "//libraries/GirlsOfSteelLibNavx",
-        "//libraries/GirlsOfSteelLibRev",
         "//y2019/OffenseBot/src/main/java/com/gos/offense2019:RobotMap",
         "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/rev/revlib",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
         "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
         "@snobot_sim//jar",
     ],
 )

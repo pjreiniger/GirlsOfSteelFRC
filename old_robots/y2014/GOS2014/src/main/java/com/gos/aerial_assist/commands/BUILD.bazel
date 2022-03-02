@@ -9,12 +9,8 @@ gos_java_library(
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:Camera",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/objects:LspbPidPlanner",
         "//old_robots/y2014/GOS2014/src/main/java/com/gos/aerial_assist/subsystems",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
         "@bazelrio//libraries/java/wpilib/new_commands",
         "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
     ],
 )
