@@ -55,7 +55,7 @@ public class OI {
 
     private static final double DEADBAND = 0.3; //TODO: find a good value
 
-    private static final DriveStyle m_driveStyle = DriveStyle.oneStickArcade;
+    private static final DriveStyle DRIVE_STYLE = DriveStyle.oneStickArcade;
 
     private Joystick m_drivingStickForward;
     private Joystick m_drivingStickBackward;
@@ -106,17 +106,17 @@ public class OI {
         m_operatingGamePad = new Joystick(0);
         m_autonSelector = new Joystick(3);
 
-        if (m_driveStyle == DriveStyle.oneStickArcade) {
+        if (DRIVE_STYLE == DriveStyle.oneStickArcade) {
             m_drivingStickForward = new Joystick(1);
             m_drivingStickBackward = new Joystick(2);
-        } else if (m_driveStyle == DriveStyle.gamePadArcade) {
+        } else if (DRIVE_STYLE == DriveStyle.gamePadArcade) {
             m_drivingGamePad = new Joystick(1);
-        } else if (m_driveStyle == DriveStyle.twoStickTank) {
+        } else if (DRIVE_STYLE == DriveStyle.twoStickTank) {
             m_drivingStickRight = new Joystick(1);
             m_drivingStickLeft = new Joystick(2);
-        } else if (m_driveStyle == DriveStyle.gamePadTank) {
+        } else if (DRIVE_STYLE == DriveStyle.gamePadTank) {
             m_drivingGamePad = new Joystick(1);
-        } else if (m_driveStyle == DriveStyle.droperation) {
+        } else if (DRIVE_STYLE == DriveStyle.droperation) {
             m_drivingGamePad = new Joystick(1);
         }
 
@@ -143,7 +143,7 @@ public class OI {
         m_unClimb.whileHeld(new UnClimb(m_climber));
         m_climb.whileHeld(new Climb(m_climber));
 
-        if (m_driveStyle == DriveStyle.oneStickArcade) {
+        if (DRIVE_STYLE == DriveStyle.oneStickArcade) {
             //DRIVER BUTTONS
             // Button to change between drive joysticks on trigger of both joysticks
             m_switchToForward = new JoystickButton(m_drivingStickForward, 1);
@@ -169,22 +169,22 @@ public class OI {
             // Buttons for shifters
             m_shifterDown.whenPressed(new ShiftDown(m_shifters));
             m_shifterUp.whenPressed(new ShiftUp(m_shifters));
-        } else if (m_driveStyle == DriveStyle.gamePadArcade) {
+        } else if (DRIVE_STYLE == DriveStyle.gamePadArcade) {
             //DRIVER BUTTONS
             // Buttons for shifters copied to both joysticks
             m_shifterDown = new JoystickButton(m_drivingGamePad, 1); //TODO: change button value
             m_shifterUp = new JoystickButton(m_drivingGamePad, 11); //TODO: change button value
-        } else if (m_driveStyle == DriveStyle.twoStickTank) {
+        } else if (DRIVE_STYLE == DriveStyle.twoStickTank) {
             //DRIVER BUTTONS
             // Buttons for shifters copied to both joysticks
             m_shifterDown = new JoystickButton(m_drivingStickLeft, 2);
             m_shifterUp = new JoystickButton(m_drivingStickLeft, 3);
-        } else if (m_driveStyle == DriveStyle.gamePadTank) {
+        } else if (DRIVE_STYLE == DriveStyle.gamePadTank) {
             //DRIVER BUTTONS
             // Buttons for shifters copied to both joysticks
             m_shifterDown = new JoystickButton(m_drivingGamePad, 1); //TODO: change button value
             m_shifterUp = new JoystickButton(m_drivingGamePad, 11); //TODO: change button value
-        } else if (m_driveStyle == DriveStyle.droperation) {
+        } else if (DRIVE_STYLE == DriveStyle.droperation) {
             m_shifterDown = new JoystickButton(m_operatingGamePad, 4); //Y
             m_shifterUp = new JoystickButton(m_operatingGamePad, 2); // B
             m_climb = new JoystickButton(m_operatingGamePad, 8); //START
@@ -201,7 +201,7 @@ public class OI {
     }
 
     public DriveStyle getDriveStyle() {
-        return m_driveStyle;
+        return DRIVE_STYLE;
     }
 
     public Command getAutonCommand() {
@@ -245,10 +245,10 @@ public class OI {
     public double getDrivingJoystickY() {
         double unscaledValue;
 
-        if (m_driveStyle == DriveStyle.droperation
-            || m_driveStyle == DriveStyle.gamePadArcade) {
+        if (DRIVE_STYLE == DriveStyle.droperation
+            || DRIVE_STYLE == DriveStyle.gamePadArcade) {
             unscaledValue = m_drivingGamePad.getY();
-        } else if (m_driveStyle == DriveStyle.oneStickArcade) {
+        } else if (DRIVE_STYLE == DriveStyle.oneStickArcade) {
             if (m_driveDirection == DriveDirection.kFWD) {
                 unscaledValue = m_drivingStickForward.getY();
             } else {
@@ -263,11 +263,11 @@ public class OI {
     public double getDrivingJoystickX() {
         double unscaledValue;
 
-        if (m_driveStyle == DriveStyle.gamePadArcade) { // keep the redundancy, it breaks if
+        if (DRIVE_STYLE == DriveStyle.gamePadArcade) { // keep the redundancy, it breaks if
             unscaledValue = m_drivingGamePad.getZ(); //TODO: this should get the Z rotate value
-        } else if (m_driveStyle == DriveStyle.droperation) { // removed
+        } else if (DRIVE_STYLE == DriveStyle.droperation) { // removed
             unscaledValue = m_drivingGamePad.getX();
-        } else if (m_driveStyle == DriveStyle.oneStickArcade) {
+        } else if (DRIVE_STYLE == DriveStyle.oneStickArcade) {
             if (m_driveDirection == DriveDirection.kFWD) {
                 unscaledValue = m_drivingStickForward.getX();
             } else {
@@ -283,9 +283,9 @@ public class OI {
     public double getDrivingJoystickLeft() {
         double unscaledValue;
 
-        if (m_driveStyle == DriveStyle.gamePadTank) {
+        if (DRIVE_STYLE == DriveStyle.gamePadTank) {
             unscaledValue = m_drivingGamePad.getY();
-        } else if (m_driveStyle == DriveStyle.twoStickTank) {
+        } else if (DRIVE_STYLE == DriveStyle.twoStickTank) {
             unscaledValue = m_drivingStickLeft.getY();
         } else {
             unscaledValue = 0.0; //TODO: may want to return something else
@@ -297,9 +297,9 @@ public class OI {
     public double getDrivingJoystickRight() {
         double unscaledValue;
 
-        if (m_driveStyle == DriveStyle.gamePadTank) {
+        if (DRIVE_STYLE == DriveStyle.gamePadTank) {
             unscaledValue = m_drivingGamePad.getZ(); //TODO: this should get the Z vertical/rotate value
-        } else if (m_driveStyle == DriveStyle.twoStickTank) {
+        } else if (DRIVE_STYLE == DriveStyle.twoStickTank) {
             unscaledValue = m_drivingStickRight.getY();
         } else {
             unscaledValue = 0.0; //TODO: may want to return something else

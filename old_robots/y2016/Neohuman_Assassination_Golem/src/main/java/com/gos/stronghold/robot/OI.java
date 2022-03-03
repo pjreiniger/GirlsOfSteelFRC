@@ -39,7 +39,7 @@ public class OI {
      * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
      */
     //IF ROZIE IS GAMEPAD; TURN TRUE. ELSE; TURN FALSE.
-    private static final boolean rozieDrive = false;
+    private static final boolean ROZIE_DRIVE = false;
 
     private final Joystick m_drivingStickForward = new Joystick(0);
     private final Joystick m_drivingStickBackward = new Joystick(1);
@@ -201,7 +201,7 @@ public class OI {
         m_resetEncoders.whenPressed(new ResetEncoderDistance(chassis, flap, pivot));
 
         //ROZIE STUFF!!!!
-        if (rozieDrive) {
+        if (ROZIE_DRIVE) {
             m_rozieShiftDownButton = new JoystickButton(m_roziePad, 3);
             m_rozieShiftDownButton.whenPressed(new ShiftDown(shifters));
             m_rozieFlapUp = new JoystickButton(m_roziePad, 8); //switched 7 & 8 again
@@ -219,7 +219,7 @@ public class OI {
 
 
     public double getDrivingJoystickY() {
-        if (rozieDrive) {
+        if (ROZIE_DRIVE) {
             return m_roziePad.getY();
         } else if (m_driveDirection == DriveDirection.kFWD) {
             return m_drivingStickForward.getY();
@@ -229,7 +229,7 @@ public class OI {
     }
 
     public double getDrivingJoystickX() {
-        if (rozieDrive) {
+        if (ROZIE_DRIVE) {
             return m_roziePad.getX();
         } else if (m_driveDirection == DriveDirection.kFWD) {
             return m_drivingStickForward.getX();

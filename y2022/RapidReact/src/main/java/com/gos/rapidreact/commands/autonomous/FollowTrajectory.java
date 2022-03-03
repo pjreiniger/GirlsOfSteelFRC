@@ -19,8 +19,8 @@ public class FollowTrajectory extends SequentialCommandGroup {
     private double m_goalVelocityRight;
 
     public static class AutoConstants {
-        public static final double kRamseteB = 2;
-        public static final double kRamseteZeta = 0.7;
+        public static final double RAMSETE_B = 2;
+        public static final double RAMSETE_ZETA = 0.7;
     }
 
     public FollowTrajectory(Trajectory trajectory, ChassisSubsystem chassis) {
@@ -33,7 +33,7 @@ public class FollowTrajectory extends SequentialCommandGroup {
         RamseteCommand ramseteCommand = new RamseteCommand(
             trajectory,
             m_chassis::getPose,
-            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+            new RamseteController(AutoConstants.RAMSETE_B, AutoConstants.RAMSETE_ZETA),
             ChassisSubsystem.K_DRIVE_KINEMATICS,
             this::setVelocityGoal,
             m_chassis

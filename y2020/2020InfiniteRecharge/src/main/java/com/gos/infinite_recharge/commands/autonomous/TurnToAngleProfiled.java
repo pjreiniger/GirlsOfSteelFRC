@@ -16,16 +16,16 @@ public class TurnToAngleProfiled extends ProfiledPIDCommand {
     private static final PropertyManager.IProperty<Double> AUTO_KD = new PropertyManager.DoubleProperty(
             "TurnToAngleProfiledKd", 0.05);
     private static final PropertyManager.IProperty<Double> MAX_TURN_RATE_DEG_PER_SEC = new PropertyManager.DoubleProperty(
-            "MaxTurnRateDegPerSec", Constants.kMaxTurnRateDegPerS);
+            "MaxTurnRateDegPerSec", Constants.MAX_TURN_RATE_DEG_PER_S);
     private static final PropertyManager.IProperty<Double> MAX_TURN_ACCELERATION_DEG_PER_SEC_SQUARED = new PropertyManager.DoubleProperty(
-            "MaxTurnAccelerationDegPerSecSquared", Constants.kMaxTurnAccelerationDegPerSSquared);
+            "MaxTurnAccelerationDegPerSecSquared", Constants.MAX_TURN_ACCELERATION_DEG_PER_S_SQUARED);
 
     // private final Chassis m_chassis;
     // private final double m_angle;
     // private final double m_allowableError;
 
     public TurnToAngleProfiled(double targetAngleDegrees, Chassis chassis) {
-        super(new ProfiledPIDController(Constants.kTurnP, Constants.kTurnI, Constants.kTurnD,
+        super(new ProfiledPIDController(Constants.TURN_KP, Constants.TURN_KI, Constants.TURN_KD,
                 new TrapezoidProfile.Constraints(MAX_TURN_RATE_DEG_PER_SEC.getValue(),
                         MAX_TURN_ACCELERATION_DEG_PER_SEC_SQUARED.getValue())),
                 // Close loop on heading
@@ -43,7 +43,7 @@ public class TurnToAngleProfiled extends ProfiledPIDCommand {
         // stationary at the
         // setpoint before it is considered as having reached the reference
 
-        getController().setTolerance(Constants.kTurnToleranceDeg, Constants.kTurnRateToleranceDegPerS);
+        getController().setTolerance(Constants.TURN_TOLERANCE_DEG, Constants.TURN_RATE_TOLERANCE_DEG_PER_S);
     }
 
     @Override
