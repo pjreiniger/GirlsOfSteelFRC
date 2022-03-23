@@ -20,7 +20,7 @@ public class FollowTrajectory extends BaseRamseteCoordinateGuiCommand {
 
     public FollowTrajectory(Trajectory trajectory, ChassisSubsystem chassis) {
         super(trajectory,
-            new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+            new RamseteController(AutoConstants.RAMSETE_B, AutoConstants.RAMSETE_ZETA),
             ChassisSubsystem.K_DRIVE_KINEMATICS,
             chassis);
 

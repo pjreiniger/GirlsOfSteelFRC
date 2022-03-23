@@ -33,7 +33,7 @@ import com.gos.stronghold.robot.subsystems.Shooter;
  */
 @SuppressWarnings({"PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.NcssCount"})
 public class OI {
-    public enum DriveDirection { kFWD, kREV }
+    public enum DriveDirection { FWD, REV }
 
     /**
      * ROZIE IS WILDIN SO PLEASE CONSULT HER FOR DROPERATION PLANS
@@ -60,7 +60,7 @@ public class OI {
     //private JoystickButton shiftUpButton2; //for backwards joystick
     private final JoystickButton m_shiftDownButton2; //for backwards joystick
 
-    private DriveDirection m_driveDirection = DriveDirection.kFWD;
+    private DriveDirection m_driveDirection = DriveDirection.FWD;
 
     private final JoystickButton m_switchCam;
     private final JoystickButton m_switchCam2; //for backwards joystick
@@ -221,7 +221,7 @@ public class OI {
     public double getDrivingJoystickY() {
         if (ROZIE_DRIVE) {
             return m_roziePad.getY();
-        } else if (m_driveDirection == DriveDirection.kFWD) {
+        } else if (m_driveDirection == DriveDirection.FWD) {
             return m_drivingStickForward.getY();
         } else {
             return -m_drivingStickBackward.getY();
@@ -231,7 +231,7 @@ public class OI {
     public double getDrivingJoystickX() {
         if (ROZIE_DRIVE) {
             return m_roziePad.getX();
-        } else if (m_driveDirection == DriveDirection.kFWD) {
+        } else if (m_driveDirection == DriveDirection.FWD) {
             return m_drivingStickForward.getX();
         } else {
             return m_drivingStickBackward.getX();
@@ -248,7 +248,7 @@ public class OI {
     }
 
     public boolean isJoystickReversed() {
-        return (m_driveDirection == DriveDirection.kREV);
+        return (m_driveDirection == DriveDirection.REV);
     }
 
     public double getDPadX() {
