@@ -4,7 +4,6 @@ load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary")
 gos_py_binary(
     name = "ShuffleboardGenerator",
     srcs = glob(["*.py"]),
-    #    imports = ["."],
     data = ["//libraries/ShuffleboardGenerator/lib/templates"],
     main = "generate_dashboard.py",
     visibility = ["//visibility:public"],
