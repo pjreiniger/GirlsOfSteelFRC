@@ -6,14 +6,8 @@ gos_java_library(
     disable_pmd = True,
     visibility = ["//codelabs/basic_simulator:__subpackages__"],
     deps = [
-        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator:Constants",
         "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/subsystems",
-        "@bazelrio//libraries/java/ctre/phoenix",
-        "@bazelrio//libraries/java/wpilib/cameraserver",
-        "@bazelrio//libraries/java/wpilib/cscore",
         "@bazelrio//libraries/java/wpilib/new_commands",
-        "@bazelrio//libraries/java/wpilib/ntcore",
         "@bazelrio//libraries/java/wpilib/wpilibj",
-        "@bazelrio//libraries/java/wpilib/wpimath",
     ],
 )
