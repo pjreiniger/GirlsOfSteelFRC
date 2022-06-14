@@ -1,14 +1,13 @@
 package com.gos.steam_works.commands;
 
 import com.gos.steam_works.subsystems.Chassis;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 
 /**
  *
  */
 public class DriveJoystickTankGamepad extends DriveJoystickBase {
-    private XboxController m_drivingStick;
+    private final XboxController m_drivingStick;
 
     public DriveJoystickTankGamepad(XboxController drivingGamepad, Chassis chassis) {
         super(chassis);

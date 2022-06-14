@@ -29,14 +29,12 @@ public class DriveByJoystick extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-        switch (m_chassis.getTeleDrivingDirection()) {
-
-        case FWD:
+        if (m_chassis.getTeleDrivingDirection() == Chassis.TeleDriveDirection.FWD) {
             m_chassis.driveByJoystick(m_drivingStickForward.getY(), m_drivingStickForward.getX());
-            break;
-        case REV:
+        } else if(m_chassis.getTeleDrivingDirection() == Chassis.TeleDriveDirection.REV) {
             m_chassis.driveByJoystick(-m_drivingStickForward.getY(), m_drivingStickBackward.getX());
-            break;
+        } else {
+            throw new IllegalArgumentException();
         }
         m_chassis.printEncoderValues();
     }

@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
      * (Initializing them here leads to very unclear error messages
      * if any of them throw an exception.)
      */
-    private final OI m_oi;
+    private final OI m_oi; // NOPMD(UnusedPrivateField)
     private final Chassis m_chassis;
     private final Shifters m_shifters;
     private final Flap m_flap;

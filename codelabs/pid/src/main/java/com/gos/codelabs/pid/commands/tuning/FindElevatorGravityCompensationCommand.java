@@ -2,7 +2,6 @@ package com.gos.codelabs.pid.commands.tuning;
 
 import com.gos.codelabs.pid.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import com.gos.lib.properties.PropertyManager;
 
 import static com.gos.codelabs.pid.subsystems.ElevatorSubsystem.ELEVATOR_SPEED;
 

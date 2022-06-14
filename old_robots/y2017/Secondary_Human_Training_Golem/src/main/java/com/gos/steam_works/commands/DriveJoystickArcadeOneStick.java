@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
  *
  */
 public class DriveJoystickArcadeOneStick extends DriveJoystickBase {
-    private Joystick m_drivingGamePad;
+    private final Joystick m_drivingGamePad;
 
     public DriveJoystickArcadeOneStick(Joystick drivingGamepad, Chassis chassis) {
         super(chassis);

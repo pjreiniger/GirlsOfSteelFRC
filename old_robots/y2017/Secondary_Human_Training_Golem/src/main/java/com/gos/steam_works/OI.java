@@ -38,14 +38,8 @@ import com.gos.steam_works.subsystems.Shooter;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-@SuppressWarnings({"PMD.GodClass", "PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.CyclomaticComplexity", "PMD.NcssCount"})
+@SuppressWarnings({"PMD.GodClass", "PMD.TooManyFields", "PMD.ExcessiveMethodLength", "PMD.CyclomaticComplexity", "PMD.NcssCount", "PMD.NPathComplexity"})
 public class OI {
-
-
-    public enum JoystickScaling {
-        LINEAR, DEADBAND, QUADRATIC
-    }
-
 
     //Drive Styles
     //gamepad: tank, split arcade
@@ -53,8 +47,6 @@ public class OI {
     public enum DriveStyle {
         ONE_STICK_ARCADE, GAME_PAD_ARCADE, TWO_STICK_TANK, GAME_PAD_TANK, DROPERATION
     }
-
-    private static final double DEADBAND = 0.3; //TODO: find a good value
 
     private static final DriveStyle DRIVE_STYLE = DriveStyle.ONE_STICK_ARCADE;
 
@@ -65,8 +57,6 @@ public class OI {
     private XboxController m_drivingGamePad;
     private final Joystick m_operatingGamePad;
     private final Joystick m_autonSelector;
-
-    private JoystickScaling m_joystickScale = JoystickScaling.LINEAR;
 
     private JoystickButton m_switchToForward;
     private JoystickButton m_switchToBackward;
@@ -210,6 +200,7 @@ public class OI {
             m_chassis.setDefaultCommand(new DriveJoystickTankGamepad(m_drivingGamePad, m_chassis));
             break;
         case DROPERATION:
+        default:
             throw new IllegalArgumentException();
         }
     }
@@ -254,11 +245,6 @@ public class OI {
         default:
             return new DriveByDistance(m_chassis, m_shifters, 75.5, Shifters.Speed.LOW);
         }
-    }
-
-    public void setJoystickScale(JoystickScaling joystickScale) {
-        m_joystickScale = joystickScale;
-        System.out.println("Joystick direction set to: " + joystickScale);
     }
 
     /**

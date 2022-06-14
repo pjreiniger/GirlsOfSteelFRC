@@ -3,13 +3,14 @@ load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 gos_java_library(
     name = "auton_modes",
     srcs = glob(["*.java"]),
+    disable_pmd = True,
     visibility = ["//codelabs/basic_simulator:__subpackages__"],
     deps = [
+        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator:Constants",
+        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/subsystems",
         "//libraries/GirlsOfSteelLib",
         "//libraries/GirlsOfSteelLibNavx",
         "//libraries/GirlsOfSteelLibRev",
-        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator:Constants",
-        "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator/subsystems",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/rev/revlib",
         "@bazelrio//libraries/java/wpilib/cameraserver",

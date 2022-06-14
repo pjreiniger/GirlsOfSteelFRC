@@ -5,11 +5,11 @@ gos_java_library(
     srcs = glob(["*.java"]),
     visibility = ["//codelabs/pid:__subpackages__"],
     deps = [
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid:Constants",
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
         "//libraries/GirlsOfSteelLib",
         "//libraries/GirlsOfSteelLibNavx",
         "//libraries/GirlsOfSteelLibRev",
-        "//codelabs/pid/src/main/java/com/gos/codelabs/pid:Constants",
-        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/rev/revlib",
         "@bazelrio//libraries/java/wpilib/cameraserver",

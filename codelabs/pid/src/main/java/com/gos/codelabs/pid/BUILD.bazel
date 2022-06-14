@@ -24,11 +24,11 @@ gos_java_robot(
     main_class = "com.gos.codelabs.pid.Main",
     visibility = ["//codelabs/pid:__subpackages__"],
     deps = [
+        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/auton_modes",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/auton",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/commands/tuning",
         "//codelabs/pid/src/main/java/com/gos/codelabs/pid/subsystems",
-        "//codelabs/pid/src/main/java/com/gos/codelabs/pid/auton_modes",
         "//libraries/GirlsOfSteelLib",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/cameraserver",
