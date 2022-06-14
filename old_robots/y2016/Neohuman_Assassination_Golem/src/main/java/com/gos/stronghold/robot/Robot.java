@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         // Default commands
-        m_chassis.setDefaultCommand(new DriveByJoystick(m_oi, m_chassis));
+        m_chassis.setDefaultCommand(new DriveByJoystick(m_chassis));
     }
 
     /**
