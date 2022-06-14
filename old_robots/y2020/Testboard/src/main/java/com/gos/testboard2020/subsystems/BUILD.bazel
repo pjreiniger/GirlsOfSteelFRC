@@ -3,9 +3,9 @@ load("//build_scripts/bazel:java_rules.bzl", "gos_java_library")
 gos_java_library(
     name = "subsystems",
     srcs = glob(["*.java"]),
-    visibility = ["//y2020/Testboard:__subpackages__"],
+    visibility = ["//old_robots/y2020/Testboard:__subpackages__"],
     deps = [
-        "//y2020/Testboard/src/main/java/com/gos/testboard2020:Constants",
+        "//old_robots/y2020/Testboard/src/main/java/com/gos/testboard2020:Constants",
         "@bazelrio//libraries/java/ctre/phoenix",
         "@bazelrio//libraries/java/wpilib/cameraserver",
         "@bazelrio//libraries/java/wpilib/cscore",

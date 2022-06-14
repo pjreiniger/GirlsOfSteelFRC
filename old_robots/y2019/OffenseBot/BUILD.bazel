@@ -1,4 +1,4 @@
 alias(
     name = "OffenseBot",
-    actual = "//y2019/OffenseBot/src/main/java/com/gos/offense2019",
+    actual = "//old_robots/y2019/OffenseBot/src/main/java/com/gos/offense2019",
 )

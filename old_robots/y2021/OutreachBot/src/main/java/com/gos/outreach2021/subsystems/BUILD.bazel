@@ -6,7 +6,7 @@ gos_java_library(
         "*.java",
         "sim/*.java",
     ]),
-    visibility = ["//y2021/OutreachBot:__subpackages__"],
+    visibility = ["//old_robots/y2021/OutreachBot:__subpackages__"],
     deps = [
         "@bazelrio//libraries/java/rev/revlib",
         "@bazelrio//libraries/java/wpilib/new_commands",

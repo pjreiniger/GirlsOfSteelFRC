@@ -1,4 +1,4 @@
 alias(
     name = "OutreachBot",
-    actual = "//y2021/OutreachBot/src/main/java/com/gos/outreach2021",
+    actual = "//old_robots/y2021/OutreachBot/src/main/java/com/gos/outreach2021",
 )
