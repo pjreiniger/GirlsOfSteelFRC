@@ -31,7 +31,7 @@ public class DriveByJoystick extends CommandBase {
     public void execute() {
         if (m_chassis.getTeleDrivingDirection() == Chassis.TeleDriveDirection.FWD) {
             m_chassis.driveByJoystick(m_drivingStickForward.getY(), m_drivingStickForward.getX());
-        } else if(m_chassis.getTeleDrivingDirection() == Chassis.TeleDriveDirection.REV) {
+        } else if (m_chassis.getTeleDrivingDirection() == Chassis.TeleDriveDirection.REV) {
             m_chassis.driveByJoystick(-m_drivingStickForward.getY(), m_drivingStickBackward.getX());
         } else {
             throw new IllegalArgumentException();
