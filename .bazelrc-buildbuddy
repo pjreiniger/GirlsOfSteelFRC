@@ -1,7 +1,7 @@
 build:remote --bes_results_url=https://app.buildbuddy.io/invocation/
 build:remote --bes_backend=grpcs://remote.buildbuddy.io
 build:remote --remote_cache=grpcs://remote.buildbuddy.io
-# build:remote --remote_download_toplevel # Helps remove network bottleneck if caching is enabled
+build:remote --remote_download_toplevel # Helps remove network bottleneck if caching is enabled
 build:remote --remote_timeout=3600
 
 # build:remote --experimental_remote_cache_compression
