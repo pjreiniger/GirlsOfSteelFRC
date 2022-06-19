@@ -7,26 +7,21 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build_windows:
-    continue-on-error: true
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
-        run: bazel test //... -k --config=remote --config=ci --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_ORG_API_KEY }} --workspace_status_command=workspace_status.sh
-  build_unix:
+  build:
+    # TODO(PJ) Remove this, make bazel first class citizen.
     continue-on-error: true
     strategy:
       fail-fast: false
       matrix:
         # TODO(PJ) Mac seems flakey on github. Turning it off for now
         # platform: [ubuntu-latest, macos-latest, windows-latest]
-        platform: [ubuntu-latest]
+        platform: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v2
       - name: Build
-        run: bazel test //... -k --config=remote --config=ci --remote_header=x-buildbuddy-api-key=${{ secrets.BUILDBUDDY_ORG_API_KEY }} --workspace_status_command=$(pwd)/workspace_status.sh
+        run: bazel test //... -k --config=remote
+
 
   buildifier:
     name: "buildifier"
