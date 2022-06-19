@@ -11,10 +11,14 @@ gos_java_library(
 
 gos_java_robot(
     name = "infinite_recharge",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = ["Constants.java"],
+    ),
     main_class = "com.gos.infinite_recharge.Main",
     visibility = ["//old_robots/y2020/2020InfiniteRecharge:__subpackages__"],
     deps = [
+        ":Constants",
         "//libraries/GirlsOfSteelLib",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/auto_modes",
         "//old_robots/y2020/2020InfiniteRecharge/src/main/java/com/gos/infinite_recharge/commands",

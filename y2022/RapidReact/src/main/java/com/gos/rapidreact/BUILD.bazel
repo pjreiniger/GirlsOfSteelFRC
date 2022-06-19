@@ -11,7 +11,7 @@ gos_java_library(
 
 gos_java_robot(
     name = "rapidreact",
-    srcs = glob(["*.java"]),
+    srcs = glob(["*.java"], exclude=["Constants.java"]),
     main_class = "com.gos.rapidreact.Main",
     visibility = ["//y2022/RapidReact:__subpackages__"],
     deps = [

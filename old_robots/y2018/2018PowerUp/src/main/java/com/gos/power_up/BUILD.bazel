@@ -33,10 +33,21 @@ gos_java_library(
 
 gos_java_robot(
     name = "power_up",
-    srcs = glob(["*.java"]),
+    srcs = glob(
+        ["*.java"],
+        exclude = [
+            "RobotMap.java",
+            "GameData.java",
+            "Blob.java",
+            "Blobs.java",
+            "Pipeline.java",
+            "PipelineListener.java",
+        ],
+    ),
     main_class = "com.gos.power_up.Main",
     visibility = ["//old_robots/y2018/2018PowerUp:__subpackages__"],
     deps = [
+        ":GameData",
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up/commands",
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up/commands/autonomous",
         "//old_robots/y2018/2018PowerUp/src/main/java/com/gos/power_up/subsystems",

@@ -21,7 +21,7 @@ gos_java_library(
 
 gos_java_robot(
     name = "steam_works",
-    srcs = glob(["*.java"]),
+    srcs = glob(["*.java"], exclude=["RobotMap.java", "GripPipeline.java", "GripPipelineListener.java"]),
     main_class = "com.gos.steam_works.Main",
     visibility = ["//old_robots/y2017/Secondary_Human_Training_Golem:__subpackages__"],
     deps = [

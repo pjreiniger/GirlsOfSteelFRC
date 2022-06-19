@@ -1,0 +1,16 @@
+load("//build_scripts/bazel:python_rules.bzl", "gos_py_binary", "gos_py_library")
+load("@gos_pip_deps//:requirements.bzl", "requirement")
+
+gos_py_binary(
+    name = "download_datalog_parser",
+    srcs = ["download_datalog_parser.py"],
+)
+
+gos_py_library(
+    name = "datalog_parser",
+    srcs = glob(["*.py"], exclude=["download_datalog_parser.py"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        requirement("pandas"),
+    ]
+)
