@@ -1,4 +1,0 @@
-alias(
-    name = "pid",
-    actual = "//codelabs/pid/src/main/java/com/gos/codelabs/pid",
-)

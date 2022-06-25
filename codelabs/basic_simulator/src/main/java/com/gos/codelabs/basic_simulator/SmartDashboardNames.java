@@ -1,4 +1,4 @@
-package com.gos.codelabs.basic_simulator;
+package com.scra.codelabs.basic_simulator;
 
 public final class SmartDashboardNames {
     public static final String WIDGET_NAME = "Codelab Structure Widget";

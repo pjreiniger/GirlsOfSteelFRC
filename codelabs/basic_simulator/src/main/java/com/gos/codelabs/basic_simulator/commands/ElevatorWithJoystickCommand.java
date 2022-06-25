@@ -1,6 +1,6 @@
-package com.gos.codelabs.basic_simulator.commands;
+package com.scra.codelabs.basic_simulator.commands;
 
-import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
+import com.scra.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 

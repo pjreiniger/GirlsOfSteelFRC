@@ -1,23 +1,22 @@
-package com.gos.codelabs.basic_simulator;
+package com.scra.codelabs.basic_simulator;
 
-import com.gos.codelabs.basic_simulator.commands.AutoDriveStraightDistanceCommand;
-import com.gos.codelabs.basic_simulator.commands.AutoDriveStraightTimedCommand;
-import com.gos.codelabs.basic_simulator.commands.ElevatorToPositionCommand;
-import com.gos.codelabs.basic_simulator.commands.MovePunchCommand;
-import com.gos.codelabs.basic_simulator.subsystems.ChassisSubsystem;
-import com.gos.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
-import com.gos.codelabs.basic_simulator.subsystems.PunchSubsystem;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import com.scra.codelabs.basic_simulator.commands.AutoDriveStraightDistanceCommand;
+import com.scra.codelabs.basic_simulator.commands.AutoDriveStraightTimedCommand;
+import com.scra.codelabs.basic_simulator.commands.ElevatorToPositionCommand;
+import com.scra.codelabs.basic_simulator.commands.MovePunchCommand;
+import com.scra.codelabs.basic_simulator.subsystems.ChassisSubsystem;
+import com.scra.codelabs.basic_simulator.subsystems.ElevatorSubsystem;
+import com.scra.codelabs.basic_simulator.subsystems.PunchSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class CommandTester {
 
     public CommandTester(RobotContainer robotContainer) {
-
         // Alias for readability
-        ChassisSubsystem chassis = robotContainer.getChassis();
-        ElevatorSubsystem elevator = robotContainer.getElevator();
-        PunchSubsystem punch = robotContainer.getPunch();
+        ChassisSubsystem chassis = robotContainer.getChassis(); // NOPMD(CloseResource)
+        ElevatorSubsystem elevator = robotContainer.getElevator(); // NOPMD(CloseResource)
+        PunchSubsystem punch = robotContainer.getPunch(); // NOPMD(CloseResource)
 
         // Elevator
         addCommand("Lift To Position Low", new ElevatorToPositionCommand(elevator, ElevatorSubsystem.Positions.LOW));
@@ -36,6 +35,6 @@ public class CommandTester {
 
     private void addCommand(String name, CommandBase command) {
         CommandBase namedCommand =  command.withName(name);
-        Shuffleboard.getTab("Command Tester").add(name, namedCommand);
+        SmartDashboard.putData(name, namedCommand);
     }
 }
