@@ -1,4 +1,0 @@
-filegroup(
-    name = "python_requirements",
-    srcs = ["requirements.txt"],
-)

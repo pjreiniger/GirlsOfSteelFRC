@@ -1,4 +1,0 @@
-alias(
-    name = "basic_simulator",
-    actual = "//codelabs/basic_simulator/src/main/java/com/gos/codelabs/basic_simulator",
-)

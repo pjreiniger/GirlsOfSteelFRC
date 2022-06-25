@@ -1,12 +1,16 @@
+import edu.wpi.first.gradlerio.deploy.roborio.RoboRIO
+
 plugins {
     id "java"
     id "edu.wpi.first.GradleRIO" version "2022.4.1"
+    id 'com.diffplug.spotless' version '5.5.0' apply false
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+def javaVersion = JavaVersion.VERSION_11
+sourceCompatibility = javaVersion
+targetCompatibility = javaVersion
 
-def ROBOT_MAIN_CLASS = "com.gos.codelabs.basic_simulator.Main"
+def ROBOT_MAIN_CLASS = "com.scra.codelabs.basic_simulator.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
 // This is added by GradleRIO's backing project DeployUtils.
@@ -45,8 +49,11 @@ wpi.java.debugJni = false
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
-// Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
-// Also defines JUnit 4.
+
+test {
+    useJUnitPlatform()
+}
+
 dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
@@ -65,7 +72,11 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    testImplementation 'junit:junit:4.13.1'
+
+    implementation platform("org.junit:junit-bom:5.8.2")
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "org.junit.jupiter:junit-jupiter-params"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -86,9 +97,4 @@ deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
 
-test {
-    ignoreFailures = true
-}
-pmd {
-    ignoreFailures = true
-}
+apply from: "styleguide/styleguide.gradle"

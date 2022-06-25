@@ -5,16 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package com.gos.codelabs.basic_simulator;
+package com.scra.codelabs.basic_simulator;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
-import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.numbers.N2;
 
@@ -58,32 +56,32 @@ public final class Constants {
 
     public static final class DrivetrainConstants {
 
-        public static final DCMotor kDriveGearbox = DCMotor.getCIM(2);
-        public static final double kDriveGearing = 8;
+        public static final DCMotor DRIVE_GEARBOX = DCMotor.getCIM(2);
+        public static final double K_DRIVE_GEARING = 8;
 
-        public static final double kTrackWidthMeters = 0.69;
-        public static final double kWheelDiameterMeters = 0.15;
+        public static final double K_TRACK_WIDTH_METERS = 0.69;
+        public static final double K_WHEEL_DIAMETER_METERS = 0.15;
 
-        public static final double ksVolts = 0.22;
-        public static final double kvVoltSecondsPerMeter = 1.98;
-        public static final double kaVoltSecondsSquaredPerMeter = 0.2;
-        public static final double kvVoltSecondsPerRadian = 2.5;
-        public static final double kaVoltSecondsSquaredPerRadian = 0.8;
+        public static final double KS_VOLTS = 0.22;
+        public static final double KV_VOLT_SECONDS_PER_METER = 1.98;
+        public static final double KA_VOLT_SECONDS_SQUARED_PER_METER = 0.2;
+        public static final double KV_VOLT_SECONDS_PER_RADIAN = 2.5;
+        public static final double KA_VOLT_SECONDS_SQUARED_PER_RADIAN = 0.8;
 
-        public static final LinearSystem<N2, N2, N2> kDrivetrainPlant =
-                LinearSystemId.identifyDrivetrainSystem(kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter,
-                        kvVoltSecondsPerRadian, kaVoltSecondsSquaredPerRadian);
+        public static final LinearSystem<N2, N2, N2> K_DRIVETRAIN_PLANT =
+                LinearSystemId.identifyDrivetrainSystem(KV_VOLT_SECONDS_PER_METER, KA_VOLT_SECONDS_SQUARED_PER_METER,
+                        KV_VOLT_SECONDS_PER_RADIAN, KA_VOLT_SECONDS_SQUARED_PER_RADIAN);
 
-        public static final DifferentialDriveKinematics kDriveKinematics =
-                new DifferentialDriveKinematics(kTrackWidthMeters);
+        public static final DifferentialDriveKinematics DRIVE_KINEMATICS =
+                new DifferentialDriveKinematics(K_TRACK_WIDTH_METERS);
 
         public static DifferentialDrivetrainSim createSim() {
             return new DifferentialDrivetrainSim(
-                    kDrivetrainPlant,
-                    kDriveGearbox,
-                    kDriveGearing,
-                    kTrackWidthMeters,
-                    kWheelDiameterMeters / 2.0,
+                    K_DRIVETRAIN_PLANT,
+                    DRIVE_GEARBOX,
+                    K_DRIVE_GEARING,
+                    K_TRACK_WIDTH_METERS,
+                    K_WHEEL_DIAMETER_METERS / 2.0,
                 SIMULATE_SENSOR_NOISE ? VecBuilder.fill(0, 0, 0.0001, 0.1, 0.1, 0.005, 0.005) : null); // NOPMD
         }
 
@@ -92,39 +90,14 @@ public final class Constants {
         }
     }
 
-    public static final class ElevatorSimConstants {
-        public static final double kElevatorGearing = 10.0;
-        public static final double kCarriageMass = 4.0; // kg
-        public static final double kMinElevatorHeight = -5.0;
-        public static final double kMaxElevatorHeight = Units.inchesToMeters(50e50);
-        public static final DCMotor kElevatorGearbox = DCMotor.getVex775Pro(4);
-
-        public static final double kElevatorDrumRadius = Units.inchesToMeters(2.0);
-
-        public static ElevatorSim createSim() {
-
-            return new ElevatorSim(
-                    ElevatorSimConstants.kElevatorGearbox,
-                    ElevatorSimConstants.kElevatorGearing,
-                    ElevatorSimConstants.kCarriageMass,
-                    ElevatorSimConstants.kElevatorDrumRadius,
-                    ElevatorSimConstants.kMinElevatorHeight,
-                    ElevatorSimConstants.kMaxElevatorHeight,
-                    SIMULATE_SENSOR_NOISE ?  VecBuilder.fill(0.01) : null); // NOPMD
-        }
-
-        private ElevatorSimConstants() {
-
-        }
-    }
 
     public static final class FlywheelSimConstants {
-        public static final DCMotor kGearbox = DCMotor.getVex775Pro(2);
-        public static final double kGearing = 4;
-        public static final double kInertia = 0.008;
+        public static final DCMotor K_GEARBOX = DCMotor.getVex775Pro(2);
+        public static final double K_GEARING = 4;
+        public static final double K_INERTIA = 0.008;
 
         public static FlywheelSim createSim() {
-            return new FlywheelSim(FlywheelSimConstants.kGearbox, FlywheelSimConstants.kGearing, FlywheelSimConstants.kInertia,
+            return new FlywheelSim(FlywheelSimConstants.K_GEARBOX, FlywheelSimConstants.K_GEARING, FlywheelSimConstants.K_INERTIA,
                     SIMULATE_SENSOR_NOISE ? VecBuilder.fill(0.5) : null); // NOPMD
         }
 
