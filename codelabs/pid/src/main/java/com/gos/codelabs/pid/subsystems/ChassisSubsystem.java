@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.SimableCANSparkMax;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -56,12 +57,12 @@ public class ChassisSubsystem extends SubsystemBase {
     @SuppressWarnings("PMD.CloseResource")
     public ChassisSubsystem() {
 
-        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkMaxLowLevel.MotorType.kBrushed);
-        CANSparkMax leftDriveB = new CANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkMaxLowLevel.MotorType.kBrushed);
+        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkMaxLowLevel.MotorType.kBrushless);
+        CANSparkMax leftDriveB = new CANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkMaxLowLevel.MotorType.kBrushless);
         leftDriveB.follow(m_leftDriveA);
 
-        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkMaxLowLevel.MotorType.kBrushed);
-        CANSparkMax rightDriveB = new CANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkMaxLowLevel.MotorType.kBrushed);
+        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkMaxLowLevel.MotorType.kBrushless);
+        CANSparkMax rightDriveB = new CANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkMaxLowLevel.MotorType.kBrushless);
         rightDriveB.follow(m_rightDriveA);
         m_rightDriveA.setInverted(true);
 
@@ -212,8 +213,29 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void driveWithVelocity(double leftVelocity, double rightVelocity) {
-        m_leftPid.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY);
-        m_rightPid.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY);
+        driveWithVelocity(leftVelocity, rightVelocity, 0, 0);
+    }
+
+    public void driveWithVelocity(double leftVelocity, double rightVelocity, double leftAccelMpss, double rightAccelMpss) {
+
+        double staticFrictionLeft = Constants.DrivetrainConstants.KS_VOLTS * Math.signum(leftVelocity);
+        double staticFrictionRight = Constants.DrivetrainConstants.KS_VOLTS * Math.signum(rightVelocity);
+        double accelerationLeft = Constants.DrivetrainConstants.KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(leftAccelMpss);
+        double accelerationRight = Constants.DrivetrainConstants.KA_VOLT_SECONDS_SQUARED_PER_METER * Math.signum(rightAccelMpss);
+
+        double arbLeft = staticFrictionLeft + accelerationLeft;
+        double arbRight = staticFrictionRight + accelerationRight;
+
+        // TODO(pj) Bug in simulator?
+        SparkMaxPIDController.ArbFFUnits arbUnit = SparkMaxPIDController.ArbFFUnits.kVoltage;
+//        SparkMaxPIDController.ArbFFUnits arbUnit = SparkMaxPIDController.ArbFFUnits.kPercentOut;
+//        arbLeft *= 0.008;
+//        arbRight *= 0.008;
+        System.out.println(RobotController.getBatteryVoltage() + ", " + arbLeft + ", " + arbRight);
+
+
+        m_leftPid.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbLeft, arbUnit);
+        m_rightPid.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, PID_SLOT_VELOCITY, arbRight, arbUnit);
         m_differentialDrive.feed();
 
         SmartDashboard.putNumber("Left Velocity Goal", leftVelocity);
@@ -230,4 +252,5 @@ public class ChassisSubsystem extends SubsystemBase {
         m_odometry.resetPosition(pose, m_gyro.getRotation2d());
         m_simulator.resetOdometry(pose);
     }
+
 }

@@ -13,18 +13,13 @@ public class PunchSubsystem extends SubsystemBase {
 
     private final Solenoid m_punchSolenoid;
 
-    private final NetworkTableEntry m_isPunchExtendedEntry;
-
     public PunchSubsystem() {
         m_punchSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.SOLENOID_PUNCH);
-
-        NetworkTable table = NetworkTableInstance.getDefault().getTable(SmartDashboardNames.SUPER_STRUCTURE_TABLE_NAME + "/" + SmartDashboardNames.PUNCH_TABLE_NAME);
-        m_isPunchExtendedEntry = table.getEntry(SmartDashboardNames.PUNCH_IS_EXTENDED);
     }
 
     @Override
     public void periodic() {
-        m_isPunchExtendedEntry.setBoolean(isExtended());
+
     }
 
     public boolean isExtended() {
