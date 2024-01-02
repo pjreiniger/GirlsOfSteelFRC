@@ -46,6 +46,13 @@ def run_our_additional_replacements(auto_commit):
 
     # Put our smarter-than-wpilib replacements here
     # fmt: off
+    # replacements.append((r"createFollowPathCommand\(\"(.*)\"\, .*?\)", r'createFollowPathCommand("\1")'))
+    # replacements.append((r"createFollowPathCommand\(String pathFilename, .*?\)", r'createFollowPathCommand(String pathFilename)'))
+    # replacements.append((r"createFollowPathCommand\((.*?), .*\)", r'createFollowPathCommand(\1)'))
+    # replacements.append((r"createFollowPathCommandNoPoseReset\((.*?), .*\)", r'createFollowPathCommandNoPoseReset(\1)'))
+    # replacements.append((r"createFollowPathCommandNoPoseReset\((.*?), .*\)", r'createFollowPathCommandNoPoseReset(\1)'))
+    # replacements.append(("import edu.wpi.first.wpilibj2.command.Command;\nimport edu.wpi.first.wpilibj2.command.Command;", "import edu.wpi.first.wpilibj2.command.Command;"))
+    replacements.append(("GosCommand", "GosCommandBase"))
     # fmt: on
 
     # Run these on all the files

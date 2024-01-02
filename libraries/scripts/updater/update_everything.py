@@ -13,10 +13,12 @@ def update_everything():
     if "BUILD_WORKSPACE_DIRECTORY" in os.environ:
         os.chdir(os.environ["BUILD_WORKSPACE_DIRECTORY"])
 
-    update_vendor_deps()
+    ignore_download_cache = True
+
+    update_vendor_deps(ignore_cache = ignore_download_cache)
     replace_gradlerio_files(True)
     run_all_replacements()
-    update_bazelrio()
+    update_bazelrio(ignore_cache = ignore_download_cache)
     run_smart_spotless(
         commands=["spotlessGroovyGradleApply", "spotlessMiscApply", "spotlessXmlApply"]
     )
