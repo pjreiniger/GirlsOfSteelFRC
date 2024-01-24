@@ -8,6 +8,7 @@ package com.gos.swerve2023;
 import com.gos.swerve2023.commands.ChassisTeleopDriveCommand;
 import com.gos.swerve2023.subsystems.ChassisSubsystem;
 import edu.wpi.first.hal.AllianceStationID;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -43,6 +44,8 @@ public class RobotContainer {
      */
     private void configureBindings() {
         m_chassis.setDefaultCommand(new ChassisTeleopDriveCommand(m_chassis, m_driverJoystick));
+
+        m_driverJoystick.start().onTrue(m_chassis.resetOdometry(0, 0, Rotation2d.fromDegrees(0)));
     }
 
 

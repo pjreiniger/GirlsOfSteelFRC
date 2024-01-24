@@ -56,49 +56,25 @@
     }
   },
   {
+    "name": "/Preferences/SwerveTranslationController.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SwerveRotationController.mm.kp",
+    "type": "double",
+    "value": 5.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
     "name": "/Preferences/ShooterSpeed",
     "type": "double",
-    "value": 0.2,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter(AllowableError))",
-    "type": "double",
-    "value": 50.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kp",
-    "type": "double",
-    "value": 0.002,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.ki",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kd",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Shooter.mm.kff",
-    "type": "double",
-    "value": 8e-05,
+    "value": 0.1,
     "properties": {
       "persistent": true
     }
@@ -152,22 +128,6 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot Profile ff.aff.kff",
-    "type": "double",
-    "value": 0.0,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
-    "name": "/Preferences/Arm Pivot Profile ff.aff.kg",
-    "type": "double",
-    "value": 1.75,
-    "properties": {
-      "persistent": true
-    }
-  },
-  {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
     "value": 0.02,
@@ -176,9 +136,57 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot.mm.ki",
+    "name": "/Preferences/Pivot Arm.mm.kd",
     "type": "double",
     "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm.aff.ks",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Pivot Arm.aff.kg",
+    "type": "double",
+    "value": 1.75,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kp",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kd",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter.mm.kff",
+    "type": "double",
+    "value": 0.0004,
     "properties": {
       "persistent": true
     }
@@ -192,17 +200,33 @@
     }
   },
   {
-    "name": "/Preferences/Arm Pivot.mm.max_acceleration",
+    "name": "/Preferences/Arm Pivot Profile ff.aff.kff",
     "type": "double",
-    "value": 80.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
   },
   {
-    "name": "/Preferences/Arm Pivot.mm.max_velocity",
+    "name": "/Preferences/Arm Pivot Profile ff.aff.kg",
     "type": "double",
-    "value": 80.0,
+    "value": 2.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SimulatedNoteX",
+    "type": "double",
+    "value": 4.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SimulatedNoteY",
+    "type": "double",
+    "value": 3.0,
     "properties": {
       "persistent": true
     }

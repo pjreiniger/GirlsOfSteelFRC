@@ -7,17 +7,24 @@ package com.gos.crescendo2024;
 
 import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
+import com.gos.crescendo2024.commands.CombinedCommandsUtil;
 import com.gos.crescendo2024.commands.DavidDriveSwerve;
+import com.gos.crescendo2024.commands.TeleopDriveWhileStaringAtAngleCommand;
+import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
+import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -40,6 +47,7 @@ public class RobotContainer {
     private final ArmPivotSubsystem m_armPivotSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
+    private final LedManagerSubsystem m_ledManager;
 
     // Joysticks
     private final CommandXboxController m_driverController =
@@ -60,31 +68,44 @@ public class RobotContainer {
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
 
+        NamedCommands.registerCommand("AimAndShoot", CombinedCommandsUtil.createShootAtFixedAngle(70, m_shooterSubsystem, m_armPivotSubsystem));
         NamedCommands.registerCommand("shoot", m_intakeSubsystem.createMoveIntakeInCommand().withTimeout(1));
 
         m_autonomousFactory = new Autos();
+
+        m_ledManager = new LedManagerSubsystem(m_intakeSubsystem);
+
 
         // Configure the trigger bindings
         configureBindings();
 
         createTestCommands();
 
+        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
+
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
         if (RobotBase.isSimulation()) {
+            DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
         }
     }
 
     private void createTestCommands() {
         ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("test commands");
+
+        // Shooter
         shuffleboardTab.add("shooterTuning", m_shooterSubsystem.createTunePercentShootCommand());
         shuffleboardTab.add("testShooter50", m_shooterSubsystem.createSetRPMCommand(50));
         shuffleboardTab.add("testShooter100", m_shooterSubsystem.createSetRPMCommand(100));
         shuffleboardTab.add("resetShooter", m_shooterSubsystem.createStopShooterCommand());
 
+        // Intake
         shuffleboardTab.add("intake in", m_intakeSubsystem.createMoveIntakeInCommand());
         shuffleboardTab.add("intake out", m_intakeSubsystem.createMoveIntakeOutCommand());
+
+
+        // Chassis
         shuffleboardTab.add("Chassis to 45", m_chassisSubsystem.createTurnToAngleCommand(45));
         shuffleboardTab.add("Chassis to 90", m_chassisSubsystem.createTurnToAngleCommand(90));
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
@@ -102,6 +123,14 @@ public class RobotContainer {
         shuffleboardTab.add("arm to -45", m_armPivotSubsystem.createMoveArmToAngle(-45));
         shuffleboardTab.add("arm to 90", m_armPivotSubsystem.createMoveArmToAngle(90));
         shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
+        shuffleboardTab.add("Pivot: Amp", m_armPivotSubsystem.createGoToAmpAngleCommand());
+
+        // Combined Utils
+        shuffleboardTab.add("Floor Pickup", CombinedCommandsUtil.createIntakeFromGroundCommand(m_intakeSubsystem, m_armPivotSubsystem));
+
+        shuffleboardTab.add("Chassis chase note", m_chassisSubsystem.createChaseNoteCommand());
+
+
 
     }
 
@@ -115,7 +144,8 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
-        m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+//        m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+        m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());

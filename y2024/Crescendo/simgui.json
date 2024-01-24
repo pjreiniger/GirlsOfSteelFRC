@@ -1,7 +1,17 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
-      "SPARK MAX [8]": {
+      "SPARK MAX [33]": {
         "header": {
           "open": true
         }
@@ -9,142 +19,33 @@
     }
   },
   "NTProvider": {
-    "NetworkTables": {
-      "persistent": {
-        "Preferences": {
-          "open": true
-        }
-      },
-      "transitory": {
-        "Shuffleboard": {
-          "open": true,
-          "test commands": {
-            "Chassis to -180": {
-              "open": true
-            },
-            "open": true
-          }
-        },
-        "SwerveDrive": {
-          "BL": {
-            "open": true
-          },
-          "open": true
-        }
-      }
-    },
-    "NetworkTables Info": {
-      "visible": true
-    },
-    "Plot": {
-      "Plot <0>": {
-        "plots": [
-          {
-            "axis": [
-              {
-                "autoFit": true
-              }
-            ],
-            "backgroundColor": [
-              0.0,
-              0.0,
-              0.0,
-              0.8500000238418579
-            ],
-            "height": -20,
-            "series": [
-              {
-                "color": [
-                  0.2980392277240753,
-                  0.44705885648727417,
-                  0.6901960968971252,
-                  1.0
-                ],
-                "id": "NT:/SwerveDrive/BL/Current Velocity"
-              },
-              {
-                "color": [
-                  0.8666667342185974,
-                  0.5176470875740051,
-                  0.32156863808631897,
-                  1.0
-                ],
-                "id": "NT:/SwerveDrive/BL/Goal Velocity"
-              },
-              {
-                "color": [
-                  0.3333333432674408,
-                  0.658823549747467,
-                  0.4078431725502014,
-                  1.0
-                ],
-                "id": "SPARK MAX [21]-Applied Output"
-              }
-            ]
-          }
-        ],
-        "window": {
-          "visible": false
-        }
-      },
-      "Plot <1>": {
-        "plots": [
-          {
-            "axis": [
-              {
-                "autoFit": true
-              }
-            ],
-            "backgroundColor": [
-              0.0,
-              0.0,
-              0.0,
-              0.8500000238418579
-            ],
-            "height": 0,
-            "series": [
-              {
-                "color": [
-                  0.2980392277240753,
-                  0.44705885648727417,
-                  0.6901960968971252,
-                  1.0
-                ],
-                "id": "NT:/SwerveDrive/BL/Current Angle"
-              },
-              {
-                "color": [
-                  0.8666667342185974,
-                  0.5176470875740051,
-                  0.32156863808631897,
-                  1.0
-                ],
-                "id": "NT:/SwerveDrive/BL/Goal Angle"
-              },
-              {
-                "color": [
-                  0.3333333432674408,
-                  0.658823549747467,
-                  0.4078431725502014,
-                  1.0
-                ],
-                "id": "SPARK MAX [25]-Applied Output"
-              }
-            ]
-          }
-        ],
-        "window": {
-          "visible": false
-        }
-      }
-    },
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/PP Paths/Example Path": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt2": "Command",
+      "/Shuffleboard/PP Paths/FourPieceSpeakerPt3": "Command",
+      "/Shuffleboard/PP Paths/FourPieceTB_P1_StartToTop": "Command",
+      "/Shuffleboard/PP Paths/FourPieceTB_P2_TopToMiddle": "Command",
+      "/Shuffleboard/PP Paths/FourPieceTB_P3_MiddleToBot": "Command",
+      "/Shuffleboard/PP Paths/LeaveWing": "Command",
+      "/Shuffleboard/PP Paths/OneNoteSpeakerAndLeaveWing": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
+      "/Shuffleboard/test commands/Chassis chase note": "Command",
       "/Shuffleboard/test commands/Chassis to -180": "Command",
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
       "/Shuffleboard/test commands/David Drive": "Command",
+      "/Shuffleboard/test commands/Floor Pickup": "Command",
+      "/Shuffleboard/test commands/Intake: In": "Command",
+      "/Shuffleboard/test commands/Intake: Out": "Command",
+      "/Shuffleboard/test commands/Pivot: 0 degrees": "Command",
+      "/Shuffleboard/test commands/Pivot: 45 degrees": "Command",
+      "/Shuffleboard/test commands/Pivot: 90 degrees": "Command",
+      "/Shuffleboard/test commands/Pivot: Amp": "Command",
+      "/Shuffleboard/test commands/Pivot: Floor Pickup": "Command",
       "/Shuffleboard/test commands/Turn to point drive": "Command",
       "/Shuffleboard/test commands/arm to -45": "Command",
       "/Shuffleboard/test commands/arm to 0": "Command",
@@ -156,49 +57,23 @@
       "/Shuffleboard/test commands/shoot": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
       "/Shuffleboard/test commands/test drive to amp": "Command",
-      "/Shuffleboard/test commands/test drive to point": "Command",
       "/Shuffleboard/test commands/test drive to speaker": "Command",
       "/Shuffleboard/test commands/testShooter100": "Command",
       "/Shuffleboard/test commands/testShooter50": "Command",
-      "/Shuffleboard/test commands/testShooter50?": "Command",
-      "/Shuffleboard/test commands/turn to face point": "Command",
       "/SmartDashboard/Auto Chooser": "String Chooser",
-      "/SmartDashboard/Field": "Field2d"
+      "/SmartDashboard/Auton Mode": "String Chooser",
+      "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/SendableChooser[1]": "String Chooser",
+      "/SmartDashboard/VisionSystemSim-GamePieceSim/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-vision/Sim Field": "Field2d"
     },
     "windows": {
-      "/Shuffleboard/test commands/David Drive": {
+      "/Shuffleboard/test commands/Chassis chase note": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Turn to point drive": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/testShooter50": {
-        "/Shuffleboard/test commands/Chassis to -180": {
-          "window": {
-            "visible": true
-          }
-        },
-        "/Shuffleboard/test commands/Chassis to 90": {
-          "window": {
-            "visible": true
-          }
-        },
-        "/SmartDashboard/Field": {
-          "bottom": 544,
-          "builtin": "2024 Crescendo",
-          "height": 8.013679504394531,
-          "left": 46,
-          "right": 1088,
-          "top": 36,
-          "width": 16.541748046875,
-          "window": {
-            "visible": true
-          }
-        },
+      "/Shuffleboard/test commands/test drive to amp": {
         "window": {
           "visible": true
         }
@@ -210,30 +85,134 @@
       },
       "/SmartDashboard/Field": {
         "AprilTags": {
-          "length": 0.10000000149011612,
+          "color": [
+            0.0,
+            255.0,
+            217.49996948242188,
+            255.0
+          ],
+          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png",
+          "length": 0.8999999761581421,
+          "width": 0.8999999761581421
+        },
+        "DetectedNotes": {
+          "arrowSize": 92,
+          "arrows": false,
+          "color": [
+            0.720588207244873,
+            0.49888473749160767,
+            0.035322971642017365,
+            255.0
+          ],
+          "length": 0.45719999074935913,
           "style": "Box/Image",
           "weight": 1.0,
+          "width": 0.45719999074935913
+        },
+        "LeftFront: DetectedTags": {
+          "color": [
+            0.5882352590560913,
+            0.12110727280378342,
+            0.12110727280378342,
+            255.0
+          ],
+          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-yellow.png"
+        },
+        "LeftFront: EstimatedPosition": {
+          "color": [
+            29.999998092651367,
+            255.0,
+            0.0,
+            255.0
+          ],
+          "length": 1.0,
+          "width": 1.0
+        },
+        "OldOdometry": {
+          "arrowColor": [
+            0.10947717726230621,
+            0.656862735748291,
+            0.640762984752655,
+            255.0
+          ],
+          "color": [
+            0.0,
+            255.0,
+            179.99998474121094,
+            255.0
+          ]
+        },
+        "RightFront: DetectedTags": {
+          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-red.png",
+          "width": 0.4000000059604645
+        },
+        "RightFront: EstimatedPosition": {
+          "arrows": false,
+          "color": [
+            7.500007152557373,
+            0.0,
+            255.0,
+            255.0
+          ],
+          "length": 1.100000023841858,
+          "width": 1.100000023841858
+        },
+        "SimulatedNotes": {
+          "arrowSize": 19,
+          "arrowWeight": 1.0,
+          "color": [
+            0.7745097875595093,
+            0.4681004583835602,
+            0.03037293069064617,
+            255.0
+          ],
+          "length": 0.10000000149011612,
+          "style": "Box/Image",
+          "weight": 0.10000000149011612,
           "width": 0.10000000149011612
         },
         "Trajectory": {
-          "arrows": false,
-          "style": "Line"
-        },
-        "TrajectoryTargetPose": {
-          "arrowColor": [
-            0.13555556535720825,
-            0.269728422164917,
-            0.6000000238418579,
+          "arrowSize": 0,
+          "color": [
+            104.9999771118164,
+            255.0,
+            0.0,
             255.0
           ],
           "style": "Line"
         },
-        "bottom": 544,
-        "builtin": "2024 Crescendo",
-        "height": 8.013679504394531,
-        "left": 46,
-        "right": 1088,
-        "top": 36,
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "units": "meters",
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/VisionSystemSim-vision/Sim Field": {
+        "apriltag": {
+          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
+        },
+        "bottom": 1476,
+        "cameras": {
+          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-yellow.png"
+        },
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "visibleTargetPoses": {
+          "color": [
+            29.999998092651367,
+            255.0,
+            0.0,
+            255.0
+          ],
+          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-green.png"
+        },
         "width": 16.541748046875,
         "window": {
           "visible": true
@@ -242,22 +221,74 @@
     }
   },
   "NetworkTables": {
+    "persistent": {
+      "Preferences": {
+        "open": true
+      }
+    },
     "transitory": {
-      "Shooter Subsystem": {
+      "Preferences": {
         "open": true
       },
-      "Shuffleboard": {
+      "SmartDashboard": {
+        "Field": {
+          "double[]##v_/SmartDashboard/Field/AprilTags": {
+            "open": true
+          },
+          "double[]##v_/SmartDashboard/Field/DetectedNotes": {
+            "open": true
+          },
+          "double[]##v_/SmartDashboard/Field/LeftFront: EstimatedPosition": {
+            "open": true
+          },
+          "open": true
+        },
+        "VisionSystemSim-GamePieceSim": {
+          "open": true
+        },
+        "VisionSystemSim-vision": {
+          "Sim Field": {
+            "open": true
+          },
+          "open": true
+        },
         "open": true
       },
-      "SwerveDrive": {
+      "Testing": {
+        "Translation3d##v_/Testing/Proto": {
+          "open": true
+        },
+        "Translation3d##v_/Testing/Sruct": {
+          "open": true
+        }
+      },
+      "photonvision": {
+        "Camera1": {
+          "open": true
+        },
+        "GamePieceVision": {
+          "double[]##v_/photonvision/GamePieceVision/targetPose": {
+            "open": true
+          },
+          "open": true
+        },
         "open": true
       }
     }
   },
   "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
+    "Server": {
+      "Publishers": {
+        "open": true
+      },
+      "open": true
+    },
     "visible": true
-  },
-  "NetworkTables View": {
-    "visible": false
   }
 }

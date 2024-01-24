@@ -1,0 +1,65 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.6750115754256556,
+        "y": 6.711356821640298
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.102269964826155,
+        "y": 6.770099550932554
+      },
+      "isLocked": false,
+      "linkedName": "WingNoteTop"
+    },
+    {
+      "anchor": {
+        "x": 1.86729904765713,
+        "y": 5.9623870231640295
+      },
+      "prevControl": {
+        "x": 1.86729904765713,
+        "y": 6.520442951440465
+      },
+      "nextControl": {
+        "x": 1.86729904765713,
+        "y": 5.549857841868956
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.748439987040977,
+        "y": 5.53650223579517
+      },
+      "prevControl": {
+        "x": 2.1610126941184125,
+        "y": 5.345588365595336
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "WingNoteMiddle"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.524,
+    "maxAcceleration": 1.524,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "FourPieceTopToBottom",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}

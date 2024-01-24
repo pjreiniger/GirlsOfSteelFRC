@@ -31,17 +31,17 @@ public class SuperStructureController {
 
 
     private static final double CHASSIS_X = 3;
-    private static final double CHASSIS_Y = 9;
-    private static final double PIVOT_MOTOR_X = 3.5;
-    private static final double PIVOT_MOTOR_Y = 9;
-    private static final double ARM_RECT_X = 3;
-    private static final double ARM_RECT_Y = 3;
-    private static final double SHOOTER_RECT_X = 2;
-    private static final double SHOOTER_RECT_Y = 2;
-    private static final double SHOOTER_MOTOR_X = 1.75;
-    private static final double SHOOTER_MOTOR_Y = 2.5;
-    private static final double INTAKE_MOTOR_X = 8.25;
-    private static final double INTAKE_MOTOR_Y = 2.5;
+    private static final double CHASSIS_Y = MAX_HEIGHT - CHASSIS_HEIGHT - 1;
+    private static final double PIVOT_MOTOR_X = CHASSIS_X + 0.5;
+    private static final double PIVOT_MOTOR_Y = CHASSIS_Y;
+    private static final double ARM_RECT_X = CHASSIS_X + 0;
+    private static final double ARM_RECT_Y = CHASSIS_Y - ARM_RECT_HEIGHT;
+    private static final double SHOOTER_RECT_X = ARM_RECT_X - 1;
+    private static final double SHOOTER_RECT_Y = CHASSIS_Y - ARM_RECT_HEIGHT - SHOOTER_RECT_HEIGHT;
+    private static final double SHOOTER_MOTOR_X = SHOOTER_RECT_X;
+    private static final double SHOOTER_MOTOR_Y = SHOOTER_RECT_Y + (SHOOTER_RECT_HEIGHT / 2);
+    private static final double INTAKE_MOTOR_X = SHOOTER_RECT_X + SHOOTER_RECT_WIDTH;
+    private static final double INTAKE_MOTOR_Y = SHOOTER_RECT_Y + (SHOOTER_RECT_HEIGHT / 2);
     private static final double PIVOT_ANGLE_GOAL_X = ARM_RECT_X;
     private static final double PIVOT_ANGLE_GOAL_Y = ARM_RECT_Y;
 
