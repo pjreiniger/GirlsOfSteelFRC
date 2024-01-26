@@ -132,6 +132,8 @@ public class RobotContainer {
 
 
 
+        shuffleboardTab.add("shoot from robot pose", m_shooterSubsystem.createShootUsingSpeakerTableCommand(m_chassisSubsystem.getPose()));
+
     }
 
     /**
