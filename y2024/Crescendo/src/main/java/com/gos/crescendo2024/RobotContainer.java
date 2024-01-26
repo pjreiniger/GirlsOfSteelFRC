@@ -8,9 +8,7 @@ package com.gos.crescendo2024;
 import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
 import com.gos.crescendo2024.commands.CombinedCommands;
-import com.gos.crescendo2024.commands.CombinedCommandsUtil;
 import com.gos.crescendo2024.commands.DavidDriveSwerve;
-import com.gos.crescendo2024.commands.TeleopDriveWhileStaringAtAngleCommand;
 import com.gos.crescendo2024.commands.TeleopSwerveDrive;
 import com.gos.crescendo2024.commands.TurnToPointSwerveDrive;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
@@ -18,9 +16,6 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
-import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.util.sendable.SendableBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -69,12 +64,12 @@ public class RobotContainer {
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
 
-        NamedCommands.registerCommand("AimAndShoot", CombinedCommandsUtil.createShootAtFixedAngle(70, m_shooterSubsystem, m_armPivotSubsystem));
+        NamedCommands.registerCommand("AimAndShoot", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
         NamedCommands.registerCommand("shoot", m_intakeSubsystem.createMoveIntakeInCommand().withTimeout(1));
 
         m_autonomousFactory = new Autos();
 
-        m_ledManager = new LedManagerSubsystem(m_intakeSubsystem);
+        m_ledManager = new LedManagerSubsystem(m_intakeSubsystem, m_armPivotSubsystem, m_chassisSubsystem, m_shooterSubsystem);
 
 
         // Configure the trigger bindings
@@ -112,6 +107,8 @@ public class RobotContainer {
         shuffleboardTab.add("Chassis to -180", m_chassisSubsystem.createTurnToAngleCommand(-180));
         shuffleboardTab.add("Chassis to -45", m_chassisSubsystem.createTurnToAngleCommand(-45));
 
+        shuffleboardTab.add("Chassis chase note", m_chassisSubsystem.createChaseNoteCommand());
+
         shuffleboardTab.add("test drive to speaker", m_chassisSubsystem.testDriveToPoint(m_chassisSubsystem, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
         shuffleboardTab.add("test drive to amp", m_chassisSubsystem.testDriveToPoint(m_chassisSubsystem, new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))));
 
@@ -126,19 +123,11 @@ public class RobotContainer {
         shuffleboardTab.add("arm to 0", m_armPivotSubsystem.createMoveArmToAngle(0));
         shuffleboardTab.add("Pivot: Amp", m_armPivotSubsystem.createGoToAmpAngleCommand());
 
-        // Combined Utils
-        shuffleboardTab.add("Floor Pickup", CombinedCommandsUtil.createIntakeFromGroundCommand(m_intakeSubsystem, m_armPivotSubsystem));
-
-        shuffleboardTab.add("Chassis chase note", m_chassisSubsystem.createChaseNoteCommand());
-
-
-
-        shuffleboardTab.add("shoot from robot pose", m_shooterSubsystem.createShootUsingSpeakerTableCommand(m_chassisSubsystem.getPose()));
-
         //Combined Commands
         shuffleboardTab.add("Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Shooting to Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Shooting to Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("shoot from robot pose", m_shooterSubsystem.createShootUsingSpeakerTableCommand(m_chassisSubsystem.getPose()));
     }
 
     /**

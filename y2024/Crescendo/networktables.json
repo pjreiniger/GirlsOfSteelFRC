@@ -162,7 +162,7 @@
   {
     "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
-    "value": 0.0,
+    "value": 0.001,
     "properties": {
       "persistent": true
     }
@@ -186,7 +186,7 @@
   {
     "name": "/Preferences/Shooter.mm.kff",
     "type": "double",
-    "value": 0.0004,
+    "value": 9e-05,
     "properties": {
       "persistent": true
     }

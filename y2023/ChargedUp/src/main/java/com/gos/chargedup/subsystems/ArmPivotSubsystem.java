@@ -11,7 +11,7 @@ import com.gos.lib.properties.pid.WpiProfiledPidPropertyBuilder;
 import com.gos.lib.properties.feedforward.ArmFeedForwardProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
-import com.gos.lib.rev.SparkMaxUtil;
+import com.gos.lib.rev.AutoRetryUtil;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel;
@@ -367,7 +367,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
 
     public final void resetPivotEncoder(double angle) {
-        SparkMaxUtil.autoRetry(() -> m_pivotMotorEncoder.setPosition(angle));
+        AutoRetryUtil.autoRetry(() -> m_pivotMotorEncoder.setPosition(angle));
     }
 
     public static double getArmAngleForScoring(AutoPivotHeight pivotHeightType, GamePieceType gamePieceType) {

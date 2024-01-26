@@ -115,26 +115,33 @@ public class VisionManagerGamePiece {
     }
 
     private Pose2d getPoseFromTarget(Pose2d robotPose, PhotonTrackedTarget target) {
-        double distanceMeters =
-            calculateDistanceToTargetMeters(
+//        double distanceMeters =
+//            calculateDistanceToTargetMeters(
+//                CAMERA_TRANSFORM.getTranslation().getZ(),
+//                0,
+//                -CAMERA_TRANSFORM.getRotation().getY(),
+//                Units.degreesToRadians(target.getPitch()),
+//                Units.degreesToRadians(target.getYaw()));
+
+//        Translation2d translation = PhotonUtils.estimateCameraToTargetTranslation(
+//            distanceMeters, Rotation2d.fromDegrees(target.getYaw() + Math.toDegrees(CAMERA_TRANSFORM.getRotation().getZ())));
+        Translation2d translation = PhotonUtils.estimateCameraToTargetTranslation(
+            PhotonUtils.calculateDistanceToTargetMeters(
                 CAMERA_TRANSFORM.getTranslation().getZ(),
                 0,
                 -CAMERA_TRANSFORM.getRotation().getY(),
-                Units.degreesToRadians(target.getPitch()),
-                Units.degreesToRadians(target.getYaw()));
-
-        Translation2d translation = PhotonUtils.estimateCameraToTargetTranslation(
-            distanceMeters, Rotation2d.fromDegrees(target.getYaw() + Math.toDegrees(CAMERA_TRANSFORM.getRotation().getZ())));
+                Units.degreesToRadians(target.getPitch())),
+            Rotation2d.fromDegrees(target.getYaw()));
         translation = new Translation2d(translation.getX() + CAMERA_TRANSFORM.getX(), translation.getY() + CAMERA_TRANSFORM.getY());
 
         Transform2d transform = new Transform2d(translation, new Rotation2d());
         return robotPose.transformBy(transform);
     }
 
-    private static double calculateDistanceToTargetMeters(double cameraHeightMeters, double targetHeightMeters, double cameraPitchRadians, double targetPitchRadians, double targetYawRadians) {
-        return (targetHeightMeters - cameraHeightMeters)
-            / (Math.tan(cameraPitchRadians + targetPitchRadians) * Math.cos(targetYawRadians));
-    }
+//    private static double calculateDistanceToTargetMeters(double cameraHeightMeters, double targetHeightMeters, double cameraPitchRadians, double targetPitchRadians, double targetYawRadians) {
+//        return (targetHeightMeters - cameraHeightMeters)
+//            / (Math.tan(cameraPitchRadians + targetPitchRadians) * Math.cos(targetYawRadians));
+//    }
 
     public Optional<Pose2d> getGamePiecePose(Pose2d robotPose) {
         PhotonPipelineResult latestResult = m_camera.getLatestResult();

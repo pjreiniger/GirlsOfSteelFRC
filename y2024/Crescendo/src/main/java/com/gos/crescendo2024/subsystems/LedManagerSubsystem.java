@@ -1,6 +1,7 @@
 package com.gos.crescendo2024.subsystems;
 
 import com.gos.crescendo2024.leds.HasGamePiecePattern;
+import com.gos.crescendo2024.leds.TeleopPattern;
 import com.gos.lib.led.LEDPolkaDots;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
@@ -17,9 +18,9 @@ public class LedManagerSubsystem extends SubsystemBase {
     private final IntakeSubsystem m_intake;
 
     // Patterns
-    private final HasGamePiecePattern m_hasGamePiecePattern;
+    private final TeleopPattern m_teleopPattern;
 
-    public LedManagerSubsystem(IntakeSubsystem intake) {
+    public LedManagerSubsystem(IntakeSubsystem intake, ArmPivotSubsystem pivot, ChassisSubsystem chassis, ShooterSubsystem shooter) {
 
         m_intake = intake;
 
@@ -33,15 +34,14 @@ public class LedManagerSubsystem extends SubsystemBase {
         m_led.start();
 
         // Patterns
-        m_hasGamePiecePattern = new HasGamePiecePattern(new LEDPolkaDots(m_buffer, 0, MAX_INDEX_LED), 2);
+        m_teleopPattern = new TeleopPattern(m_buffer, intake, pivot, chassis, shooter);
     }
 
     @Override
     public void periodic() {
         clear();
 
-        m_hasGamePiecePattern.setPiece(m_intake.hasGamePiece());
-        m_hasGamePiecePattern.writeLeds();
+        m_teleopPattern.update();
 
         // Write LEDs
         m_led.setData(m_buffer);

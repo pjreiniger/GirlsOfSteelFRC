@@ -155,10 +155,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         }
     }
 
-    public boolean isArmAtGoal(double goal) {
-        return Math.abs(goal - getAngle()) < 1;
-    }
-
     public void setArmMotorSpeed(double speed) {
         m_pivotMotor.set(speed);
     }
@@ -167,7 +163,7 @@ public class ArmPivotSubsystem extends SubsystemBase {
     // Command Factories
     /////////////////////
     public Command createMoveArmToAngle(double goalAngle) {
-        return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).until(() -> isArmAtGoal(goalAngle)).withName("arm to " + goalAngle + " deg");
+        return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).until(this::isArmAtGoal).withName("arm to " + goalAngle + " deg");
     }
 
     public Command createGoToIntakeCommand() {

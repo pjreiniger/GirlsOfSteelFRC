@@ -162,7 +162,7 @@
   {
     "name": "/Preferences/Shooter.mm.kp",
     "type": "double",
-    "value": 0.0,
+    "value": 0.001,
     "properties": {
       "persistent": true
     }
@@ -186,7 +186,7 @@
   {
     "name": "/Preferences/Shooter.mm.kff",
     "type": "double",
-    "value": 0.0004,
+    "value": 9e-05,
     "properties": {
       "persistent": true
     }
@@ -226,7 +226,7 @@
   {
     "name": "/Preferences/SimulatedNoteY",
     "type": "double",
-    "value": 2.0,
+    "value": 3.0,
     "properties": {
       "persistent": true
     }
@@ -259,6 +259,14 @@
     "name": "/Preferences/Chassis On the Fly Max Angular Acceleration",
     "type": "double",
     "value": 180.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/ShooterDefaultRpm",
+    "type": "double",
+    "value": 1000.0,
     "properties": {
       "persistent": true
     }

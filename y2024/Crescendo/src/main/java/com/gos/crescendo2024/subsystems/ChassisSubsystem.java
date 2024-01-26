@@ -7,9 +7,9 @@ package com.gos.crescendo2024.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.GoSField24;
 import com.gos.crescendo2024.VisionManagerAprilTag;
-import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.VisionManagerGamePiece;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -27,7 +27,6 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -44,8 +43,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
-import java.util.List;
 import java.util.Optional;
+
+import java.util.List;
 
 public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_BASE = 0.381;
@@ -63,12 +63,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final GoSField24 m_field;
 
-    private final PIDController m_xController;
-    private final PIDController m_yController;
     private final PIDController m_turnAnglePIDVelocity;
-
-    private final PidProperty m_xControllerProperties;
-    private final PidProperty m_yControllerProperties;
     private final PidProperty m_turnAnglePIDProperties;
 
     private final VisionManagerAprilTag m_aprilTagVision;
@@ -83,17 +78,6 @@ public class ChassisSubsystem extends SubsystemBase {
     private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
 
     public ChassisSubsystem() {
-        m_xController = new PIDController(0, 0, 0);
-        m_yController = new PIDController(0, 0, 0);
-
-        m_xControllerProperties = new WpiPidPropertyBuilder("SwerveTranslationController", false, m_xController)
-            .addP(0)
-            .build();
-        m_yControllerProperties = new WpiPidPropertyBuilder("SwerveTranslationController", false, m_yController)
-            .addP(0)
-            .build();
-
-
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
         m_gyro.getConfigurator().apply(new Pigeon2Configuration());
 
@@ -110,6 +94,7 @@ public class ChassisSubsystem extends SubsystemBase {
         //TODO need change pls
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
         m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
+        m_turnAnglePIDVelocity.setTolerance(2);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePIDVelocity)
             .addP(0)
             .addI(0)
@@ -177,8 +162,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_protoPublisher.set(new Translation3d(1, 2, 3));
         m_structPublisher.set(new Translation3d(1, 2, 3));
 
-        m_xControllerProperties.updateIfChanged();
-        m_yControllerProperties.updateIfChanged();
         m_turnAnglePIDProperties.updateIfChanged();
     }
 
@@ -218,10 +201,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_swerveDrive.setChassisSpeeds(xVel, yVel, steerVelocity, true);
     }
 
-    public void rotateToAngle(double targetAngleRad) {
-        turnToAngleWithVelocity(0, 0, targetAngleRad);
-    }
-
     public void turnToFacePoint(Pose2d point, double xVel, double yVel) {
         Pose2d robotPose = getPose();
         double xDiff = point.getX() - robotPose.getX();
@@ -242,9 +221,10 @@ public class ChassisSubsystem extends SubsystemBase {
     // Checklists
     /////////////////////////////////////
 
-    ////////////////////////////
-    // Command factories
-    ////////////////////////////
+
+    /////////////////////////////////////
+    // Command Factories
+    /////////////////////////////////////
 
     public Command createResetGyroCommand() {
         return runOnce(() -> m_gyro.setYaw(0));

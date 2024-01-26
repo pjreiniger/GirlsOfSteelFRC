@@ -39,6 +39,7 @@
       "/Shuffleboard/test commands/Chassis to 90": "Command",
       "/Shuffleboard/test commands/David Drive": "Command",
       "/Shuffleboard/test commands/Floor Pickup": "Command",
+      "/Shuffleboard/test commands/Intake Piece": "Command",
       "/Shuffleboard/test commands/Intake: In": "Command",
       "/Shuffleboard/test commands/Intake: Out": "Command",
       "/Shuffleboard/test commands/Pivot: 0 degrees": "Command",
@@ -46,6 +47,8 @@
       "/Shuffleboard/test commands/Pivot: 90 degrees": "Command",
       "/Shuffleboard/test commands/Pivot: Amp": "Command",
       "/Shuffleboard/test commands/Pivot: Floor Pickup": "Command",
+      "/Shuffleboard/test commands/Shooting to Amp": "Command",
+      "/Shuffleboard/test commands/Shooting to Speaker": "Command",
       "/Shuffleboard/test commands/Turn to point drive": "Command",
       "/Shuffleboard/test commands/arm to -45": "Command",
       "/Shuffleboard/test commands/arm to 0": "Command",
@@ -55,6 +58,7 @@
       "/Shuffleboard/test commands/intake out": "Command",
       "/Shuffleboard/test commands/resetShooter": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
+      "/Shuffleboard/test commands/shoot from robot pose": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
       "/Shuffleboard/test commands/test drive to amp": "Command",
       "/Shuffleboard/test commands/test drive to speaker": "Command",
@@ -69,6 +73,21 @@
     },
     "windows": {
       "/Shuffleboard/test commands/Chassis chase note": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Shooting to Speaker": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/arm to 45": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/shoot from robot pose": {
         "window": {
           "visible": true
         }
@@ -187,6 +206,17 @@
         "right": 2961,
         "top": 79,
         "units": "meters",
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
+      },
+      "/SmartDashboard/VisionSystemSim-GamePieceSim/Sim Field": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
         "width": 16.541748046875,
         "window": {
           "visible": true
