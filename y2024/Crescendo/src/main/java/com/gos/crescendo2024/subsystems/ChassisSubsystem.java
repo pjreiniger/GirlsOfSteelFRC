@@ -196,7 +196,7 @@ public class ChassisSubsystem extends SubsystemBase {
         return m_swerveDrive.getEstimatedPosition();
     }
 
-    public boolean turnPIDIsAngle() {
+    public boolean isAngleAtGoal() {
         return m_turnAnglePIDVelocity.atSetpoint();
     }
 
@@ -205,7 +205,7 @@ public class ChassisSubsystem extends SubsystemBase {
         double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angleGoal);
         //TODO add ff
 
-        if (turnPIDIsAngle()) {
+        if (isAngleAtGoal()) {
             steerVelocity = 0;
         }
         ChassisSpeeds speeds = new ChassisSpeeds(0, 0, steerVelocity);
@@ -253,7 +253,7 @@ public class ChassisSubsystem extends SubsystemBase {
     public Command createTurnToAngleCommand(double angleGoal) {
         return runOnce(m_turnAnglePIDVelocity::reset)
             .andThen(this.run(() -> turnToAngle(angleGoal))
-                .until(this::turnPIDIsAngle)
+                .until(this::isAngleAtGoal)
                 .withName("Chassis to Angle" + angleGoal));
     }
 

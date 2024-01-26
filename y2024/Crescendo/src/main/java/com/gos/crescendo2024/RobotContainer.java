@@ -7,6 +7,7 @@ package com.gos.crescendo2024;
 
 import com.gos.crescendo2024.auton.Autos;
 import com.gos.crescendo2024.commands.ArmPivotJoystickCommand;
+import com.gos.crescendo2024.commands.CombinedCommands;
 import com.gos.crescendo2024.commands.CombinedCommandsUtil;
 import com.gos.crescendo2024.commands.DavidDriveSwerve;
 import com.gos.crescendo2024.commands.TeleopDriveWhileStaringAtAngleCommand;
@@ -134,6 +135,10 @@ public class RobotContainer {
 
         shuffleboardTab.add("shoot from robot pose", m_shooterSubsystem.createShootUsingSpeakerTableCommand(m_chassisSubsystem.getPose()));
 
+        //Combined Commands
+        shuffleboardTab.add("Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("Shooting to Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("Shooting to Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_intakeSubsystem));
     }
 
     /**
