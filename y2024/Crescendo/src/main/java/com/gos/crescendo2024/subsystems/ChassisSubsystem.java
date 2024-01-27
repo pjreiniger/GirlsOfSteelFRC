@@ -218,8 +218,8 @@ public class ChassisSubsystem extends SubsystemBase {
     public Command createTurnToAngleCommand(double angleGoal) {
         return runOnce(m_turnAnglePIDVelocity::reset)
             .andThen(this.run(() -> turnToAngle(angleGoal))
-                .until(this::isAngleAtGoal)
-                .withName("Chassis to Angle" + angleGoal));
+                .until(this::isAngleAtGoal))
+            .withName("Chassis to Angle" + angleGoal);
     }
 
     public Command createPathCommand(PathPlannerPath path, boolean resetPose) {
@@ -241,6 +241,7 @@ public class ChassisSubsystem extends SubsystemBase {
                 Units.degreesToRadians((m_angularMaxAcceleration.getValue()))),
             new GoalEndState(0.0, end.getRotation())
         );
+        path.preventFlipping = true;
         return createPathCommand(path, false);
     }
 

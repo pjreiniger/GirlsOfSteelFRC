@@ -43,7 +43,6 @@ public class TeleopPattern {
         if (m_hasGamePiecePattern.isPatternActive()) {
             m_hasGamePiecePattern.writeLeds();
         } else {
-            System.out.println(m_pivot.isArmAtGoal() + ", " + m_shooter.isShooterAtGoal() + ", " + m_chassis.isAngleAtGoal());
             m_isArmAngleGoodPattern.setStateAndWrite(m_pivot.isArmAtGoal());
             m_isShooterRpmGoodPattern.setStateAndWrite(m_shooter.isShooterAtGoal());
             m_isChassisAimedPattern.setStateAndWrite(m_chassis.isAngleAtGoal());

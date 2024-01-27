@@ -1,0 +1,175 @@
+<dashboard-tab
+    tab-name="TeleOperated"
+    slot="tab"
+    source-provider="NetworkTables"
+><frc-sendable-chooser
+        source-provider="NetworkTables"
+        selected="leave wing"
+        style="transform: translate(166px, 86px);"
+        source-key="/SmartDashboard/Auto Chooser"
+        options="[]"
+    ></frc-sendable-chooser><frc-network-alerts
+        source-provider="NetworkTables"
+        style="transform: translate(166px, 216px);"
+        source-key="/SmartDashboard/Alerts"
+        errors="[]"
+        warnings="[]"
+        infos="[]"
+    ></frc-network-alerts></dashboard-tab><dashboard-tab
+    tab-name="Test Commands"
+    slot="tab"
+    source-provider="NetworkTables"
+><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(86px, 110px);"
+        source-key="/Shuffleboard/test commands/Intake Piece"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
+    tab-name="Arm Pivot"
+    slot="tab"
+    source-provider="NetworkTables"
+><frc-line-chart
+        chart-title="Line Chart"
+        source-provider="NetworkTables"
+        style="transform: translate(240px, 120px);"
+    >
+        <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
+        <frc-line-chart-axis
+            source-provider="NetworkTables"
+            min="0"
+            max="95"
+            lock-min=""
+            lock-max=""
+        ></frc-line-chart-axis>
+
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            display-name="Absolute Encoder Angle"
+            source-key="/Arm Pivot Subsystem/Abs Encoder Value"
+        ></frc-line-chart-data>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            display-name="Relative Encoder Angle"
+            source-key="/Arm Pivot Subsystem/Rel Encoder Value"
+        ></frc-line-chart-data><frc-line-chart-data
+            source-provider="NetworkTables"
+            display-name="Goal Angle"
+            source-key="/SmartDashboard/super structure/GoalAngle"
+        ></frc-line-chart-data></frc-line-chart><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(33px, 61px);"
+        source-key="/Shuffleboard/test commands/arm to 45"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(14px, 355px);"
+        source-key="/Shuffleboard/test commands/arm to coast"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(17px, 235px);"
+        source-key="/Shuffleboard/test commands/Pivot: Amp"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(65px, 139px);"
+        source-key="/Shuffleboard/test commands/arm to 0"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(75px, 451px);"
+        source-key="/Shuffleboard/test commands/arm to 90"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
+    tab-name="Shooter"
+    slot="tab"
+    source-provider="NetworkTables"
+    selected=""
+><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(24px, 50px); width: 207px; height: 50px;"
+        source-key="/Shuffleboard/test commands/shooterTuning"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(45px, 135px);"
+        source-key="/Shuffleboard/test commands/testShooter50"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(61px, 224px);"
+        source-key="/Shuffleboard/test commands/testShooter100"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(81px, 302px);"
+        source-key="/Shuffleboard/test commands/resetShooter"
+    ></frc-robot-command><frc-line-chart
+        chart-title="Line Chart"
+        source-provider="NetworkTables"
+        style="transform: translate(280px, 120px);"
+    >
+        <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
+        <frc-line-chart-axis
+            source-provider="NetworkTables"
+            max="2000"
+            lock-min=""
+            lock-max=""
+        ></frc-line-chart-axis>
+
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            source-key="/Shooter Subsystem/Velocity (RPM)"
+        ></frc-line-chart-data>
+    </frc-line-chart></dashboard-tab><dashboard-tab
+    tab-name="Intake"
+    slot="tab"
+    source-provider="NetworkTables"
+><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(55px, 69px);"
+        source-key="/Shuffleboard/test commands/intake in"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(61px, 147px);"
+        source-key="/Shuffleboard/test commands/intake out"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
+    tab-name="Chassis"
+    slot="tab"
+    source-provider="NetworkTables"
+><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(0px, 0px);"
+        source-key="/Shuffleboard/test commands/Chassis to 45"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(0px, 80px); width: 100px; height: 50px;"
+        source-key="/Shuffleboard/test commands/Chassis to 90"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(48px, 177px);"
+        source-key="/Shuffleboard/test commands/Chassis to -180"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(51px, 244px);"
+        source-key="/Shuffleboard/test commands/Chassis to -45"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(56px, 312px);"
+        source-key="/Shuffleboard/test commands/Chassis chase note"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(40px, 400px);"
+        source-key="/Shuffleboard/test commands/test drive to speaker"
+    ></frc-robot-command><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(40px, 480px);"
+        source-key="/Shuffleboard/test commands/test drive to amp"
+    ></frc-robot-command><frc-field-wrapper
+        source-key="/SmartDashboard/Field"
+        source-provider="NetworkTables"
+        style="transform: translate(320px, 0px);"
+        game="Crescendo"
+        grid-size="1"
+    >
+    </frc-field-wrapper><frc-swerve-drivebase
+        source-provider="NetworkTables"
+        style="transform: translate(440px, 360px); width: 210px; height: 265px;"
+        source-key="/SwerveDrive"
+        wheellocations="[2.5,2,2.5,-2,-2.5,2,-2.5,-2]"
+        measuredstates="[0,0,0,0,0,0,0,0]"
+        desiredstates="[0,0,0,0,0,0,0,0]"
+        sizeleftright="4"
+        sizefrontback="5"
+    ></frc-swerve-drivebase></dashboard-tab>
