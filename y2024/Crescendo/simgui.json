@@ -1,10 +1,5 @@
 {
   "HALProvider": {
-    "Addressable LEDs": {
-      "window": {
-        "visible": true
-      }
-    },
     "DIO": {
       "window": {
         "visible": true
@@ -15,6 +10,9 @@
         "header": {
           "open": true
         }
+      },
+      "window": {
+        "visible": false
       }
     }
   },
@@ -88,11 +86,6 @@
         }
       },
       "/Shuffleboard/test commands/shoot from robot pose": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/test drive to amp": {
         "window": {
           "visible": true
         }
@@ -217,10 +210,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       },
       "/SmartDashboard/VisionSystemSim-vision/Sim Field": {
         "apriltag": {
@@ -243,10 +233,7 @@
           ],
           "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-green.png"
         },
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },
@@ -320,5 +307,8 @@
       "open": true
     },
     "visible": true
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }
