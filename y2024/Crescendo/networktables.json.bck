@@ -266,7 +266,7 @@
   {
     "name": "/Preferences/ShooterDefaultRpm",
     "type": "double",
-    "value": 1000.0,
+    "value": 500.0,
     "properties": {
       "persistent": true
     }

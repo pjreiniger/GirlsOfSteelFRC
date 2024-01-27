@@ -53,10 +53,6 @@ public class ChassisSubsystem extends SubsystemBase {
     public static final double MAX_TRANSLATION_SPEED = Units.feetToMeters(13);
     public static final double MAX_ROTATION_SPEED = Units.degreesToRadians(360);
 
-
-    private final ProtobufPublisher<Translation3d> m_protoPublisher;
-    private final StructPublisher<Translation3d> m_structPublisher;
-
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
 
@@ -103,10 +99,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_photonVisionSubsystem = new AprilTagDetection();
         m_objectDetectonSubsystem = new ObjectDetection();
 
-        m_protoPublisher = NetworkTableInstance.getDefault().getTable("Testing").getProtobufTopic("Proto", Translation3d.proto).publish();
-        m_structPublisher = NetworkTableInstance.getDefault().getTable("Testing").getStructTopic("Sruct", Translation3d.struct).publish();
-
-
         AutoBuilder.configureHolonomic(
             this::getPose,
             this::resetOdometry,
@@ -128,8 +120,6 @@ public class ChassisSubsystem extends SubsystemBase {
 
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
-
-        resetOdometry(new Pose2d(5, 2, Rotation2d.fromDegrees(180)));
     }
 
     public void resetOdometry(Pose2d pose2d) {
@@ -147,17 +137,7 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_swerveDrive.periodic();
-//        List<EstimatedRobotPose> cameraPoses = m_aprilTagVision.update(m_swerveDrive.getEstimatedPosition());
-//
-//        for (EstimatedRobotPose cameraPose : cameraPoses) {
-//            m_swerveDrive.addVisionMeasurement(cameraPose.estimatedPose, cameraPose.timestampSeconds);
-//        }
-//        m_field.setOdometry(m_swerveDrive.getOdometryPosition());
         m_field.setPoseEstimate(m_swerveDrive.getEstimatedPosition());
-
-//        m_protoPublisher.set(new Translation3d(1, 2, 3));
-//        m_structPublisher.set(new Translation3d(1, 2, 3));
-
         m_turnAnglePIDProperties.updateIfChanged();
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
         if (cameraResult.isPresent()) {

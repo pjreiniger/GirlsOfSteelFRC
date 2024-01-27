@@ -24,8 +24,7 @@ import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.FlywheelSimWrapper;
 import org.snobotv2.sim_wrappers.ISimWrapper;
-import com.gos.crescendo2024.SpeakerLookupTable;
-import com.gos.crescendo2024.FieldConstants;
+
 public class ShooterSubsystem extends SubsystemBase {
 
     public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 500);
@@ -41,13 +40,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
     private ISimWrapper m_shooterSimulator;
     private double m_shooterGoalRPM;
-
-    private final SpeakerLookupTable m_speakerTable;
-    //TODO need to switch values
-    public static final double MAX_SHOOTER_RPM = 0.0;
-
-    public static final double TARMAC_EDGE_RPM_HIGH = 0.0;
-
 
     public ShooterSubsystem() {
         m_shooterMotorLeader = new SimableCANSparkMax(Constants.SHOOTER_MOTOR_LEADER, CANSparkLowLevel.MotorType.kBrushless);
@@ -79,8 +71,6 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Current Amps", m_shooterMotorLeader::getOutputCurrent);
         m_networkTableEntries.addDouble("Output", m_shooterMotorLeader::getAppliedOutput);
         m_networkTableEntries.addDouble("Velocity (RPM)", m_shooterEncoder::getVelocity);
-
-        m_speakerTable = new SpeakerLookupTable();
 
         if (RobotBase.isSimulation()) {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
@@ -123,14 +113,6 @@ public class ShooterSubsystem extends SubsystemBase {
         return m_shooterMotorLeader.getAppliedOutput();
     }
 
-    public void shootUsingSpeakerLookupTable(Pose2d roboMan)
-    {
-        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
-        Translation2d roboManTranslation =  roboMan.getTranslation();
-        double distanceToSpeaker = roboManTranslation.getDistance(speaker.getTranslation());
-        setPidRpm(m_speakerTable.getVelocityTable(distanceToSpeaker));
-    }
-
     public boolean isShooterAtGoal() {
         double error = m_shooterGoalRPM - getRPM();
         return Math.abs(error) < ALLOWABLE_ERROR;
@@ -149,10 +131,4 @@ public class ShooterSubsystem extends SubsystemBase {
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
     }
-
-    public Command createShootUsingSpeakerTableCommand(Pose2d roboMan)
-    {
-        return this.runEnd(() -> this.shootUsingSpeakerLookupTable(roboMan), this::stopShooter).withName("shoot from robot pose");
-    }
-
 }

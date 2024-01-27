@@ -27,18 +27,6 @@ import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
 
 
 public class ArmPivotSubsystem extends SubsystemBase {
-    // Sim Stuff
-    private static final double ARM_LENGTH_METERS = Units.inchesToMeters(15);
-    private static final double J_KG_METERS_SQUARED = 1;
-    private static final double MIN_ANGLE_RADS = Math.toRadians(0);
-    private static final double MAX_ANGLE_RADS = Math.toRadians(90);
-    private static final boolean SIMULATE_GRAVITY = true;
-
-    private static final double GEAR_RATIO =  252.0;
-
-    private static final double GROUND_INTAKE_ANGLE = 20;
-    private static final double AMP_SCORING_ANGLE = 45;
-
     public static final GosDoubleProperty ARM_INTAKE_ANGLE = new GosDoubleProperty(true, "intakeAngle", 20); //arbitrary num
     public static final GosDoubleProperty ARM_SPEAKER_ANGLE = new GosDoubleProperty(true, "speakerScoreAngle", 80); //arbitrary
     public static final GosDoubleProperty ARM_AMP_ANGLE = new GosDoubleProperty(true, "ampScoreAngle", 75); //arbitrary
@@ -82,7 +70,10 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
         m_sparkPidProperties = new RevPidPropertyBuilder("Arm Pivot", false, m_sparkPidController, 0)
             .addP(0)
+            .addI(0)
             .addD(0)
+            .addMaxAcceleration(80)
+            .addMaxVelocity(80)
             .build();
 
         m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", false)
@@ -101,8 +92,8 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_followMotor.burnFlash();
 
         if (RobotBase.isSimulation()) {
-            SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), GEAR_RATIO, J_KG_METERS_SQUARED,
-                ARM_LENGTH_METERS, MIN_ANGLE_RADS, MAX_ANGLE_RADS, SIMULATE_GRAVITY, 0);
+            SingleJointedArmSim armSim = new SingleJointedArmSim(DCMotor.getNeo550(1), 252, 1,
+                0.381, 0, Units.degreesToRadians(90), true, 0);
             m_pivotSimulator = new SingleJointedArmSimWrapper(armSim, new RevMotorControllerSimWrapper(m_pivotMotor),
                 RevEncoderSimWrapper.create(m_pivotMotor), true);
         }
@@ -168,11 +159,11 @@ public class ArmPivotSubsystem extends SubsystemBase {
     }
 
     public Command createGoToIntakeCommand() {
-        return createMoveArmToAngle(GROUND_INTAKE_ANGLE).withName("Intake To Ground");
+        return createMoveArmToAngle(ARM_INTAKE_ANGLE.getValue()).withName("Intake To Ground");
     }
 
     public Command createGoToAmpAngleCommand() {
-        return createMoveArmToAngle(AMP_SCORING_ANGLE).withName("Intake To Amp");
+        return createMoveArmToAngle(ARM_AMP_ANGLE.getValue()).withName("Intake To Amp");
     }
 
     public double getArmAngleGoal() {

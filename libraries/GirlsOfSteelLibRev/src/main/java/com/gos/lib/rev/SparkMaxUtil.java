@@ -9,7 +9,7 @@ import org.littletonrobotics.frc2023.util.Alert;
 
 import java.util.function.Supplier;
 
-public class AutoRetryUtil {
+public class SparkMaxUtil {
 
     private static final StringBuilder ALERT_BUILDER = new StringBuilder(100); // NOPMD(AvoidStringBufferField)
     private static final Alert CONFIG_FAILED_ALERT = new Alert("Rev CAN config failure", Alert.AlertType.ERROR);
@@ -45,42 +45,42 @@ public class AutoRetryUtil {
     }
 
     public static void setP(SparkPIDController pidController, double gain, int slot) {
-        AutoRetryUtil.autoRetry("setP", () -> pidController.setP(gain, slot));
+        SparkMaxUtil.autoRetry("setP", () -> pidController.setP(gain, slot));
     }
 
     public static void setI(SparkPIDController pidController, double gain, int slot) {
-        AutoRetryUtil.autoRetry("setI", () -> pidController.setI(gain, slot));
+        SparkMaxUtil.autoRetry("setI", () -> pidController.setI(gain, slot));
     }
 
     public static void setD(SparkPIDController pidController, double gain, int slot) {
-        AutoRetryUtil.autoRetry("setD", () -> pidController.setD(gain, slot));
+        SparkMaxUtil.autoRetry("setD", () -> pidController.setD(gain, slot));
     }
 
     public static void setFF(SparkPIDController pidController, double gain, int slot) {
-        AutoRetryUtil.autoRetry("setFF", () -> pidController.setFF(gain, slot));
+        SparkMaxUtil.autoRetry("setFF", () -> pidController.setFF(gain, slot));
     }
 
     public static void setSmartMotionMaxVelocity(SparkPIDController pidController, double gain, int slot) {
-        AutoRetryUtil.autoRetry("setSmartMotionMaxVelocity", () -> pidController.setSmartMotionMaxVelocity(gain, slot));
+        SparkMaxUtil.autoRetry("setSmartMotionMaxVelocity", () -> pidController.setSmartMotionMaxVelocity(gain, slot));
     }
 
     public static void setSmartMotionMaxAccel(SparkPIDController pidController, double gain, int slot) {
-        AutoRetryUtil.autoRetry("setSmartMotionMaxAccel", () -> pidController.setSmartMotionMaxAccel(gain, slot));
+        SparkMaxUtil.autoRetry("setSmartMotionMaxAccel", () -> pidController.setSmartMotionMaxAccel(gain, slot));
     }
 
     public static void restoreFactoryDefaults(CANSparkBase motorController) {
-        AutoRetryUtil.autoRetry("restoreFactoryDefaults", motorController::restoreFactoryDefaults);
+        SparkMaxUtil.autoRetry("restoreFactoryDefaults", motorController::restoreFactoryDefaults);
     }
 
     public static void setIdleMode(CANSparkBase motorController, CANSparkMax.IdleMode idleMode) {
-        AutoRetryUtil.autoRetry("setIdleMode", () -> motorController.setIdleMode(idleMode));
+        SparkMaxUtil.autoRetry("setIdleMode", () -> motorController.setIdleMode(idleMode));
     }
 
     public static void setSmartCurrentLimit(CANSparkBase motorController, int currentLimit) {
-        AutoRetryUtil.autoRetry("setSmartCurrentLimit", () -> motorController.setSmartCurrentLimit(currentLimit));
+        SparkMaxUtil.autoRetry("setSmartCurrentLimit", () -> motorController.setSmartCurrentLimit(currentLimit));
     }
 
     public static void follow(CANSparkBase motorController, CANSparkBase controllerToFollow) {
-        AutoRetryUtil.autoRetry("follow", () -> motorController.follow(controllerToFollow));
+        SparkMaxUtil.autoRetry("follow", () -> motorController.follow(controllerToFollow));
     }
 }

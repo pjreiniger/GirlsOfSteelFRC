@@ -270,5 +270,29 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.ki",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.max_acceleration",
+    "type": "double",
+    "value": 80.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Arm Pivot.mm.max_velocity",
+    "type": "double",
+    "value": 80.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

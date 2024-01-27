@@ -52,6 +52,7 @@
       "/Shuffleboard/test commands/arm to 0": "Command",
       "/Shuffleboard/test commands/arm to 45": "Command",
       "/Shuffleboard/test commands/arm to 90": "Command",
+      "/Shuffleboard/test commands/arm to coast": "Command",
       "/Shuffleboard/test commands/intake in": "Command",
       "/Shuffleboard/test commands/intake out": "Command",
       "/Shuffleboard/test commands/resetShooter": "Command",
@@ -235,7 +236,10 @@
           ],
           "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-green.png"
         },
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },
