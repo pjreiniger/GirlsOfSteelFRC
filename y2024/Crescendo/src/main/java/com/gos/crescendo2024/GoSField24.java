@@ -56,9 +56,12 @@ public class GoSField24 {
     private final FieldObject2d m_detectedNotes;
 
 
+    private final FieldObject2d m_drawnNotePoses;
+
     public GoSField24() {
         m_field = new Field2d();
         m_currentTrajectoryObject = m_field.getObject("Trajectory");
+        m_drawnNotePoses = m_field.getObject("Notes");
         m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
         m_odometryObject = m_field.getObject("OldOdometry");
         m_aprilTagObjects = m_field.getObject("AprilTags");
@@ -90,6 +93,10 @@ public class GoSField24 {
 
     public Sendable getSendable() {
         return m_field;
+    }
+
+    public void drawNotePoses(List<Pose2d> poses) {
+        m_drawnNotePoses.setPoses(poses);
     }
 
 

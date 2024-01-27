@@ -7,8 +7,10 @@ package com.gos.crescendo2024.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.GoSField24;
+import com.gos.crescendo2024.ObjectDetection;
 import com.gos.crescendo2024.VisionManagerAprilTag;
 import com.gos.crescendo2024.VisionManagerGamePiece;
 import com.gos.lib.GetAllianceUtil;
@@ -102,6 +104,8 @@ public class ChassisSubsystem extends SubsystemBase {
             .build();
 
         m_swerveDrive = new RevSwerveChassis(swerveConstants, m_gyro::getRotation2d, new Pigeon2Wrapper(m_gyro));
+        m_photonVisionSubsystem = new AprilTagDetection();
+        m_objectDetectonSubsystem = new ObjectDetection();
 
         m_protoPublisher = NetworkTableInstance.getDefault().getTable("Testing").getProtobufTopic("Proto", Translation3d.proto).publish();
         m_structPublisher = NetworkTableInstance.getDefault().getTable("Testing").getStructTopic("Sruct", Translation3d.struct).publish();
@@ -163,12 +167,21 @@ public class ChassisSubsystem extends SubsystemBase {
         m_structPublisher.set(new Translation3d(1, 2, 3));
 
         m_turnAnglePIDProperties.updateIfChanged();
+        Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
+        if (cameraResult.isPresent()) {
+            EstimatedRobotPose camPose = cameraResult.get();
+            Pose2d pose2d = camPose.estimatedPose.toPose2d();
+            m_swerveDrive.addVisionMeasurement(pose2d, camPose.timestampSeconds);
+        }
+        m_field.drawNotePoses(m_objectDetectonSubsystem.objectLocations(getPose()));
     }
 
 
     @Override
     public void simulationPeriodic() {
         m_swerveDrive.updateSimulator();
+        m_photonVisionSubsystem.updateAprilTagSimulation(getPose());
+        m_objectDetectonSubsystem.updateObjectDetectionSimulation(getPose());
     }
 
     public void teleopDrive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
