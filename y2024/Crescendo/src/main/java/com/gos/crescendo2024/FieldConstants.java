@@ -7,8 +7,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
-import java.beans.PropertyEditor;
-
 public class FieldConstants {
 
     public static final Translation2d AMP_CENTER =

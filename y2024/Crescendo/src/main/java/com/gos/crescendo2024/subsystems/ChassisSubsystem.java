@@ -11,8 +11,6 @@ import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.GoSField24;
 import com.gos.crescendo2024.ObjectDetection;
-import com.gos.crescendo2024.VisionManagerAprilTag;
-import com.gos.crescendo2024.VisionManagerGamePiece;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
@@ -45,9 +43,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
-import java.util.Optional;
-
 import java.util.List;
+import java.util.Optional;
 
 public class ChassisSubsystem extends SubsystemBase {
     private static final double WHEEL_BASE = 0.381;
