@@ -67,10 +67,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final PIDController m_turnAnglePIDVelocity;
     private final PidProperty m_turnAnglePIDProperties;
+    private final AprilTagDetection m_photonVisionSubsystem;
 
-    private final VisionManagerAprilTag m_aprilTagVision;
-    private final VisionManagerGamePiece m_gamePieceVision;
-
+    private final ObjectDetection m_objectDetectonSubsystem;
     private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
 
     private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
@@ -133,9 +132,6 @@ public class ChassisSubsystem extends SubsystemBase {
         PathPlannerLogging.setLogActivePathCallback(m_field::setTrajectory);
         PathPlannerLogging.setLogTargetPoseCallback(m_field::setTrajectorySetpoint);
 
-        m_aprilTagVision = new VisionManagerAprilTag(m_field);
-        m_gamePieceVision = new VisionManagerGamePiece(m_field);
-
         resetOdometry(new Pose2d(5, 2, Rotation2d.fromDegrees(180)));
     }
 
@@ -154,17 +150,16 @@ public class ChassisSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         m_swerveDrive.periodic();
-        m_gamePieceVision.update(m_swerveDrive.getEstimatedPosition());
-        List<EstimatedRobotPose> cameraPoses = m_aprilTagVision.update(m_swerveDrive.getEstimatedPosition());
-
-        for (EstimatedRobotPose cameraPose : cameraPoses) {
-            m_swerveDrive.addVisionMeasurement(cameraPose.estimatedPose, cameraPose.timestampSeconds);
-        }
-        m_field.setOdometry(m_swerveDrive.getOdometryPosition());
+//        List<EstimatedRobotPose> cameraPoses = m_aprilTagVision.update(m_swerveDrive.getEstimatedPosition());
+//
+//        for (EstimatedRobotPose cameraPose : cameraPoses) {
+//            m_swerveDrive.addVisionMeasurement(cameraPose.estimatedPose, cameraPose.timestampSeconds);
+//        }
+//        m_field.setOdometry(m_swerveDrive.getOdometryPosition());
         m_field.setPoseEstimate(m_swerveDrive.getEstimatedPosition());
 
-        m_protoPublisher.set(new Translation3d(1, 2, 3));
-        m_structPublisher.set(new Translation3d(1, 2, 3));
+//        m_protoPublisher.set(new Translation3d(1, 2, 3));
+//        m_structPublisher.set(new Translation3d(1, 2, 3));
 
         m_turnAnglePIDProperties.updateIfChanged();
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
@@ -278,9 +273,9 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public Command createChaseNoteCommand() {
         return defer(() -> {
-            Optional<Pose2d> maybeGamePiecePose = m_gamePieceVision.getGamePiecePose(getPose());
-            if (maybeGamePiecePose.isPresent()) {
-                return createDriveToPointNoFlipCommand(maybeGamePiecePose.get());
+            List<Pose2d> maybeGamePiecePose = m_objectDetectonSubsystem.objectLocations(getPose());
+            if (!maybeGamePiecePose.isEmpty()) {
+                return createDriveToPointNoFlipCommand(maybeGamePiecePose.get(0));
             } else {
                 return runOnce(m_swerveDrive::stop);
             }

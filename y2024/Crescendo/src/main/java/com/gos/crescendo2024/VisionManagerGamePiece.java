@@ -68,7 +68,7 @@ public class VisionManagerGamePiece {
             m_defaultSimulatedNotes = new ArrayList<>();
             m_defaultSimulatedNotes.add(m_simulatedNote);
 
-            for (Translation2d stagingLocation : FieldConstants.StagingLocations.CENTER_LINE_TRANSLATIONS) {
+            for (Translation2d stagingLocation : FieldConstants.StagingLocations.CENTERLINE_TRANSLATIONS) {
                 m_defaultSimulatedNotes.add(new VisionTargetSim(new Pose3d(new Pose2d(stagingLocation, new Rotation2d())), TARGET_MODEL));
             }
 

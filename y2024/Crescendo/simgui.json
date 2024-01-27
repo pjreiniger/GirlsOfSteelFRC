@@ -67,6 +67,8 @@
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/SendableChooser[1]": "String Chooser",
       "/SmartDashboard/VisionSystemSim-GamePieceSim/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-vision/Sim Field": "Field2d"
     },
     "windows": {
