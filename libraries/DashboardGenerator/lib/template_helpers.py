@@ -13,5 +13,9 @@ def render_template_to_file(template: Template, output_file: str, **kwargs):
     if not os.path.exists(parent_dir):
         os.makedirs(parent_dir)
 
-    with open(output_file, "w") as f:
-        f.write(template.render(**kwargs))
+    try:
+        with open(output_file, "w") as f:
+            f.write(template.render(**kwargs))
+    except:
+        print(f"Failed to render template for {output_file}")
+        raise

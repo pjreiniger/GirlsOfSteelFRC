@@ -32,6 +32,11 @@ export class Rectangle extends Shape {
     this.setRotation(degrees);
   }
 
+  rotateAroundShapeEnd(degrees: number, shape: Rectangle) {
+    this.rotation_point = [shape.x + shape.width, shape.y + shape.height];
+    this.setRotation(degrees);
+  }
+
   rotateAroundOrigin(degrees: number) {
     this.rotateAround(degrees, this.x, this.y);
   }

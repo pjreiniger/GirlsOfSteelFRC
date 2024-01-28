@@ -1,4 +1,3 @@
-
 import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { MAX_WIDTH, MAX_HEIGHT, Renderer } from "./super-structure/renderer";

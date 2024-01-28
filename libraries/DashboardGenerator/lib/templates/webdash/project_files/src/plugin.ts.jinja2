@@ -4,10 +4,10 @@ import './{{widget.package_name.as_dash()}}';
 {%- endfor %}
 
 {%- for widget in overall_config.widgets %}
-import {elementConfig as {{lower_first_char(widget.table)}}Elements
+import {elementConfig as {{widget.table}}Elements
 {%- if widget.has_nested_tables %}
 {%- for child in widget.children_tables %}
-, {{lower_first_char(child.table)}}ElementConfig
+, {{child.table}}ElementConfig
 {%- endfor %}
 {%- endif -%}
 } from "./{{widget.package_name.as_dash()}}";
@@ -16,10 +16,10 @@ import {elementConfig as {{lower_first_char(widget.table)}}Elements
 export default function addPlugin(dashboard: FrcDashboard) {
   dashboard.addElements({
 {%- for widget in overall_config.widgets %}
-    "{{widget.package_name.as_dash()}}": {{lower_first_char(widget.table)}}Elements,
+    "{{widget.package_name.as_dash()}}": {{widget.table}}Elements,
   {%- if widget.has_nested_tables %}
   {%- for child in widget.children_tables %}
-    "{{subtable_name(widget, child)}}": {{lower_first_char(child.table)}}ElementConfig,
+    "{{subtable_name(widget, child)}}": {{child.table}}ElementConfig,
   {%- endfor %}
   {%- endif %}
 {%- endfor %}

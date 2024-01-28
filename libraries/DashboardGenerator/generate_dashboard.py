@@ -85,7 +85,7 @@ def generate_dashboard(
     force_fxml,
     force_standalone_main,
     force_controller,
-    generate_web_dashboard=False,
+    generate_web_dash=True,
 ):
     this_dir = get_this_directory()
     generator_directory = this_dir
@@ -110,7 +110,7 @@ def generate_dashboard(
         force_controller,
     )
 
-    if generate_web_dashboard:
+    if generate_web_dash:
         generate_web_dashboard(
             generator_directory,
             project_dir + "Webdash",

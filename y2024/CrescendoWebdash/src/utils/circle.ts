@@ -1,12 +1,14 @@
 
 
 import { Shape } from "./shape";
+import { Rectangle } from "./rectangle";
 
 export class Circle extends Shape {
   centerX: number;
   centerY: number;
-  rotation: number;
   radius: number;
+  rotation: number;
+  rotation_point?: [number, number];
 
   constructor(x: number, y: number, radius: number, fillColor?: string) {
     super(fillColor);
@@ -16,7 +18,6 @@ export class Circle extends Shape {
     this.fillColor = fillColor;
     this.rotation = 0.0;
   }
-
 
   rotateAroundShapeEnd(degrees: number, shape: Rectangle) {
     this.rotation_point = [shape.x + shape.width, shape.y + shape.height];

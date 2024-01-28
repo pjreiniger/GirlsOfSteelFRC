@@ -98,6 +98,9 @@ def generate_web_dashboard(
             rel_path = os.path.relpath(template_file, project_files_templates)
             output_file = os.path.join(project_dir, rel_path[:-7])
 
-            # data_template = load_template(project_files_templates, rel_path)
+            # gen.__render_template_to_file(rel_path, output_file)
+
+            template = load_template2(os.path.join(project_files_templates, rel_path))
+            render_template_to_file(template, output_file, overall_config=config)
             # with open(output_file, "w") as f:
             #     f.write(data_template.render(overall_config=config))
