@@ -1,0 +1,43 @@
+
+
+import { Shape } from "./shape";
+
+export class Circle extends Shape {
+  centerX: number;
+  centerY: number;
+  rotation: number;
+  radius: number;
+
+  constructor(x: number, y: number, radius: number, fillColor?: string) {
+    super(fillColor);
+    this.centerX = x;
+    this.centerY = y;
+    this.radius = radius;
+    this.fillColor = fillColor;
+    this.rotation = 0.0;
+  }
+
+
+  rotateAroundShapeEnd(degrees: number, shape: Rectangle) {
+    this.rotation_point = [shape.x + shape.width, shape.y + shape.height];
+    this.rotation = (-degrees - 90) * Math.PI / 180.0;
+  }
+
+  render(ctx: CanvasRenderingContext2D) {
+    ctx.save();
+
+    ctx.beginPath();
+
+    if (this.rotation_point !== undefined) {
+      ctx.translate(this.rotation_point[0], this.rotation_point[1]);
+      ctx.rotate(this.rotation);
+      ctx.translate(-this.rotation_point[0], -this.rotation_point[1]);
+    }
+
+    ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = this.fillColor!;
+    ctx.fill();
+
+    ctx.restore();
+  }
+}
