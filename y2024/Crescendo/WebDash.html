@@ -19,10 +19,20 @@
     tab-name="Test Commands"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(86px, 110px);"
         source-key="/Shuffleboard/test commands/Intake Piece"
+    ></frc-robot-command><super-structure
+        source-key="/SmartDashboard/super structure"
+        source-provider="NetworkTables"
+        style="width: 460px; height: 315px; transform: translate(179px, 116px);"
+    >
+    </super-structure><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(110px, 50px);"
+        source-key="/Shuffleboard/test commands/Shooting to Speaker"
     ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
@@ -78,7 +88,6 @@
     tab-name="Shooter"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(24px, 50px); width: 207px; height: 50px;"

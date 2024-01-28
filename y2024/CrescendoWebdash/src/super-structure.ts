@@ -1,9 +1,8 @@
-import { html, LitElement } from "lit";
+
+import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { MAX_WIDTH, MAX_HEIGHT, Renderer } from "./super-structure/renderer";
 import { SuperStructureData } from "./super-structure/datatypes";
-
-/* tslint:disable */
 
 export const elementConfig = {
   dashboard: {
@@ -28,13 +27,8 @@ export const elementConfig = {
 };
 
 
-
-
 @customElement("super-structure")
 export class SuperStructure extends LitElement {
-  static properties = elementConfig.properties;
-
-
   @property({ type: Number }) pivotMotorAngle = 0.0;
   @property({ type: Number }) goalAngle = 0.0;
   @property({ type: Number }) shooterMotorPercentage = 0.0;
@@ -100,5 +94,11 @@ export class SuperStructure extends LitElement {
         style="border:1px solid #000000;"
       />
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    "super-structure": SuperStructure;
   }
 }
