@@ -1,0 +1,26 @@
+{%- for widget in overall_config.widgets %}
+import './{{widget.package_name.as_dash()}}';
+{%- endfor %}
+import { addElements } from '@frc-web-components/app';
+
+{%- for widget in overall_config.widgets %}
+import {elementConfig as {{widget.table}}Elements
+{%- if widget.has_nested_tables %}
+{%- for child in widget.children_tables %}
+, {{child.table}}ElementConfig
+{%- endfor %}
+{%- endif -%}
+} from "./{{widget.package_name.as_dash()}}-config";
+{%- endfor %}
+
+addElements({
+{%- for widget in overall_config.widgets %}
+    "{{widget.package_name.as_dash()}}": {{widget.table}}Elements,
+  {%- if widget.has_nested_tables %}
+  {%- for child in widget.children_tables %}
+    "{{subtable_name(widget, child)}}": {{child.table}}ElementConfig,
+  {%- endfor %}
+  {%- endif %}
+{%- endfor %}
+  }, "Girls of Steel");
+

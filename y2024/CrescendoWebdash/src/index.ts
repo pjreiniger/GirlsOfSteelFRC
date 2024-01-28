@@ -6,4 +6,3 @@ import {elementConfig as SuperStructureElements} from "./super-structure-config"
 addElements({
     "super-structure": SuperStructureElements,
   }, "Girls of Steel");
-

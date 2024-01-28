@@ -52,7 +52,7 @@ export class Rectangle extends Shape {
     ctx.strokeStyle = this.strokeColor!;
 
     if (this.rotationPoint !== undefined) {
-      ctx.translate(this.rotation_point[0], this.rotationPoint[1]);
+      ctx.translate(this.rotationPoint[0], this.rotationPoint[1]);
       ctx.rotate(this.rotation);
       ctx.translate(-this.rotationPoint[0], -this.rotationPoint[1]);
     } else {
