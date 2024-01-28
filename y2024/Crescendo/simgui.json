@@ -16,6 +16,8 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Intake Subsystem": "Command",
+      "/Intake Subsystem/ParallelRaceGroup": "Command",
       "/Shuffleboard/PP Paths/Example Path": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt2": "Command",
@@ -63,6 +65,7 @@
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Auton Mode": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
+      "/SmartDashboard/ParallelRaceGroup": "Command",
       "/SmartDashboard/SendableChooser[1]": "String Chooser",
       "/SmartDashboard/VisionSystemSim-GamePieceSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": "Field2d",
@@ -70,6 +73,11 @@
       "/SmartDashboard/VisionSystemSim-vision/Sim Field": "Field2d"
     },
     "windows": {
+      "/Intake Subsystem/ParallelRaceGroup": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/Chassis chase note": {
         "window": {
           "visible": true
@@ -103,7 +111,7 @@
             217.49996948242188,
             255.0
           ],
-          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png",
+          "image": "..\\..\\libraries\\shared_images\\tag-blue.png",
           "length": 0.8999999761581421,
           "width": 0.8999999761581421
         },
@@ -128,7 +136,7 @@
             0.12110727280378342,
             255.0
           ],
-          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-yellow.png"
+          "image": "..\\..\\libraries\\shared_images\\tag-yellow.png"
         },
         "LeftFront: EstimatedPosition": {
           "color": [
@@ -155,7 +163,7 @@
           ]
         },
         "RightFront: DetectedTags": {
-          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-red.png",
+          "image": "..\\..\\libraries\\shared_images\\tag-red.png",
           "width": 0.4000000059604645
         },
         "RightFront: EstimatedPosition": {
@@ -217,11 +225,11 @@
       },
       "/SmartDashboard/VisionSystemSim-vision/Sim Field": {
         "apriltag": {
-          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-blue.png"
+          "image": "..\\..\\libraries\\shared_images\\tag-blue.png"
         },
         "bottom": 1476,
         "cameras": {
-          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-yellow.png"
+          "image": "..\\..\\libraries\\shared_images\\tag-yellow.png"
         },
         "height": 8.210550308227539,
         "left": 150,
@@ -234,7 +242,7 @@
             0.0,
             255.0
           ],
-          "image": "C:\\Users\\PJ\\git\\gos\\GirlsOfSteelFRC\\libraries\\shared_images\\tag-green.png"
+          "image": "..\\..\\libraries\\shared_images\\tag-green.png"
         },
         "width": 16.541748046875,
         "window": {
@@ -244,6 +252,9 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "persistent": {
       "Preferences": {
         "open": true
@@ -306,15 +317,18 @@
     "Connections": {
       "open": true
     },
+    "FRC Web Components_59329722@3": {
+      "open": true
+    },
     "Server": {
       "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
         "open": true
       },
       "open": true
     },
     "visible": true
-  },
-  "NetworkTables View": {
-    "visible": false
   }
 }
