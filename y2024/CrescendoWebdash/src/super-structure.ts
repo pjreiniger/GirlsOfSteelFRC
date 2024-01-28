@@ -1,10 +1,14 @@
-import { LitElement, html, css } from "lit";
+import { html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { MAX_WIDTH, MAX_HEIGHT, Renderer } from "./super-structure/renderer";
 import { SuperStructureData } from "./super-structure/datatypes";
 
+
+
+
 @customElement("super-structure")
 export class SuperStructure extends LitElement {
+
   @property({ type: Number }) pivotMotorAngle = 0.0;
   @property({ type: Number }) goalAngle = 0.0;
   @property({ type: Number }) shooterMotorPercentage = 0.0;

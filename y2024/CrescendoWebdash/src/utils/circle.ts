@@ -8,7 +8,7 @@ export class Circle extends Shape {
   centerY: number;
   radius: number;
   rotation: number;
-  rotation_point?: [number, number];
+  rotationPoint?: [number, number];
 
   constructor(x: number, y: number, radius: number, fillColor?: string) {
     super(fillColor);
@@ -20,7 +20,7 @@ export class Circle extends Shape {
   }
 
   rotateAroundShapeEnd(degrees: number, shape: Rectangle) {
-    this.rotation_point = [shape.x + shape.width, shape.y + shape.height];
+    this.rotationPoint = [shape.x + shape.width, shape.y + shape.height];
     this.rotation = (-degrees - 90) * Math.PI / 180.0;
   }
 
@@ -29,10 +29,10 @@ export class Circle extends Shape {
 
     ctx.beginPath();
 
-    if (this.rotation_point !== undefined) {
-      ctx.translate(this.rotation_point[0], this.rotation_point[1]);
+    if (this.rotationPoint !== undefined) {
+      ctx.translate(this.rotationPoint[0], this.rotationPoint[1]);
       ctx.rotate(this.rotation);
-      ctx.translate(-this.rotation_point[0], -this.rotation_point[1]);
+      ctx.translate(-this.rotationPoint[0], -this.rotationPoint[1]);
     }
 
     ctx.arc(this.centerX, this.centerY, this.radius, 0, 2 * Math.PI, false);

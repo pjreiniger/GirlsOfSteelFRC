@@ -1,0 +1,35 @@
+
+export const elementConfig = {
+  dashboard: {
+    displayName: "{{widget.table}}",
+  },
+{%- if widget.has_nested_tables %}
+  slots: [{ name: '', allowedChildren: [
+{%- for child in widget.children_tables -%}
+"{{subtable_name(widget, child)}}"{% if not loop.last %}, {%endif%}
+{%- endfor -%}
+] }],
+{%- endif %}
+  properties: {
+{%- if not widget.has_nested_tables %}
+{%- for child in widget.children_tables %}
+  {%- for variable in child.entries %}
+    {{variable.name}}: { type: "{{javascript_type(variable.type)}}", {% if loop.first %}primary: true{%else%}reflect: true{%endif%} },
+  {%- endfor %}
+{%- endfor %}
+{%- endif %}
+  },
+  demos: [
+    {
+      html: `
+      <{{widget.package_name.as_dash()}} source-key="/{{widget.table}}" source-provider="NetworkTables" style="width: 460px; height: 315px;">
+{%- if widget.has_nested_tables %}
+{%- for child in widget.children_tables %}
+        <{{subtable_name(widget, child)}} source-provider="NetworkTables" source-key="/{{widget.table}}/{{child.table}}"></{{subtable_name(widget, child)}}>
+{%- endfor %}
+{%- endif %}
+      </{{widget.package_name.as_dash()}}>
+    `,
+    },
+  ],
+};
