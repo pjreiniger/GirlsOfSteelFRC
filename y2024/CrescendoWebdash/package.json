@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "displayName": "CrescendoWebdash",
-  "description": "2024 Girls of Steel Plugin",
+  "description": "2024 Girls of Steel Webdash",
   "author": "Girls of Steel",
   "email": "girlsofsteelrobotics@gmail.com",
   "license": "UNLICENSED",
@@ -23,7 +23,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint src/**/*",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -33,10 +32,6 @@
   "devDependencies": {
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vite-plugin-dts": "^3.7.0",
-    "eslint": "^8.34.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-monorepo": "^0.3.2"
+    "vite-plugin-dts": "^3.7.0"
   }
 }
