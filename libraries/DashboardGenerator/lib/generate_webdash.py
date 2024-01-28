@@ -52,6 +52,9 @@ class WidgetGenerator:
         output_file = os.path.join(self.src_dir, f"{self.widget_name}.ts")
         self.__render_template_to_file("component.jinja2", output_file, **self.default_kwargs)
 
+        output_file = os.path.join(self.src_dir, f"{self.widget_name}-config.ts")
+        self.__render_template_to_file("component-config.ts.jinja2", output_file, **self.default_kwargs)
+
     ########################
     # The maybe generators
     ########################

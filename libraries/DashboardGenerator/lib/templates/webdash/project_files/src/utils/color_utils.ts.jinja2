@@ -1,4 +1,4 @@
-
+/* eslint no-param-reassign: "off" */
 import { Shape } from "./shape";
 
 export function getClampedColor(inSpeed: number, min: number, max: number) : string {
@@ -27,7 +27,7 @@ export function getMotorColor(speed: number) : string {
 }
 
 export function getMotorColorWithDefault(speed: number, defaultColor: string | undefined) : string {
-  if (defaultColor !== undefined && (isNaN(speed) || Math.abs(speed) < .005)) {
+  if (defaultColor !== undefined && (Number.isNaN(speed) || Math.abs(speed) < .005)) {
     return defaultColor;
   }
   return getMotorColor(speed);
