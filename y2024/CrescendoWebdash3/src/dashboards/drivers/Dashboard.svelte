@@ -9,6 +9,8 @@
   const updateToggle = () => {
     toggled.setValue(!$toggled);
   };
+
+import GosField from '../../components/GosField.svelte';
 </script>
 
 <div>
@@ -21,21 +23,5 @@
     toggled={$toggled}
     on:toggle={updateToggle}
   />
-  <MyElement count={$count} onIncrement={(value) => count.setValue(value)} />
 </div>
-<frc-field crop-left=".1" crop-right=".9" rotation-unit="deg">
-  <frc-field-robot color="blue" opacity="1" pose={$pose}></frc-field-robot>
-</frc-field>
-
-<style>
-  div {
-    display: flex;
-    gap: 15px;
-    align-items: start;
-  }
-
-  frc-field {
-    width: 500px;
-    height: 300px;
-  }
-</style>
+<GosField />
