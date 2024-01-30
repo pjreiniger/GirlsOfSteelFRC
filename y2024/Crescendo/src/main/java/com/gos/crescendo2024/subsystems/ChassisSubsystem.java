@@ -254,7 +254,7 @@ public class ChassisSubsystem extends SubsystemBase {
 
     public Command createChaseNoteCommand() {
         return defer(() -> {
-            List<Pose2d> maybeGamePiecePose = m_objectDetectonSubsystem.objectLocations(getPose());
+            List<Pose2d> maybeGamePiecePose = m_objectDetectionSubsystem.objectLocations(getPose());
             if (!maybeGamePiecePose.isEmpty()) {
                 return createDriveToPointNoFlipCommand(maybeGamePiecePose.get(0));
             } else {

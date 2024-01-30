@@ -16,7 +16,6 @@ public class FieldConstants {
     public static final double FIELD_LENGTH = Units.inchesToMeters(651.223);
 
     public static final double FIELD_WIDTH = Units.inchesToMeters(323.277);
-    public static final AprilTagFieldLayout TAG_LAYOUT = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
 
     public static final class Speaker {
         public static final Pose2d CENTER_SPEAKER_OPENING =

@@ -89,8 +89,6 @@ public class RobotContainer {
             DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
         }
-
-        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
     }
 
     private void createTestCommands() {

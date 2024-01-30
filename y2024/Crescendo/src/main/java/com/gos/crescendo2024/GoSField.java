@@ -21,7 +21,7 @@ public class GoSField {
         private final FieldObject2d m_estimatedPosition;
         private final FieldObject2d m_detectedTags;
 
-        public CameraObject(Transform3d robotToCamera, GoSField24 field, String cameraName) {
+        public CameraObject(Transform3d robotToCamera, GoSField field, String cameraName) {
             m_robotToCamera = robotToCamera;
             m_estimatedPosition = field.m_field.getObject(cameraName + ": EstimatedPosition");
             m_detectedTags = field.m_field.getObject(cameraName + ": DetectedTags");
@@ -60,9 +60,7 @@ public class GoSField {
         m_detectedNotePoses = m_field.getObject("Notes");
         m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
         m_odometryObject = m_field.getObject("OldOdometry");
-        m_aprilTagObjects = m_field.getObject("AprilTags");
         m_simulatedNotes = m_field.getObject("SimulatedNotes");
-        m_detectedNotes = m_field.getObject("DetectedNotes");
 
         List<Pose2d> tagPoses = new ArrayList<>();
         for (AprilTag tag : FieldConstants.TAG_LAYOUT.getTags()) {
@@ -99,10 +97,6 @@ public class GoSField {
 
     public void addSimulatedNotes(List<Pose2d> notePoses) {
         m_simulatedNotes.setPoses(notePoses);
-    }
-
-    public void addDetectedNotes(List<Pose2d> notePoses) {
-        m_detectedNotes.setPoses(notePoses);
     }
 
 }

@@ -18,6 +18,7 @@
       "/FMSInfo": "FMSInfo",
       "/Intake Subsystem": "Command",
       "/Intake Subsystem/ParallelRaceGroup": "Command",
+      "/Shuffleboard/PP Paths/Curve Path": "Command",
       "/Shuffleboard/PP Paths/Example Path": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt1": "Command",
       "/Shuffleboard/PP Paths/FourPieceSpeakerPt2": "Command",
@@ -27,9 +28,25 @@
       "/Shuffleboard/PP Paths/FourPieceTB_P3_MiddleToBot": "Command",
       "/Shuffleboard/PP Paths/LeaveWing": "Command",
       "/Shuffleboard/PP Paths/OneNoteSpeakerAndLeaveWing": "Command",
+      "/Shuffleboard/PP Paths/S-Curve Path": "Command",
+      "/Shuffleboard/PP Paths/SplinePath": "Command",
+      "/Shuffleboard/PP Paths/StraightLinePath": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
+      "/Shuffleboard/test commands/Arm to 0": "Command",
+      "/Shuffleboard/test commands/Arm to 45": "Command",
+      "/Shuffleboard/test commands/Arm to 90": "Command",
+      "/Shuffleboard/test commands/Arm to amp angle": "Command",
+      "/Shuffleboard/test commands/Arm to coast": "Command",
+      "/Shuffleboard/test commands/Arm to default speaker angle": "Command",
+      "/Shuffleboard/test commands/Arm to ground intake angle": "Command",
+      "/Shuffleboard/test commands/Arm to speaker (from pose)": "Command",
+      "/Shuffleboard/test commands/Auto-Intake Piece": "Command",
+      "/Shuffleboard/test commands/Auto-Shoot in Amp": "Command",
+      "/Shuffleboard/test commands/Auto-Shoot in Speaker": "Command",
       "/Shuffleboard/test commands/Chassis chase note": "Command",
+      "/Shuffleboard/test commands/Chassis drive to amp": "Command",
+      "/Shuffleboard/test commands/Chassis drive to speaker": "Command",
       "/Shuffleboard/test commands/Chassis to -180": "Command",
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
@@ -44,8 +61,14 @@
       "/Shuffleboard/test commands/Pivot: 90 degrees": "Command",
       "/Shuffleboard/test commands/Pivot: Amp": "Command",
       "/Shuffleboard/test commands/Pivot: Floor Pickup": "Command",
+      "/Shuffleboard/test commands/Shooter Percent Output": "Command",
+      "/Shuffleboard/test commands/Shooter RPM: 3500": "Command",
+      "/Shuffleboard/test commands/Shooter RPM: 4000": "Command",
+      "/Shuffleboard/test commands/Shooter stop": "Command",
       "/Shuffleboard/test commands/Shooting to Amp": "Command",
       "/Shuffleboard/test commands/Shooting to Speaker": "Command",
+      "/Shuffleboard/test commands/Teleop: Aim at speaker": "Command",
+      "/Shuffleboard/test commands/Teleop: David Drive": "Command",
       "/Shuffleboard/test commands/Turn to point drive": "Command",
       "/Shuffleboard/test commands/arm to -45": "Command",
       "/Shuffleboard/test commands/arm to 0": "Command",
@@ -57,6 +80,7 @@
       "/Shuffleboard/test commands/resetShooter": "Command",
       "/Shuffleboard/test commands/shoot": "Command",
       "/Shuffleboard/test commands/shoot from robot pose": "Command",
+      "/Shuffleboard/test commands/shooter RPM: default": "Command",
       "/Shuffleboard/test commands/shooterTuning": "Command",
       "/Shuffleboard/test commands/test drive to amp": "Command",
       "/Shuffleboard/test commands/test drive to speaker": "Command",
@@ -83,17 +107,7 @@
           "visible": true
         }
       },
-      "/Shuffleboard/test commands/Shooting to Speaker": {
-        "window": {
-          "visible": true
-        }
-      },
       "/Shuffleboard/test commands/arm to 45": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/shoot from robot pose": {
         "window": {
           "visible": true
         }
@@ -115,20 +129,6 @@
           "length": 0.8999999761581421,
           "width": 0.8999999761581421
         },
-        "DetectedNotes": {
-          "arrowSize": 92,
-          "arrows": false,
-          "color": [
-            0.720588207244873,
-            0.49888473749160767,
-            0.035322971642017365,
-            255.0
-          ],
-          "length": 0.45719999074935913,
-          "style": "Box/Image",
-          "weight": 1.0,
-          "width": 0.45719999074935913
-        },
         "LeftFront: DetectedTags": {
           "color": [
             0.5882352590560913,
@@ -147,6 +147,20 @@
           ],
           "length": 1.0,
           "width": 1.0
+        },
+        "Notes": {
+          "arrowSize": 92,
+          "arrows": false,
+          "color": [
+            0.720588207244873,
+            0.49888473749160767,
+            0.035322971642017365,
+            255.0
+          ],
+          "length": 0.45719999074935913,
+          "style": "Box/Image",
+          "weight": 1.0,
+          "width": 0.45719999074935913
         },
         "OldOdometry": {
           "arrowColor": [
@@ -218,10 +232,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       },
       "/SmartDashboard/VisionSystemSim-vision/Sim Field": {
         "apriltag": {

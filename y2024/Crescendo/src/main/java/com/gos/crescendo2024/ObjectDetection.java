@@ -1,5 +1,7 @@
 package com.gos.crescendo2024;
 
+import com.gos.lib.properties.GosDoubleProperty;
+import edu.wpi.first.math.ComputerVisionUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,6 +16,7 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 import org.photonvision.estimation.TargetModel;
 import org.photonvision.simulation.PhotonCameraSim;
+import org.photonvision.simulation.SimCameraProperties;
 import org.photonvision.simulation.VisionSystemSim;
 import org.photonvision.simulation.VisionTargetSim;
 import org.photonvision.targeting.PhotonPipelineResult;
@@ -21,6 +24,7 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.gos.crescendo2024.FieldConstants.StagingLocations.CENTERLINE_TRANSLATIONS;
 import static com.gos.crescendo2024.FieldConstants.StagingLocations.SPIKE_TRANSLATIONS;
@@ -86,11 +90,15 @@ public class ObjectDetection {
             double distance = calculateDistanceToTarget(
                 ROBOT_TO_CAMERA.getZ(),
                 0,
-                ROBOT_TO_CAMERA.getRotation().getY(),
+                -ROBOT_TO_CAMERA.getRotation().getY(),
                 Units.degreesToRadians(result.getPitch()),
                 Units.degreesToRadians(result.getYaw())
                 );
-            Translation2d relToCamera = PhotonUtils.estimateCameraToTargetTranslation(distance, Rotation2d.fromDegrees(result.getYaw()));
+
+            Translation2d relToCamera = PhotonUtils.estimateCameraToTargetTranslation(
+                distance, Rotation2d.fromDegrees(result.getYaw() + Math.toDegrees(ROBOT_TO_CAMERA.getRotation().getZ())));
+            relToCamera = new Translation2d(relToCamera.getX() + ROBOT_TO_CAMERA.getX(), relToCamera.getY() + ROBOT_TO_CAMERA.getY());
+
             Transform2d adjustForRot = new Transform2d(relToCamera, new Rotation2d());
             objectLocationsList.add(chassisLocation.transformBy(adjustForRot));
         }
