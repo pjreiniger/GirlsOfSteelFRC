@@ -18,8 +18,6 @@ import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
@@ -80,8 +78,6 @@ public class RobotContainer {
 
         createTestCommands();
 
-        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
-
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
         if (RobotBase.isSimulation()) {
@@ -89,6 +85,8 @@ public class RobotContainer {
             DriverStationSim.setDsAttached(true);
             DriverStationSim.setEnabled(true);
         }
+
+        PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
     }
 
     private void createTestCommands() {

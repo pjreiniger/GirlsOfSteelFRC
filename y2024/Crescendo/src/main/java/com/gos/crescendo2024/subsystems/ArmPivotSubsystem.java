@@ -171,21 +171,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_pivotMotor.set(speed);
     }
 
-    /////////////////////
-    // Command Factories
-    /////////////////////
-    public Command createMoveArmToAngle(double goalAngle) {
-        return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).until(this::isArmAtGoal).withName("arm to " + goalAngle + " deg");
-    }
-
-    public Command createGoToIntakeCommand() {
-        return createMoveArmToAngle(ARM_INTAKE_ANGLE.getValue()).withName("Intake To Ground");
-    }
-
-    public Command createGoToAmpAngleCommand() {
-        return createMoveArmToAngle(ARM_AMP_ANGLE.getValue()).withName("Intake To Amp");
-    }
-
     public double getArmAngleGoal() {
         return m_armGoalAngle;
     }

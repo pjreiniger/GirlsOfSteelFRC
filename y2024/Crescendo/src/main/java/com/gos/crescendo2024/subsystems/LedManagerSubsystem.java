@@ -1,8 +1,6 @@
 package com.gos.crescendo2024.subsystems;
 
-import com.gos.crescendo2024.leds.HasGamePiecePattern;
 import com.gos.crescendo2024.leds.TeleopPattern;
-import com.gos.lib.led.LEDPolkaDots;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

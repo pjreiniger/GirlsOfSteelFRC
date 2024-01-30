@@ -28,14 +28,9 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.ProtobufPublisher;
-import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -43,8 +38,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 
-import java.util.List;
 import java.util.Optional;
+
+import java.util.List;
 
 public class ChassisSubsystem extends SubsystemBase {
     private static final double GYRO_TO_CHASSIS_OFFSET = -90;
@@ -245,7 +241,7 @@ public class ChassisSubsystem extends SubsystemBase {
             new GoalEndState(0.0, end.getRotation())
         );
         path.preventFlipping = true;
-        return createFollowPathCommand(path, false);
+        return createFollowPathCommand(path, false).withName("Follow Path to " + end);
     }
 
     public Command createDriveToPointCommand(Pose2d endPoint) {
@@ -260,7 +256,7 @@ public class ChassisSubsystem extends SubsystemBase {
             } else {
                 return runOnce(m_swerveDrive::stop);
             }
-        });
+        }).withName("Chase Note");
     }
 
 }
