@@ -30,7 +30,7 @@ public final class PathPlannerUtils {
                 .map(name -> name.substring(0, name.lastIndexOf(".")))
                 .collect(Collectors.toSet());
         for (String pathName : pathNames) {
-            tab.add(chassis.createPathCommand(PathPlannerPath.fromPathFile(pathName), true).withName(pathName));
+            tab.add(chassis.createFollowPathCommand(PathPlannerPath.fromPathFile(pathName), true).withName(pathName));
         }
     }
 }

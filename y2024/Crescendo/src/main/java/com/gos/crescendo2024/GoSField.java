@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class GoSField24 {
+public class GoSField {
     @SuppressWarnings("PMD.DataClass")
     public static class CameraObject {
         private final Transform3d m_robotToCamera;
@@ -51,17 +51,13 @@ public class GoSField24 {
     private final FieldObject2d m_currentTrajectoryObject;
     private final FieldObject2d m_trajectorySetpoint;
     private final FieldObject2d m_odometryObject;
-    private final FieldObject2d m_aprilTagObjects;
     private final FieldObject2d m_simulatedNotes;
-    private final FieldObject2d m_detectedNotes;
+    private final FieldObject2d m_detectedNotePoses;
 
-
-    private final FieldObject2d m_drawnNotePoses;
-
-    public GoSField24() {
+    public GoSField() {
         m_field = new Field2d();
         m_currentTrajectoryObject = m_field.getObject("Trajectory");
-        m_drawnNotePoses = m_field.getObject("Notes");
+        m_detectedNotePoses = m_field.getObject("Notes");
         m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
         m_odometryObject = m_field.getObject("OldOdometry");
         m_aprilTagObjects = m_field.getObject("AprilTags");
@@ -72,7 +68,8 @@ public class GoSField24 {
         for (AprilTag tag : FieldConstants.TAG_LAYOUT.getTags()) {
             tagPoses.add(tag.pose.toPose2d());
         }
-        m_aprilTagObjects.setPoses(tagPoses);
+        FieldObject2d aprilTagObjects = m_field.getObject("AprilTags"); // NOPMD(CloseResource)
+        aprilTagObjects.setPoses(tagPoses);
     }
 
     public void setTrajectory(List<Pose2d> trajectory) {
@@ -96,7 +93,7 @@ public class GoSField24 {
     }
 
     public void drawNotePoses(List<Pose2d> poses) {
-        m_drawnNotePoses.setPoses(poses);
+        m_detectedNotePoses.setPoses(poses);
     }
 
 

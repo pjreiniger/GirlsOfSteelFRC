@@ -15,7 +15,6 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -26,7 +25,7 @@ import org.snobotv2.sim_wrappers.ISimWrapper;
 public class ShooterSubsystem extends SubsystemBase {
 
     public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 500);
-    public static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
+    private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
     private static final double ALLOWABLE_ERROR = 50;
 
     private final SimableCANSparkMax m_shooterMotorLeader;
@@ -81,7 +80,6 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorErrorAlerts.checkAlerts();
         m_networkTableEntries.updateLogs();
         m_pidProperties.updateIfChanged();
-        SmartDashboard.putNumber("shooterRpm", this.getRPM());
 
     }
 
@@ -116,14 +114,19 @@ public class ShooterSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
 
+    /////////////////////////////////////
     // Command Factories
-
+    /////////////////////////////////////
     public Command createTunePercentShootCommand() {
         return this.runEnd(this::tuneShootPercentage, this::stopShooter).withName("TuneShooterPercentage");
     }
 
     public Command createSetRPMCommand(double rpm) {
         return this.runEnd(() -> this.setPidRpm(rpm), this::stopShooter).withName("set shooter rpm " + rpm);
+    }
+
+    public Command createRunDefaultRpmCommand() {
+        return this.runEnd(() -> this.setPidRpm(DEFAULT_SHOOTER_RPM.getValue()), this::stopShooter).withName("set shooter default rpm");
     }
 
     public Command createStopShooterCommand() {
