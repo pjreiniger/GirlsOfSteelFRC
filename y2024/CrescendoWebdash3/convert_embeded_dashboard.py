@@ -1,0 +1,47 @@
+from bs4 import BeautifulSoup
+import os
+
+
+def handle_tab(dashboard_tab):
+    tab_name = dashboard_tab.get('tab-name')
+    output_file = os.path.join(r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\CrescendoWebdash3\src\components')
+
+    print(tab_name)
+    if tab_name == "TeleOperated":
+        output_file = os.path.join(output_file, "DriverTab.svelte")
+    else:
+        output_file = os.path.join(output_file, "subsystems", tab_name.replace(" ", "") + "SubsystemTab.svelte")
+
+
+
+    with open(output_file, 'w') as f:
+        command_tags = dashboard_tab.find_all('frc-robot-command')
+        if command_tags:
+            f.write("<ul>\n")
+            for ct in command_tags:
+                f.write("<li>\n")
+                del ct["style"]
+                f.write(ct.prettify())
+                f.write("\n")
+                f.write("</li>\n")
+            f.write("</ul>\n")
+
+
+def main():
+    with open(r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\WebDash.html', 'r') as f:
+        soup = BeautifulSoup(f.read(), 'html.parser' )
+
+    for dashboard_tab in soup.find_all('dashboard-tab'):
+        handle_tab(dashboard_tab)
+        # print("\n\n\n\n\n")
+        # print(dashboard_tab.get("tab-name"))
+
+
+        # for x in dashboard_tab:
+        #     print(x)
+        #     print("-----------")
+        # print(type(dashboard_tab))
+        # print(dashboard_tab)
+
+if __name__ == "__main__":
+    main()
