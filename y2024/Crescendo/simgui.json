@@ -232,7 +232,10 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       },
       "/SmartDashboard/VisionSystemSim-vision/Sim Field": {
         "apriltag": {
@@ -255,10 +258,7 @@
           ],
           "image": "..\\..\\libraries\\shared_images\\tag-green.png"
         },
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },
@@ -276,6 +276,9 @@
         "open": true
       },
       "SmartDashboard": {
+        "Auto Chooser": {
+          "open": true
+        },
         "Field": {
           "double[]##v_/SmartDashboard/Field/AprilTags": {
             "open": true
@@ -285,8 +288,7 @@
           },
           "double[]##v_/SmartDashboard/Field/LeftFront: EstimatedPosition": {
             "open": true
-          },
-          "open": true
+          }
         },
         "VisionSystemSim-GamePieceSim": {
           "open": true
@@ -328,16 +330,70 @@
     "Connections": {
       "open": true
     },
-    "FRC Web Components_59329722@3": {
+    "FRC Web Components_10789366@1": {
+      "Publishers": {
+        "open": true
+      },
       "open": true
     },
-    "Server": {
+    "FRC Web Components_11259905@1": {
       "Publishers": {
         "open": true
       },
       "Subscribers": {
         "open": true
       },
+      "open": true
+    },
+    "FRC Web Components_20428105@1": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "FRC Web Components_22260623@1": {
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "FRC Web Components_28671333@1": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "FRC Web Components_3169703@1": {
+      "open": true
+    },
+    "FRC Web Components_43013439@1": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "FRC Web Components_59329722@3": {
+      "open": true
+    },
+    "FRC Web Components_67747048@2": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "Server": {
       "open": true
     },
     "visible": true
