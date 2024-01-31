@@ -1,0 +1,14 @@
+{
+    "extends": "eslint:recommended",
+    "extends": [
+    ],
+    "overrides": [
+        {
+            "files": ["src/**/*"],
+            "parser": "svelte-eslint-parser"
+        }
+    ],
+    "rules": {
+        "svelte/derived-has-same-inputs-outputs": 1
+    }
+}

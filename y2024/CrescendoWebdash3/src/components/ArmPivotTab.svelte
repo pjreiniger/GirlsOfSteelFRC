@@ -86,7 +86,6 @@
         <div
             slot="error-message"
             id="error-message-vaadin-number-field-416"
-            hidden=""
         ></div>
     </vaadin-number-field><vaadin-number-field
         label="Percent Output"
@@ -117,7 +116,6 @@
         <div
             slot="error-message"
             id="error-message-vaadin-number-field-417"
-            hidden=""
         ></div>
     </vaadin-number-field><vaadin-number-field
         label="Abs Arm ANgle"
@@ -148,6 +146,5 @@
         <div
             slot="error-message"
             id="error-message-vaadin-number-field-453"
-            hidden=""
         ></div>
     </vaadin-number-field>
