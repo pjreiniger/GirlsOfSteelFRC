@@ -6,6 +6,11 @@
       }
     },
     "Other Devices": {
+      "SPARK MAX [26]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [33]": {
         "header": {
           "open": true
@@ -258,7 +263,10 @@
           ],
           "image": "..\\..\\libraries\\shared_images\\tag-green.png"
         },
-        "width": 16.541748046875
+        "width": 16.541748046875,
+        "window": {
+          "visible": true
+        }
       }
     }
   },
@@ -272,10 +280,10 @@
       }
     },
     "transitory": {
-      "Preferences": {
-        "open": true
-      },
       "SmartDashboard": {
+        "Alerts": {
+          "open": true
+        },
         "Auto Chooser": {
           "open": true
         },
