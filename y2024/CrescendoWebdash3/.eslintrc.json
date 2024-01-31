@@ -1,6 +1,7 @@
 {
     "extends": "eslint:recommended",
     "extends": [
+        "plugin:svelte/all"
     ],
     "overrides": [
         {

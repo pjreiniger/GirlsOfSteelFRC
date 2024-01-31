@@ -8,11 +8,24 @@
   let trajectory = getEntry(`/SmartDashboard/Field/Trajectory`, []);
 </script>
 
-<frc-field game="Crescendo" crop-left=".1" crop-right=".9" rotation-unit="radians">
-  <frc-field-robot pose="{$robotPoseEstimation}"></frc-field-robot>
-  <frc-field-path color="orange" opacity="1" poses="{$notes}"></frc-field-path>
-  <frc-field-path color="pink" opacity="1" poses="{$aprilTags}"></frc-field-path>
-  <frc-field-path color="green" opacity="0.7" poses="{$trajectory}"></frc-field-path>
+<frc-field
+  crop-left=".1"
+  crop-right=".9"
+  game="Crescendo"
+  rotation-unit="radians">
+  <frc-field-robot pose={$robotPoseEstimation} />
+  <frc-field-path
+    color="orange"
+    opacity="1"
+    poses={$notes} />
+  <frc-field-path
+    color="pink"
+    opacity="1"
+    poses={$aprilTags} />
+  <frc-field-path
+    color="green"
+    opacity="0.7"
+    poses={$trajectory} />
 </frc-field>
 
 <style>
