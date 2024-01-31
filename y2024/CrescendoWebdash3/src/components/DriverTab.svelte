@@ -1,4 +1,3 @@
-<dashboard-tab selected>
 
 <div>
   <frc-sendable-chooser
@@ -6,5 +5,3 @@
   />
   <frc-basic-fms-info source-key="/FMSInfo" />
 </div>
-
-</dashboard-tab>
