@@ -1,13 +1,11 @@
 <script lang="ts">
   import "@frc-web-components/fwc/components";
 
-  import DriverTab from '../../components/DriverTab.svelte';
-
-  import PitTab from '../../components/PitTab.svelte';
-  import ArmPivotTab from '../../components/subsystems/ArmPivotSubsystemTab.svelte';
-
   import Tabs from '../../components/Tabs.svelte';
 
+  import DriverTab   from '../../tabs/DriverTab.svelte';
+  import PitTab      from '../../tabs/PitTab.svelte';
+  import ArmPivotTab from '../../tabs/subsystems/ArmPivotSubsystemTab.svelte';
 
   // List of tab items with labels, values and assigned components
   let items = [

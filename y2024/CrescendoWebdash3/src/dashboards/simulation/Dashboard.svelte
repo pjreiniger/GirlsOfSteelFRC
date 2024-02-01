@@ -1,15 +1,15 @@
 <script lang="ts">
   import "@frc-web-components/fwc/components";
 
-  import DriverTab from '../../components/DriverTab.svelte';
-
-  import PitTab from '../../components/PitTab.svelte';
-  import ArmPivotTab from '../../components/subsystems/ArmPivotSubsystemTab.svelte';
-  import ChassisTab from '../../components/subsystems/ChassisSubsystemTab.svelte';
-  import IntakeTab from '../../components/subsystems/IntakeSubsystemTab.svelte';
-  import ShooterTab from '../../components/subsystems/ShooterSubsystemTab.svelte';
 
   import Tabs from '../../components/Tabs.svelte';
+
+  import DriverTab   from '../../tabs/DriverTab.svelte';
+  import PitTab      from '../../tabs/PitTab.svelte';
+  import ArmPivotTab from '../../tabs/subsystems/ArmPivotSubsystemTab.svelte';
+  import ChassisTab  from '../../tabs/subsystems/ChassisSubsystemTab.svelte';
+  import IntakeTab   from '../../tabs/subsystems/IntakeSubsystemTab.svelte';
+  import ShooterTab  from '../../tabs/subsystems/ShooterSubsystemTab.svelte';
 
 
   // List of tab items with labels, values and assigned components
