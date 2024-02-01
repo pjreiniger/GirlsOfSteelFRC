@@ -51,6 +51,12 @@ def handle_tab(dashboard_tab):
                 del tag["options"]
                 del tag["selected"]
 
+            if tag.name == "frc-line-chart":
+                if tab_name == "Arm Pivot":
+                    tag["style"] = "transform-origin: 0 0; transform: translate(50%, -100%);"
+                elif tab_name == "Shooter":
+                    tag["style"] = "transform-origin: 0 0; transform: translate(50%, -50%);"
+
             try:
                 f.write(tag.prettify())
                 f.write("\n")

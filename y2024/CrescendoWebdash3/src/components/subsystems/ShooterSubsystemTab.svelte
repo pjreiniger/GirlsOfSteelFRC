@@ -29,9 +29,10 @@
   </li>
 </ul>
 <frc-line-chart
+  style:transform-origin="0 0"
+  style:transform="translate(50%, -50%)"
   chart-title="Line Chart"
-  source-provider="NetworkTables"
-  style="transform-origin: 0 0; transform: translate(50%, -50%);">
+  source-provider="NetworkTables">
   <frc-line-chart-legend source-provider="NetworkTables" />
   <frc-line-chart-axis
     lock-max=""

@@ -1,7 +1,3 @@
-<script lang="ts">
-  import GosField from "../GosField.svelte";
-</script>
-
 <ul>
   <li>
     <frc-robot-command
@@ -55,4 +51,3 @@
   source-provider="NetworkTables"
   wheellocations="[2.5,2,2.5,-2,-2.5,2,-2.5,-2]" />
 
-<GosField />
