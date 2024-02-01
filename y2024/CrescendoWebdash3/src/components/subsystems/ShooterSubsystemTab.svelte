@@ -1,24 +1,28 @@
 <ul>
   <li>
     <frc-robot-command
+      name="UNLINKED"
       source-key="/Shuffleboard/test commands/Shooter Percent Output"
       source-provider="NetworkTables" />
 
   </li>
   <li>
     <frc-robot-command
+      name="UNLINKED"
       source-key="/Shuffleboard/test commands/shooter RPM: default"
       source-provider="NetworkTables" />
 
   </li>
   <li>
     <frc-robot-command
+      name="UNLINKED"
       source-key="/Shuffleboard/test commands/Shooter RPM: 3500"
       source-provider="NetworkTables" />
 
   </li>
   <li>
     <frc-robot-command
+      name="UNLINKED"
       source-key="/Shuffleboard/test commands/Shooter RPM: 4000"
       source-provider="NetworkTables" />
 

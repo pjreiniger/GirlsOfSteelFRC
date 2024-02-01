@@ -19,6 +19,7 @@ def handle_tab(dashboard_tab):
         if command_tags:
             f.write("<ul>\n")
             for ct in command_tags:
+                ct['name'] = "UNLINKED"
                 f.write("<li>\n")
                 del ct["style"]
                 f.write(ct.prettify())

@@ -1,12 +1,14 @@
 <ul>
   <li>
     <frc-robot-command
+      name="UNLINKED"
       source-key="/Shuffleboard/test commands/intake in"
       source-provider="NetworkTables" />
 
   </li>
   <li>
     <frc-robot-command
+      name="UNLINKED"
       source-key="/Shuffleboard/test commands/intake out"
       source-provider="NetworkTables" />
 
