@@ -1,16 +1,28 @@
 <dashboard-tab
-    tab-name="TeleOperated"
+    tab-name="Drivers"
     slot="tab"
     source-provider="NetworkTables"
 ><frc-sendable-chooser
         source-provider="NetworkTables"
         selected="leave wing"
-        style="transform: translate(166px, 86px);"
+        style="transform: translate(118px, 144px);"
         source-key="/SmartDashboard/Auto Chooser"
         options="[]"
-    ></frc-sendable-chooser><frc-network-alerts
+    ></frc-sendable-chooser><frc-basic-fms-info
         source-provider="NetworkTables"
-        style="transform: translate(166px, 216px);"
+        style="transform: translate(132px, 61px);"
+        source-key="/FMSInfo"
+    ></frc-basic-fms-info></dashboard-tab><dashboard-tab
+    tab-name="Pit"
+    slot="tab"
+    source-provider="NetworkTables"
+><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(60px, 86px);"
+        source-key="/Shuffleboard/test commands/Arm to coast"
+    ></frc-robot-command><frc-network-alerts
+        source-provider="NetworkTables"
+        style="transform: translate(299px, 101px);"
         source-key="/SmartDashboard/Alerts"
         errors="[]"
         warnings="[]"
@@ -19,6 +31,7 @@
     tab-name="Programmers Tab"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(24px, 86px); width: 197px; height: 50px;"
@@ -44,7 +57,14 @@
         source-provider="NetworkTables"
         style="transform: translate(46px, 345px);"
         source-key="/Shuffleboard/test commands/Auto-Shoot in Amp"
-    ></frc-robot-command></dashboard-tab><dashboard-tab
+    ></frc-robot-command><frc-field-wrapper
+        source-key="/SmartDashboard/Field"
+        source-provider="NetworkTables"
+        style="transform: translate(379px, 12px);"
+        game="Crescendo"
+        grid-size="1"
+    >
+    </frc-field-wrapper></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
@@ -299,7 +319,6 @@
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(55px, 69px); width: 178px; height: 50px;"

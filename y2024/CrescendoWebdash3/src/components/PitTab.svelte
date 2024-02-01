@@ -1,7 +1,13 @@
-<frc-network-alerts source-key="/SmartDashboard/Alerts" />
-<br />
+<ul>
+  <li>
+    <frc-robot-command
+      name="UNLINKED"
+      source-key="/Shuffleboard/test commands/Arm to coast"
+      source-provider="NetworkTables" />
 
-<frc-robot-command
-  source-key="/Shuffleboard/test commands/Arm to coast"
+  </li>
+</ul>
+<frc-network-alerts
+  source-key="/SmartDashboard/Alerts"
   source-provider="NetworkTables" />
-<br />
+

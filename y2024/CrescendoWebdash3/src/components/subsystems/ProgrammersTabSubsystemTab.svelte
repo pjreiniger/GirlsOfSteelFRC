@@ -39,3 +39,9 @@
   source-key="/SmartDashboard/super structure"
   source-provider="NetworkTables" />
 
+<frc-field-wrapper
+  game="Crescendo"
+  grid-size="1"
+  source-key="/SmartDashboard/Field"
+  source-provider="NetworkTables" />
+

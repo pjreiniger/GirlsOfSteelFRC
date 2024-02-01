@@ -6,12 +6,17 @@ def handle_tab(dashboard_tab):
     tab_name = dashboard_tab.get('tab-name')
     output_file = os.path.join(r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\CrescendoWebdash3\src\components')
 
+
     print(tab_name)
-    if tab_name == "TeleOperated":
+    if tab_name == "Drivers":
         output_file = os.path.join(output_file, "DriverTab.svelte")
+    elif tab_name == "Pit":
+        output_file = os.path.join(output_file, "PitTab.svelte")
     else:
         output_file = os.path.join(output_file, "subsystems", tab_name.replace(" ", "") + "SubsystemTab.svelte")
 
+    if not os.path.exists(os.path.dirname(output_file)):
+        os.mkdir(os.path.dirname(output_file))
 
 
     with open(output_file, 'w') as f:
