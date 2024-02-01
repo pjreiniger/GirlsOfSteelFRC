@@ -12,7 +12,7 @@
   crop-left=".1"
   crop-right=".9"
   game="Crescendo"
-  rotation-unit="radians">
+  rotation-unit="degrees">
   <frc-field-robot pose={$robotPoseEstimation} />
   <frc-field-path
     color="orange"

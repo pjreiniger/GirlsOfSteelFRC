@@ -4,7 +4,7 @@
   import DriverTab from '../../components/DriverTab.svelte';
 
   import PitTab from '../../components/PitTab.svelte';
-  import ArmPivotTab from '../../components/subsystems/ArmPivotTab.svelte';
+  import ArmPivotTab from '../../components/subsystems/ArmPivotSubsystemTab.svelte';
   import ChassisTab from '../../components/subsystems/ChassisSubsystemTab.svelte';
   import IntakeTab from '../../components/subsystems/IntakeSubsystemTab.svelte';
   import ShooterTab from '../../components/subsystems/ShooterSubsystemTab.svelte';

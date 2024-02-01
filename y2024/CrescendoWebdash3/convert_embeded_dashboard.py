@@ -26,6 +26,32 @@ def handle_tab(dashboard_tab):
                 f.write("</li>\n")
             f.write("</ul>\n")
 
+        for tag in dashboard_tab:
+            if tag.name == 'frc-robot-command':
+                continue
+            if tag.name == "vaadin-number-field":
+                continue
+            if tag.name is None:
+                continue
+            print(tag.name)
+
+            del tag["style"]
+            if tag.name == "frc-network-alerts":
+                del tag["infos"]
+                del tag["errors"]
+                del tag["warnings"]
+
+            if tag.name == "frc-sendable-chooser":
+                del tag["options"]
+                del tag["selected"]
+
+            try:
+                f.write(tag.prettify())
+                f.write("\n")
+            except:
+                print("FAILED")
+                raise
+
 
 def main():
     with open(r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\WebDash.html', 'r') as f:
