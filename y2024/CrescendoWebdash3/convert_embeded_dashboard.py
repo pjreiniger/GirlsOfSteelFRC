@@ -4,10 +4,8 @@ import os
 
 def handle_tab(dashboard_tab):
     tab_name = dashboard_tab.get('tab-name')
-    output_file = os.path.join(r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\CrescendoWebdash3\src\components')
+    output_file = os.path.join(r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\CrescendoWebdash3\src\tabs')
 
-
-    print(tab_name)
     if tab_name == "Drivers":
         output_file = os.path.join(output_file, "DriverTab.svelte")
     elif tab_name == "Pit":
@@ -39,8 +37,11 @@ def handle_tab(dashboard_tab):
             if tag.name == "vaadin-number-field":
                 continue
             if tag.name is None:
+                print(f"WHY IS THIS NONE FOR {tab_name}")
+                print("*" * 79)
+                print(tag)
+                print("*" * 79)
                 continue
-            print(tag.name)
 
             del tag["style"]
             if tag.name == "frc-network-alerts":
@@ -72,15 +73,6 @@ def main():
 
     for dashboard_tab in soup.find_all('dashboard-tab'):
         handle_tab(dashboard_tab)
-        # print("\n\n\n\n\n")
-        # print(dashboard_tab.get("tab-name"))
-
-
-        # for x in dashboard_tab:
-        #     print(x)
-        #     print("-----------")
-        # print(type(dashboard_tab))
-        # print(dashboard_tab)
 
 if __name__ == "__main__":
     main()
