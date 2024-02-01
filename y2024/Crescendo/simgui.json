@@ -306,7 +306,9 @@
             "open": true
           },
           "open": true
-        },
+        }
+      },
+      "SwerveDrive": {
         "open": true
       },
       "Testing": {

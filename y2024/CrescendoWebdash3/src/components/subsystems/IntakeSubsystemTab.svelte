@@ -13,6 +13,8 @@
   </li>
 </ul>
 <frc-boolean-box
+  false-color="#b4a7a7"
   source-key="/SmartDashboard/super structure/HasGamePiece"
-  source-provider="NetworkTables" />
+  source-provider="NetworkTables"
+  true-color="#ffa200" />
 
