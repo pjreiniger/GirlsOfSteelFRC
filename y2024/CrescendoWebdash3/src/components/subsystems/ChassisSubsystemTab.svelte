@@ -2,6 +2,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Chassis to 45"
       source-provider="NetworkTables" />
 
@@ -9,6 +11,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Chassis to 90"
       source-provider="NetworkTables" />
 
@@ -16,6 +20,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Chassis to -45"
       source-provider="NetworkTables" />
 
@@ -23,6 +29,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Chassis to -180"
       source-provider="NetworkTables" />
 
@@ -30,6 +38,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Chassis drive to speaker"
       source-provider="NetworkTables" />
 
@@ -37,6 +47,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Chassis drive to amp"
       source-provider="NetworkTables" />
 

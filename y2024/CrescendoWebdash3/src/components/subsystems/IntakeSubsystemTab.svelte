@@ -2,6 +2,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/intake in"
       source-provider="NetworkTables" />
 
@@ -9,6 +11,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/intake out"
       source-provider="NetworkTables" />
 

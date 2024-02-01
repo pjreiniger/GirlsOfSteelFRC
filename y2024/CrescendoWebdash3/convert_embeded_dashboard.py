@@ -27,6 +27,7 @@ def handle_tab(dashboard_tab):
                 ct['name'] = "UNLINKED"
                 f.write("<li>\n")
                 del ct["style"]
+                ct['style'] = "width: 250px; height: 50px;"
                 f.write(ct.prettify())
                 f.write("\n")
                 f.write("</li>\n")

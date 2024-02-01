@@ -2,6 +2,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Arm to 0"
       source-provider="NetworkTables" />
 
@@ -9,6 +11,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Arm to coast"
       source-provider="NetworkTables" />
 
@@ -16,6 +20,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Arm to 90"
       source-provider="NetworkTables" />
 
@@ -23,6 +29,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Arm to 45"
       source-provider="NetworkTables" />
 
@@ -30,6 +38,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Arm to amp angle"
       source-provider="NetworkTables" />
 
@@ -37,6 +47,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Arm to ground intake angle"
       source-provider="NetworkTables" />
 
@@ -44,6 +56,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Arm to default speaker angle"
       source-provider="NetworkTables" />
 
@@ -51,6 +65,8 @@
   <li>
     <frc-robot-command
       name="UNLINKED"
+      style:width="250px"
+      style:height="50px"
       source-key="/Shuffleboard/test commands/Arm to speaker (from pose)"
       source-provider="NetworkTables" />
 
