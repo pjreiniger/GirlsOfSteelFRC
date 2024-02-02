@@ -1,24 +1,41 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "experimentalDecorators": true,
-    "useDefineForClassFields": false,
     "module": "ESNext",
+    "target": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-
-    /* Linting */
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "Node",
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "useDefineForClassFields": false,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@dashboard/*": ["src/dashboard/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    "vite*",
+    "src/stories/assets/*.svg"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }
