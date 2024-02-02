@@ -17,19 +17,6 @@ public class CombinedCommands {
             .withName("Intake Piece");
     }
 
-//    public static Command createIntakeFromGroundCommand(IntakeSubsystem intake, ArmPivotSubsystem pivot) {
-//        return Commands.parallel(
-//            intake.createIntakeUntilPiece(),
-//            pivot.createGoToIntakeCommand()
-//        );
-//    }
-//
-//    public static Command createShootAtFixedAngle(double angle, ShooterSubsystem shooter, ArmPivotSubsystem pivot) {
-//        return Commands.sequence(
-//            pivot.createMoveArmToAngle(angle),
-//            shooter.createTunePercentShootCommand().withTimeout(1)
-//        );
-//    }
 
     public static Command speakerAimAndShoot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, ChassisSubsystem chassis, IntakeSubsystem intake) {
         return new SpeakerAimAndShootCommand(armPivot, chassis, intake, shooter)
