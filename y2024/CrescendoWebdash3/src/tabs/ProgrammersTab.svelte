@@ -2,6 +2,7 @@
   import "@frc-web-components/fwc/components";
 
   import GosField from '../components/GosField.svelte';
+  import SuperStructure from '../components/SuperStructure.svelte';
 </script>
 <ul>
   <li>
@@ -51,9 +52,6 @@
   </li>
 </ul>
 
-<super-structure style="width: 460px; height: 315px;" source-key="/SmartDashboard/super structure"/>
-
-
-<GosField
-        />
+<SuperStructure />
+<GosField />
 
