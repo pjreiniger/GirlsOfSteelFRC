@@ -54,12 +54,15 @@ public class GoSField {
     private final FieldObject2d m_simulatedNotes;
     private final FieldObject2d m_detectedNotePoses;
 
+    private final FieldObject2d m_futurePosition;
+
     public GoSField() {
         m_field = new Field2d();
         m_currentTrajectoryObject = m_field.getObject("Trajectory");
         m_detectedNotePoses = m_field.getObject("Notes");
         m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
         m_odometryObject = m_field.getObject("OldOdometry");
+        m_futurePosition = m_field.getObject("futurePosition");
         m_simulatedNotes = m_field.getObject("SimulatedNotes");
 
         List<Pose2d> tagPoses = new ArrayList<>();
@@ -80,6 +83,10 @@ public class GoSField {
 
     public void setOdometry(Pose2d pose) {
         m_odometryObject.setPose(pose);
+    }
+
+    public void setFuturePose(Pose2d pose) {
+        m_futurePosition.setPose(pose);
     }
 
     public void setPoseEstimate(Pose2d pose) {

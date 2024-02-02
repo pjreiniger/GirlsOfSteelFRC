@@ -45,7 +45,7 @@ public class RobotContainer {
     private final ArmPivotSubsystem m_armPivotSubsystem;
     private final ShooterSubsystem m_shooterSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
-    private final LedManagerSubsystem m_ledManager;
+    private final LedManagerSubsystem m_ledSubsystem; // NOPMD
 
     // Joysticks
     private final CommandXboxController m_driverController =
@@ -65,6 +65,7 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
+        m_ledSubsystem = new LedManagerSubsystem();
 
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
         NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem).withTimeout(1));
@@ -100,7 +101,8 @@ public class RobotContainer {
         addShooterTestCommands(shuffleboardTab);
 
         shuffleboardTab.add("Teleop: David Drive", new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-        shuffleboardTab.add("Teleop: Aim at speaker", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
+        shuffleboardTab.add("Teleop: Aim at speaker (current pose)", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
+        shuffleboardTab.add("Teleop: Aim at speaker (predicted pose)", new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getFuturePose));
 
         // Combined Commands
         shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
@@ -170,7 +172,7 @@ public class RobotContainer {
         /////////////////////////////
         // Chassis
         m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
-        m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING));
+        m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
         // Arm
         m_driverController.leftTrigger().onTrue(m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());

@@ -173,7 +173,14 @@ public class RevSwerveChassis {
         double xSpeedDelivered = xSpeed * m_maxSpeedMetersPerSecond;
         double ySpeedDelivered = ySpeed * m_maxSpeedMetersPerSecond;
         double rotDelivered = rot * m_maxAngularSpeed;
-        setChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, fieldRelative);
+
+        ChassisSpeeds desiredSpeed;
+        if (fieldRelative) {
+            desiredSpeed = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, getEstimatedPosition().getRotation());
+        } else {
+            desiredSpeed = new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered);
+        }
+        setChassisSpeeds(desiredSpeed);
     }
 
     /**
