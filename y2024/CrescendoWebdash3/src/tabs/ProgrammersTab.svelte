@@ -51,8 +51,9 @@
   </li>
 </ul>
 
-<super-structure />
+<super-structure style="width: 460px; height: 315px;" source-key="/SmartDashboard/super structure"/>
 
 
-<GosField />
+<GosField
+        />
 
