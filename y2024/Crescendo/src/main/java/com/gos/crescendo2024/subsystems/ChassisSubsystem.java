@@ -228,7 +228,6 @@ public class ChassisSubsystem extends SubsystemBase {
             currentFieldVelocity.vyMetersPerSecond * seconds,
             new Rotation2d(currentFieldVelocity.omegaRadiansPerSecond * seconds));
         Pose2d futurePos = new Pose2d(currentPos.getX() + deltaPos.getX(), currentPos.getY() + deltaPos.getY(), new Rotation2d());
-        System.out.println(currentFieldVelocity + " " + deltaPos);
 
         return futurePos;
     }

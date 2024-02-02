@@ -19,10 +19,10 @@ import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -65,16 +65,13 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
-        m_ledSubsystem = new LedManagerSubsystem();
+        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_armPivotSubsystem, m_chassisSubsystem, m_shooterSubsystem);
 
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
         NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem).withTimeout(1));
         NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
         NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
         m_autonomousFactory = new Autos();
-
-        m_ledManager = new LedManagerSubsystem(m_intakeSubsystem, m_armPivotSubsystem, m_chassisSubsystem, m_shooterSubsystem);
-
 
         // Configure the trigger bindings
         configureBindings();
@@ -125,6 +122,7 @@ public class RobotContainer {
     private void addIntakeTestCommands(ShuffleboardTab shuffleboardTab) {
         shuffleboardTab.add("intake in", m_intakeSubsystem.createMoveIntakeInCommand());
         shuffleboardTab.add("intake out", m_intakeSubsystem.createMoveIntakeOutCommand());
+        shuffleboardTab.add("intake until piece", m_intakeSubsystem.createIntakeUntilPiece());
     }
 
     private void addArmPivotTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -159,12 +157,12 @@ public class RobotContainer {
         /////////////////////////////
         // Default Commands
         /////////////////////////////
-        if (RobotBase.isReal()) {
-            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-        }
-        else {
+//        if (RobotBase.isReal()) {
+//            m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
+//        }
+//        else {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
-        }
+//        }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
 
         /////////////////////////////

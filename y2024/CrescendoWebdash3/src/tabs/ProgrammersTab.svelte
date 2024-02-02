@@ -1,3 +1,8 @@
+<script lang="ts">
+  import "@frc-web-components/fwc/components";
+
+  import GosField from '../components/GosField.svelte';
+</script>
 <ul>
   <li>
     <frc-robot-command
@@ -45,13 +50,7 @@
 
   </li>
 </ul>
-<super-structure
-  source-key="/SmartDashboard/super structure"
-  source-provider="NetworkTables" />
 
-<frc-field-wrapper
-  game="Crescendo"
-  grid-size="1"
-  source-key="/SmartDashboard/Field"
-  source-provider="NetworkTables" />
+
+<GosField />
 

@@ -9,8 +9,8 @@ public class LedManagerSubsystem extends SubsystemBase {
     private static final int MAX_INDEX_LED = 30;
 
     // Led core
-    private final AddressableLEDBuffer m_buffer;
-    private final AddressableLED m_led;
+    protected final AddressableLEDBuffer m_buffer;
+    protected final AddressableLED m_led;
 
     // Subsystems
     private final IntakeSubsystem m_intake;
@@ -28,6 +28,7 @@ public class LedManagerSubsystem extends SubsystemBase {
 
         m_led.setLength(m_buffer.getLength());
 
+        // Set the data
         m_led.setData(m_buffer);
         m_led.start();
 

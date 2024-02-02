@@ -31,7 +31,6 @@
     tab-name="Programmers Tab"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(24px, 86px); width: 197px; height: 50px;"
@@ -324,6 +323,7 @@
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(55px, 69px); width: 178px; height: 50px;"
@@ -338,7 +338,61 @@
         source-key="/SmartDashboard/super structure/HasGamePiece"
         true-color="#ffa200"
         false-color="#b4a7a7"
-    ></frc-boolean-box></dashboard-tab><dashboard-tab
+    ></frc-boolean-box><frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(350px, 128px);"
+        source-key="/Shuffleboard/test commands/intake until piece"
+    ></frc-robot-command><vaadin-number-field
+        label="Label"
+        value="0"
+        has-label=""
+        source-provider="NetworkTables"
+        style="transform: translate(253px, 314px);"
+        source-key="/Preferences/Intake_In_Speed"
+        has-controls=""
+        has-value=""
+        placeholder=""
+        min="NaN"
+        max="NaN"
+        hascontrols=""
+    ><input
+            slot="input"
+            value="0"
+            type="number"
+            id="vaadin-number-field-185"
+            aria-labelledby="label-vaadin-number-field-205"
+            aria-describedby=""
+            min="undefined"
+            max="undefined"
+            step="any"
+            tabindex="0"
+        ><label
+            slot="label"
+            id="label-vaadin-number-field-205"
+            for="vaadin-number-field-185"
+        >Label</label>
+        <div
+            slot="error-message"
+            id="error-message-vaadin-number-field-152"
+            hidden=""
+        ></div>
+    </vaadin-number-field><frc-line-chart
+        chart-title="Line Chart"
+        source-provider="NetworkTables"
+        style="transform: translate(586px, 78px);"
+    >
+        <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
+        <frc-line-chart-axis source-provider="NetworkTables"></frc-line-chart-axis>
+        <frc-line-chart-axis
+            side="right"
+            source-provider="NetworkTables"
+        ></frc-line-chart-axis>
+        <frc-line-chart-data
+            source-provider="NetworkTables"
+            display-name="Current (Amps)"
+            source-key="/Intake Subsystem/Current (Amps)"
+        ></frc-line-chart-data>
+    </frc-line-chart></dashboard-tab><dashboard-tab
     tab-name="Chassis"
     slot="tab"
     source-provider="NetworkTables"
