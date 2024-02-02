@@ -1,84 +1,155 @@
-import { html, LitElement } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { MAX_WIDTH, MAX_HEIGHT, Renderer } from "./renderer";
-import { SuperStructureData } from "./super-structure/datatypes";
+/* eslint-disable no-bitwise */
+import { html, css, LitElement } from 'lit';
+import { property } from 'lit/decorators.js';
+import { WebbitConfig } from '@webbitjs/webbit';
 
+export const SuperStructureDashboardConfig: Partial<WebbitConfig> = {
+  dashboard: {
+    displayName: 'Basic FMS Info',
+  },
+  properties: {
+    matchType: { type: 'Number', attribute: 'match-type' },
+    matchNumber: { type: 'Number', attribute: 'match-number' },
+    eventName: { type: 'String', attribute: 'event-name' },
+    fmsControlData: { type: 'Number', attribute: 'fms-control-data' },
+  },
+};
 
+const ENABLED_FLAG = 0x01;
+const AUTO_FLAG = 0x02;
+const TEST_FLAG = 0x04;
+const EMERGENCY_STOP_FLAG = 0x08;
+const FMS_ATTACHED_FLAG = 0x10;
+const DS_ATTACHED_FLAG = 0x20;
 
+const MATCH_TYPES = ['Unknown', 'Practice', 'Qualification', 'Elimination'];
 
-@customElement("super-structure")
 export class SuperStructure extends LitElement {
+  @property({ type: Number, attribute: 'match-type' }) matchType = 0;
+  @property({ type: Number, attribute: 'match-number' }) matchNumber = 0;
+  @property({ type: String, attribute: 'event-name' }) eventName = '';
+  @property({ type: Number, attribute: 'fms-control-data' }) fmsControlData = 0;
 
-  @property({ type: Number }) pivotMotorAngle = 0.0;
-  @property({ type: Number }) goalAngle = 0.0;
-  @property({ type: Number }) shooterMotorPercentage = 0.0;
-  @property({ type: Number }) pivotMotorPercentage = 0.0;
-  @property({ type: Boolean }) hasGamePiece = false;
-  @property({ type: Number }) intakeMotorPercentage = 0.0;
+  static styles = css`
+    p {
+      margin: 5px 0;
+    }
+    p:first-child {
+      margin-top: 0;
+    }
+    p:last-child {
+      margin: 0;
+    }
+    :host {
+      text-align: center;
+      font-size: 15px;
+      display: inline-flex;
+      width: auto;
+      flex-direction: column;
+      justify-content: center;
+      font-family: sans-serif;
+      color: var(--super-structure-text-color, #000);
+    }
 
-  renderer = new Renderer();
+    .info {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+  `;
 
-  firstUpdated() {
-    const canvas = this.shadowRoot?.querySelector("canvas") as HTMLCanvasElement;
-    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
-
-
-    const updateObjectsAndDrawings = () => {
-      this.renderRobot(canvas, ctx);
-      window.requestAnimationFrame(updateObjectsAndDrawings);
-    };
-
-    const resizeObserver = new ResizeObserver(() => this.resized());
-    resizeObserver.observe(this);
-
-    window.requestAnimationFrame(updateObjectsAndDrawings);
+  getRobotState(): string {
+    if (this.isEnabled()) {
+      if (this.isTest()) {
+        return 'Test';
+      }
+      if (this.isAuto()) {
+        return 'Autonomous';
+      }
+      return 'Teleoperated';
+    }
+    return 'Disabled';
   }
 
-  private renderRobot(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D): void {
-    ctx.save();
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-
-    const { width, height } = this.getBoundingClientRect();
-    const scale = Math.min(width / MAX_WIDTH, height / MAX_HEIGHT);
-
-    ctx.beginPath();
-    ctx.scale(scale, scale);
-
-    const superStructureInfo: SuperStructureData = {
-      pivotMotorAngle: this.pivotMotorAngle,
-      goalAngle: this.goalAngle,
-      shooterMotorPercentage: this.shooterMotorPercentage,
-      pivotMotorPercentage: this.pivotMotorPercentage,
-      hasGamePiece: this.hasGamePiece,
-      intakeMotorPercentage: this.intakeMotorPercentage,
-    };
-
-    this.renderer.render(ctx, superStructureInfo);
-
-    ctx.restore();
+  isEnabled(): boolean {
+    return !!(this.fmsControlData & ENABLED_FLAG);
   }
 
-  private resized(): void {
-    this.requestUpdate();
+  isAuto(): boolean {
+    return !!(this.fmsControlData & AUTO_FLAG);
+  }
+
+  isTest(): boolean {
+    return !!(this.fmsControlData & TEST_FLAG);
+  }
+
+  isEmergencyStopped(): boolean {
+    return !!(this.fmsControlData & EMERGENCY_STOP_FLAG);
+  }
+
+  isFmsAttached(): boolean {
+    return !!(this.fmsControlData & FMS_ATTACHED_FLAG);
+  }
+
+  isDsAttached(): boolean {
+    return !!(this.fmsControlData & DS_ATTACHED_FLAG);
   }
 
   render() {
-    const rect = this.getBoundingClientRect();
-    const { width, height } = rect;
     return html`
-      <canvas
-        width="${width}"
-        height="${height}"
-        style="border:1px solid #000000;"
-      />
+      <p>
+        <strong>
+          <span>${this.eventName}</span>
+          <span>${MATCH_TYPES[this.matchType]}</span>
+          <span>match ${this.matchNumber}</span>
+        </strong>
+      </p>
+
+      <p style="margin-bottom: 7px; font-weight: normal">
+        <span style="margin-right: 5px;">
+          ${this.isFmsAttached()
+            ? html`
+                <span class="info">
+                  <frc-icon icon="check" color="green"></frc-icon>
+                  FMS connected
+                </span>
+              `
+            : html`
+                <span class="info">
+                  <frc-icon icon="close" color="red"></frc-icon>
+                  FMS disconnected
+                </span>
+              `}
+        </span>
+        <span>
+          ${this.isDsAttached()
+            ? html`
+                <span class="info">
+                  <frc-icon icon="check" color="green"></frc-icon>
+                  DriverStation connected
+                </span>
+              `
+            : html`
+                <span class="info">
+                  <frc-icon icon="close" color="red"></frc-icon>
+                  DriverStation disconnected
+                </span>
+              `}
+        </span>
+      </p>
+      <p style="font-weight: normal">Robot state: ${this.getRobotState()}</p>
     `;
   }
 }
 
+export default SuperStructure;
+
+if (!customElements.get('super-structure')) {
+  customElements.define('super-structure', SuperStructure);
+}
+
 declare global {
   interface HTMLElementTagNameMap {
-    "super-structure": SuperStructure;
+    'super-structure': SuperStructure;
   }
 }
