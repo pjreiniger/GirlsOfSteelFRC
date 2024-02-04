@@ -88,7 +88,7 @@ public class IntakeSubsystem extends SubsystemBase {
         return this.runEnd(this::intakeOut, this::intakeStop).withName("Intake Out");
     }
 
-    public Command createIntakeUntilPiece() {
+    public Command createIntakeUntilPieceCommand() {
         return createMoveIntakeInCommand().until(this::hasGamePiece).withName("Intake Till Piece");
     }
 }
