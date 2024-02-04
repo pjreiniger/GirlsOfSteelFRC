@@ -1,7 +1,7 @@
 /* eslint camelcase: "off" */
-import { Circle } from "../../utils/circle";
-import { getMotorColor } from "../../utils/color_utils";
-import { Rectangle } from "../../utils/rectangle";
+import { Circle } from "../utils/circle";
+import { getMotorColor } from "../utils/color_utils";
+import { Rectangle } from "../utils/rectangle";
 
 import { SuperStructureData } from "./datatypes";
 
