@@ -1,64 +1,55 @@
-import { defineConfig, Plugin } from 'vite';
-import basicSsl from '@vitejs/plugin-basic-ssl';
-import { hideBin } from 'yargs/helpers';
-import yargs from 'yargs/yargs';
-import fs from 'fs';
-import path from 'node:path';
-import dts from 'vite-plugin-dts';
+import { defineConfig } from "vite";
+import dts from "vite-plugin-dts";
+import { writeFileSync } from "fs";
+import { join } from "path";
+const packageJson = require("./package.json");
 
-const argv = yargs(hideBin(process.argv)).argv;
-
-const plugins: Plugin[] = [dts()];
-
-if ((argv as any)._.includes('--useHttps')) {
-  plugins.push(basicSsl());
-}
-
-function getEntries(folder: string): Record<string, string> {
-  const entries: Record<string, string> = {};
-
-  const folderPath = path.resolve(__dirname, `src/${folder}`);
-  const fileNames = fs.readdirSync(folderPath, { withFileTypes: true });
-
-  fileNames.forEach((fileName) => {
-    if (fileName.isDirectory()) {
-      entries[
-        `${folder}/${fileName.name}`
-      ] = `src/${folder}/${fileName.name}/index.ts`;
-    }
-  });
-
-  return {
-    [folder]: `src/${folder}/index.ts`,
-    ...entries,
-  };
-}
-
-function getAllEntries(): Record<string, string> {
-  return {
-    ...getEntries('components'),
-    fwc: 'src/index.ts',
-  };
-}
-
+// https://vitejs.dev/config/
 export default defineConfig({
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@dashboard': path.resolve(__dirname, './src/dashboard'),
+  plugins: [
+    dts(),
+    {
+      name: 'postbuild-commands', // the name of your custom plugin. Could be anything.
+      closeBundle: async () => {
+        const pluginJson = {
+          name: packageJson?.displayName ?? 'Some FWC Plugin',
+          description: packageJson?.description ?? '',
+          version: packageJson?.version ?? '0.0.0',
+        };
+        const pluginJsonPath = join(__dirname, "plugin/plugin.json");
+
+        writeFileSync(pluginJsonPath, JSON.stringify(pluginJson, null, 4));
+      }
     },
-  },
+  ],
   build: {
     lib: {
-      entry: getAllEntries(),
-      formats: ['es'],
+      entry: {
+        "index": "src/index.ts",
+        "components": "src/components/index.ts"
+      },
+      name: "fwc-plugin",
+      // TODO: multiple entry points are not supported with umd
+      // How do we add umd support then?
+      formats: ["es"],
       fileName: (format, entryName) => `${entryName}.${format}.js`,
     },
-    minify: true,
-    sourcemap: true,
+    outDir: "plugin",
+    rollupOptions: {
+      external: ["lit", "@frc-web-components/app"],
+      output: {
+        // Provide global variables to use in the UMD build
+        // for externalized deps
+        globals: {
+          "@frc-web-components/app": "fwcApp",
+        },
+      },
+    },
+  },
+  define: {
+    "process.env": process.env,
   },
   server: {
-    open: '/',
+    open: true,
   },
-  plugins,
 });
