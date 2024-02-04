@@ -6,11 +6,6 @@
       }
     },
     "Other Devices": {
-      "SPARK MAX [26]": {
-        "header": {
-          "open": true
-        }
-      },
       "SPARK MAX [33]": {
         "header": {
           "open": true
@@ -413,6 +408,7 @@
     },
     "Server": {
       "open": true
-    }
+    },
+    "visible": true
   }
 }

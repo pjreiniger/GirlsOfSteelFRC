@@ -88,7 +88,6 @@ public class ChassisSubsystem extends SubsystemBase {
         m_turnAnglePIDVelocity = new PIDController(0, 0, 0);
         m_turnAnglePIDVelocity.setTolerance(5);
         m_turnAnglePIDVelocity.enableContinuousInput(0, 360);
-        m_turnAnglePIDVelocity.setTolerance(2);
         m_turnAnglePIDProperties = new WpiPidPropertyBuilder("Chassis to angle", false, m_turnAnglePIDVelocity)
             .addP(0.2)
             .addI(0)
