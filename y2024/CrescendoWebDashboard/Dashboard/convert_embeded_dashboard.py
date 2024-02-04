@@ -68,7 +68,7 @@ def handle_tab(dashboard_tab):
 
 
 def main():
-    with open(r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\WebDash.html', 'r') as f:
+    with open(r'/WebDash.html', 'r') as f:
         soup = BeautifulSoup(f.read(), 'html.parser' )
 
     for dashboard_tab in soup.find_all('dashboard-tab'):
