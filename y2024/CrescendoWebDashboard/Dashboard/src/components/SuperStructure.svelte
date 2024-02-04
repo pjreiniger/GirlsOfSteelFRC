@@ -9,7 +9,7 @@
 </script>
 
 
-<super-structure style="width: 460px; height: 315px;"
+<super-structure style="width: 700px; height: 700px;"
     pivotMotorAngle={$pivotMotorAngle}
     goalAngle={$goalAngle}
     shooterMotorPercentage={$shooterMotorPercentage}

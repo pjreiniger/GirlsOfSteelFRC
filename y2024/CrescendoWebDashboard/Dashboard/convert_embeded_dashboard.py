@@ -4,13 +4,16 @@ import os
 
 def handle_tab(dashboard_tab):
     tab_name = dashboard_tab.get('tab-name')
-    output_file = os.path.join(r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\CrescendoWebdash3\src\tabs')
+    output_file = os.path.join(r'src\tabs')
 
     if tab_name == "Drivers":
         output_file = os.path.join(output_file, "DriverTab.svelte")
     elif tab_name == "Pit":
         output_file = os.path.join(output_file, "PitTab.svelte")
+    elif tab_name == "Programmers Tab":
+        output_file = os.path.join(output_file, "ProgrammersTab.svelte")
     else:
+        print(f"Assuming '{tab_name}' is a subsystem")
         output_file = os.path.join(output_file, "subsystems", tab_name.replace(" ", "") + "SubsystemTab.svelte")
 
     if not os.path.exists(os.path.dirname(output_file)):
@@ -48,16 +51,20 @@ def handle_tab(dashboard_tab):
                 del tag["infos"]
                 del tag["errors"]
                 del tag["warnings"]
-
-            if tag.name == "frc-sendable-chooser":
+            elif tag.name == "frc-sendable-chooser":
                 del tag["options"]
                 del tag["selected"]
-
-            if tag.name == "frc-line-chart":
+            elif tag.name == "frc-line-chart":
                 if tab_name == "Arm Pivot":
                     tag["style"] = "transform-origin: 0 0; transform: translate(50%, -100%);"
                 elif tab_name == "Shooter":
                     tag["style"] = "transform-origin: 0 0; transform: translate(50%, -50%);"
+            elif tag.name == "super-structure":
+                f.write("<SuperStructure />\n")
+                continue
+            elif tag.name == "frc-field-wrapper":
+                f.write("<GosField />\n")
+                continue
 
             try:
                 f.write(tag.prettify())
@@ -68,7 +75,7 @@ def handle_tab(dashboard_tab):
 
 
 def main():
-    with open(r'/WebDash.html', 'r') as f:
+    with open(r'../../Crescendo/WebDash.html', 'r') as f:
         soup = BeautifulSoup(f.read(), 'html.parser' )
 
     for dashboard_tab in soup.find_all('dashboard-tab'):
