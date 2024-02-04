@@ -3,7 +3,6 @@ package com.gos.lib.rev.swerve;
 import com.gos.lib.swerve.SwerveDrivePublisher;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -133,7 +132,6 @@ public class RevSwerveChassis {
      * @return The pose.
      */
     public Pose2d getEstimatedPosition() {
-//        m_poseEstimator.
         return m_poseEstimator.getEstimatedPosition();
     }
 
@@ -244,17 +242,6 @@ public class RevSwerveChassis {
         m_modules[moduleId].setDesiredState(new SwerveModuleState(velocity, Rotation2d.fromDegrees(degrees)));
     }
 
-    public void setChassisSpeeds(double xVelocity, double yVelocity, double omegaVelocity, boolean fieldRelative) {
-        ChassisSpeeds desiredSpeed;
-        if (fieldRelative) {
-            desiredSpeed = ChassisSpeeds.fromFieldRelativeSpeeds(xVelocity, yVelocity, omegaVelocity, getEstimatedPosition().getRotation());
-        } else {
-            desiredSpeed = new ChassisSpeeds(xVelocity, omegaVelocity, omegaVelocity);
-        }
-
-        setChassisSpeeds(desiredSpeed);
-    }
-
     public void setChassisSpeeds(ChassisSpeeds speeds) {
         SwerveModuleState[] moduleStates = m_kinematics.toSwerveModuleStates(speeds);
         SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, m_maxSpeedMetersPerSecond);
@@ -273,9 +260,5 @@ public class RevSwerveChassis {
 
     public String getModuleName(int moduleId) {
         return m_modules[moduleId].getName();
-    }
-
-    public void addVisionMeasurement(Pose3d estimatedPose, double timestampSeconds) {
-        m_poseEstimator.addVisionMeasurement(estimatedPose.toPose2d(), timestampSeconds);
     }
 }
