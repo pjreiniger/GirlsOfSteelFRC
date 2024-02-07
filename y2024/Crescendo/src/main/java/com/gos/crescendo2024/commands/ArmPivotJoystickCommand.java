@@ -3,8 +3,10 @@ package com.gos.crescendo2024.commands;
 import com.gos.crescendo2024.subsystems.ArmPivotSubsystem;
 import com.gos.lib.properties.GosDoubleProperty;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 
 public class ArmPivotJoystickCommand extends Command {

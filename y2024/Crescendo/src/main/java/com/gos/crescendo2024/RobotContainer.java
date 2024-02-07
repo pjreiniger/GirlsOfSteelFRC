@@ -17,6 +17,8 @@ import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import com.gos.crescendo2024.subsystems.IntakeSubsystem;
 import com.gos.crescendo2024.subsystems.LedManagerSubsystem;
 import com.gos.crescendo2024.subsystems.ShooterSubsystem;
+import com.gos.crescendo2024.subsystems.sysid.ArmPivotSysId;
+import com.gos.crescendo2024.subsystems.sysid.ShooterSysId;
 import com.gos.lib.properties.PropertyManager;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.hal.AllianceStationID;
@@ -32,6 +34,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.photonvision.PhotonCamera;
 
 
@@ -48,6 +51,10 @@ public class RobotContainer {
     private final ShooterSubsystem m_shooterSubsystem;
     private final IntakeSubsystem m_intakeSubsystem;
     private final LedManagerSubsystem m_ledSubsystem; // NOPMD
+
+    // SysID
+    private final ArmPivotSysId m_pivotSysId;
+    private final ShooterSysId m_shooterSysId;
 
     // Joysticks
     private final CommandXboxController m_driverController =
@@ -75,10 +82,14 @@ public class RobotContainer {
         NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
         m_autonomousFactory = new Autos();
 
+        m_pivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
+        m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
+
         // Configure the trigger bindings
         configureBindings();
 
         createTestCommands();
+        createSysIdCommands();
 
         SmartDashboard.putData("super structure", new SuperstructureSendable());
 
@@ -91,6 +102,21 @@ public class RobotContainer {
         PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
 
         PhotonCamera.setVersionCheckEnabled(false); // TODO turn back on when we have the cameras hooked up
+    }
+
+    private void createSysIdCommands() {
+        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("sysid commands");
+
+        shuffleboardTab.add("Pivot Sysid: Quasistatic Forward", m_pivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Quasi Forward"));
+        shuffleboardTab.add("Pivot Sysid: Quasistatic Reverse", m_pivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Quasi Reverse"));
+        shuffleboardTab.add("Pivot Sysid: Dynamic Forward", m_pivotSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Dynamic Forward"));
+        shuffleboardTab.add("Pivot Sysid: Dynamic Reverse", m_pivotSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Dynamic Reverse"));
+
+
+        shuffleboardTab.add("Shooter Sysid: Quasistatic Forward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Quasi Forward"));
+        shuffleboardTab.add("Shooter Sysid: Quasistatic Reverse", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Quasi Reverse"));
+        shuffleboardTab.add("Shooter Sysid: Dynamic Forward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Dynamic Forward"));
+        shuffleboardTab.add("Shooter Sysid: Dynamic Reverse", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Dynamic Reverse"));
     }
 
     private void createTestCommands() {
