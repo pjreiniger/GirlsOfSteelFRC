@@ -16,6 +16,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -73,11 +74,13 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addDouble("Current Amps", m_shooterMotorLeader::getOutputCurrent);
         m_networkTableEntries.addDouble("Output", m_shooterMotorLeader::getAppliedOutput);
         m_networkTableEntries.addDouble("Velocity (RPM)", m_shooterEncoder::getVelocity);
+        m_networkTableEntries.addBoolean("Shooter At Goal", this::isShooterAtGoal);
 
         if (RobotBase.isSimulation()) {
             FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
             this.m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim, new RevMotorControllerSimWrapper(this.m_shooterMotorLeader), RevEncoderSimWrapper.create(this.m_shooterMotorLeader));
         }
+
     }
 
     @Override
@@ -106,12 +109,27 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterGoalRPM = rpm;
     }
 
+    public void setVoltage(double outputVolts) {
+        m_shooterMotorLeader.setVoltage(outputVolts);
+    }
+
     public double getRPM() {
         return m_shooterEncoder.getVelocity();
     }
 
     public double getShooterMotorPercentage() {
         return m_shooterMotorLeader.getAppliedOutput();
+    }
+
+    public double getVoltage() {
+        if (RobotBase.isReal()) {
+            return m_shooterMotorLeader.getBusVoltage();
+        }
+        return m_shooterMotorLeader.getAppliedOutput() * RobotController.getBatteryVoltage();
+    }
+
+    public double getEncoderPos() {
+        return m_shooterEncoder.getPosition();
     }
 
     public boolean isShooterAtGoal() {
@@ -137,21 +155,5 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public Command createStopShooterCommand() {
         return this.run(this::stopShooter).withName("stop shooter");
-    }
-
-
-    public void setVoltage(double voltage) {
-        m_shooterMotorLeader.setVoltage(voltage);
-    }
-
-    public double getMotorVoltage() {
-        if (RobotBase.isSimulation()) {
-            return m_shooterMotorLeader.getAppliedOutput() * 12;
-        }
-        return m_shooterMotorLeader.getBusVoltage();
-    }
-
-    public double getDistance() {
-        return m_shooterEncoder.getPosition();
     }
 }

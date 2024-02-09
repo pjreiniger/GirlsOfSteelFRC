@@ -4,7 +4,6 @@ import com.gos.crescendo2024.subsystems.ShooterSubsystem;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
-import edu.wpi.first.units.Units;
 import edu.wpi.first.units.Velocity;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
@@ -17,47 +16,43 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Volts;
 
 public class ShooterSysId {
-    private static final Angle ANGLE_UNIT = Rotations;
-    private static final Velocity<Angle> VELOCITY_UNIT = RotationsPerSecond;
-
-    private final SysIdRoutine m_sysIdRoutine;
+    private final SysIdRoutine m_routine;
     private final ShooterSubsystem m_shooter;
 
     private final MutableMeasure<Voltage> m_appliedVoltage = mutable(Volts.of(0));
-    private final MutableMeasure<Angle> m_angle = mutable(ANGLE_UNIT.of(0));
-    private final MutableMeasure<Velocity<Angle>> m_velocity = mutable(VELOCITY_UNIT.of(0));
+    private final MutableMeasure<Angle> m_rotations = mutable(Rotations.of(0));
+    private final MutableMeasure<Velocity<Angle>> m_velocity = mutable(RotationsPerSecond.of(0));
 
     public ShooterSysId(ShooterSubsystem shooter) {
         m_shooter = shooter;
-
-        m_sysIdRoutine =  new SysIdRoutine(
-            new SysIdRoutine.Config(
-                Units.Volts.of(1).per(Units.Seconds.of(1.0)),
-                Units.Volts.of(3.0),
-                Units.Seconds.of(10)
-            ),
-            new SysIdRoutine.Mechanism((Measure<Voltage> voltage) -> {
-                m_shooter.setVoltage(voltage.in(Volts));
-            }, this::logSysId, m_shooter)
+        m_routine = new SysIdRoutine(
+            new SysIdRoutine.Config(),
+            new SysIdRoutine.Mechanism(this::voltageMotors, this::logMotors, shooter)
         );
     }
 
-    private void logSysId(SysIdRoutineLog log) {
+    private void voltageMotors(Measure<Voltage> volts) {
+        m_shooter.setVoltage(volts.in(Volts));
+    }
+
+    private void logMotors(SysIdRoutineLog log) {
         log.motor("shooter")
             .voltage(
                 m_appliedVoltage.mut_replace(
-                    m_shooter.getMotorVoltage(), Volts))
-            .angularPosition(m_angle.mut_replace(m_shooter.getDistance(), ANGLE_UNIT))
+                    m_shooter.getVoltage(), Volts))
+            .angularPosition(m_rotations.mut_replace(m_shooter.getEncoderPos(), Rotations))
             .angularVelocity(
-                m_velocity.mut_replace(m_shooter.getRPM(), VELOCITY_UNIT));
+                m_velocity.mut_replace(m_shooter.getRPM(), RotationsPerSecond));
     }
 
+    ///////////////////////
+    // Command Factories
+    ///////////////////////
     public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-        return m_sysIdRoutine.quasistatic(direction);
+        return m_routine.quasistatic(direction);
     }
 
     public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-        return m_sysIdRoutine.dynamic(direction);
+        return m_routine.dynamic(direction);
     }
-
 }

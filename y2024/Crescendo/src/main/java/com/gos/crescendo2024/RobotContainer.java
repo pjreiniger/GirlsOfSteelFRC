@@ -52,8 +52,8 @@ public class RobotContainer {
     private final IntakeSubsystem m_intakeSubsystem;
     private final LedManagerSubsystem m_ledSubsystem; // NOPMD
 
-    // SysID
-    private final ArmPivotSysId m_pivotSysId;
+    // SysId
+    private final ArmPivotSysId m_armPivotSysId;
     private final ShooterSysId m_shooterSysId;
 
     // Joysticks
@@ -74,13 +74,19 @@ public class RobotContainer {
         m_shooterSubsystem = new ShooterSubsystem();
         m_armPivotSubsystem = new ArmPivotSubsystem();
         m_intakeSubsystem = new IntakeSubsystem();
-        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_armPivotSubsystem, m_chassisSubsystem, m_shooterSubsystem);
+
+
+
+        m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
+        m_armPivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
+
 
         NamedCommands.registerCommand("AimAndShootIntoSpeaker", new SpeakerAimAndShootCommand(m_armPivotSubsystem, m_chassisSubsystem, m_intakeSubsystem, m_shooterSubsystem));
-        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem).withTimeout(1));
+        NamedCommands.registerCommand("IntakePiece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
         NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
         m_autonomousFactory = new Autos();
+        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory);
 
         m_pivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
         m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
@@ -135,7 +141,22 @@ public class RobotContainer {
         // Combined Commands
         shuffleboardTab.add("Auto-Intake Piece", CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         shuffleboardTab.add("Auto-Shoot in Speaker", CombinedCommands.speakerAimAndShoot(m_armPivotSubsystem, m_shooterSubsystem, m_chassisSubsystem, m_intakeSubsystem));
-        shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_intakeSubsystem));
+        shuffleboardTab.add("Auto-Shoot in Amp", CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    }
+
+    private void createSysIdCommands() {
+        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("SysId");
+
+
+        shuffleboardTab.add("Arm SysId Dynamic Forward", m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Arm Dyn F"));
+        shuffleboardTab.add("Arm SysId Dynamic Backward", m_armPivotSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Arm Dyn B"));
+        shuffleboardTab.add("Arm SysId Quasistatic Forward", m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Arm Quas F"));
+        shuffleboardTab.add("Arm SysId Quasistatic Backward", m_armPivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Arm Quas B"));
+
+        shuffleboardTab.add("Shooter SysId Dynamic Forward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Shooter Dyn F"));
+        shuffleboardTab.add("Shooter SysId Dynamic Backward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Shooter Dyn B"));
+        shuffleboardTab.add("Shooter SysId Quasistatic Forward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Shooter Quas F"));
+        shuffleboardTab.add("Shooter SysId Quasistatic Backward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Shooter Quas B"));
     }
 
     private void addChassisTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -148,6 +169,9 @@ public class RobotContainer {
 
 
         shuffleboardTab.add("Chassis Set Pose Origin", m_chassisSubsystem.createResetPoseCommand(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+        shuffleboardTab.add("Chassis Set Pose Subwoofer Bottom", m_chassisSubsystem.createResetPoseCommand(new Pose2d(0.6933452953924437, 4.403274541213847, Rotation2d.fromDegrees(-60))).withName("Reset Pose Subwoofer Bottom"));
+        shuffleboardTab.add("Chassis Set Pose Subwoofer Mid", m_chassisSubsystem.createResetPoseCommand(new Pose2d(1.34, 5.55, Rotation2d.fromDegrees(0))).withName("Reset Pose Subwoofer Mid"));
+        shuffleboardTab.add("Chassis Set Pose Subwoofer Top", m_chassisSubsystem.createResetPoseCommand(new Pose2d(0.6933452953924437,        6.686887667641241, Rotation2d.fromDegrees(60))).withName("Reset Pose Subwoofer Top"));
 
         shuffleboardTab.add("Chassis drive to speaker", m_chassisSubsystem.createDriveToPointCommand(FieldConstants.Speaker.CENTER_SPEAKER_OPENING).withName("Drive To Speaker"));
         shuffleboardTab.add("Chassis drive to amp", m_chassisSubsystem.createDriveToPointCommand(new Pose2d(FieldConstants.AMP_CENTER, Rotation2d.fromDegrees(90))).withName("Drive To Amp"));
@@ -172,6 +196,8 @@ public class RobotContainer {
         shuffleboardTab.add("Arm to ground intake angle", m_armPivotSubsystem.createMoveArmToGroundIntakeAngleCommand());
         shuffleboardTab.add("Arm to default speaker angle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
         shuffleboardTab.add("Arm to speaker (from pose)", m_armPivotSubsystem.createPivotUsingSpeakerTableCommand(m_chassisSubsystem::getPose));
+        shuffleboardTab.add("Arm Resync Encoder", m_armPivotSubsystem.createSyncRelativeEncoderCommand());
+
     }
 
     private void addShooterTestCommands(ShuffleboardTab shuffleboardTab) {
@@ -197,8 +223,7 @@ public class RobotContainer {
         /////////////////////////////
         if (RobotBase.isReal()) {
             m_chassisSubsystem.setDefaultCommand(new DavidDriveSwerve(m_chassisSubsystem, m_driverController));
-        }
-        else {
+        } else {
             m_chassisSubsystem.setDefaultCommand(new TeleopSwerveDrive(m_chassisSubsystem, m_driverController));
         }
         m_armPivotSubsystem.setDefaultCommand(new ArmPivotJoystickCommand(m_armPivotSubsystem, m_operatorController));
@@ -207,32 +232,26 @@ public class RobotContainer {
         // Driver Controller
         /////////////////////////////
         // Chassis
-        m_driverController.start().onTrue(m_chassisSubsystem.createResetGyroCommand());
+        m_driverController.start().whileTrue(m_chassisSubsystem.createResetGyroCommand());
         m_driverController.x().whileTrue(new TurnToPointSwerveDrive(m_chassisSubsystem, m_driverController, FieldConstants.Speaker.CENTER_SPEAKER_OPENING, true, m_chassisSubsystem::getPose));
 
-        // Arm & shoot rpm
-        m_driverController.leftBumper().whileTrue(
-            m_armPivotSubsystem.createMoveArmToAmpAngleCommand()
-                .alongWith(m_shooterSubsystem.createSetRPMCommand(400)));
+        // Amp Scoring
+        m_driverController.leftBumper().whileTrue(CombinedCommands.prepareAmpShot(m_armPivotSubsystem, m_shooterSubsystem));
+        m_driverController.leftBumper().and(m_driverController.rightTrigger()).whileTrue(
+            CombinedCommands.ampShooterCommand(m_armPivotSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+
+        //Speaker Shooting
         m_driverController.rightBumper().whileTrue(
-            m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand()
-                .alongWith(m_shooterSubsystem.createSetRPMCommand(4000)));
+
+            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem));
+        m_driverController.rightBumper().and(m_driverController.rightTrigger()).whileTrue(
+            CombinedCommands.prepareSpeakerShot(m_armPivotSubsystem, m_shooterSubsystem)
+                    .alongWith(m_intakeSubsystem.createMoveIntakeInCommand()));
 
         //go to floor
         m_driverController.leftTrigger().whileTrue(CombinedCommands.intakePieceCommand(m_armPivotSubsystem, m_intakeSubsystem));
         //spit out
         m_driverController.a().whileTrue(m_intakeSubsystem.createMoveIntakeOutCommand());
-
-        //Amp Shooting
-        m_driverController.leftBumper().and(m_driverController.rightTrigger()).whileTrue(
-            m_armPivotSubsystem.createMoveArmToAmpAngleCommand()
-                .alongWith(m_shooterSubsystem.createSetRPMCommand(400)
-                    .alongWith(m_intakeSubsystem.createMoveIntakeInCommand())));
-        //Speaker Shooting
-        m_driverController.rightBumper().and(m_driverController.rightTrigger()).whileTrue(
-            m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand()
-                .alongWith(m_shooterSubsystem.createSetRPMCommand(4000)
-                    .alongWith(m_intakeSubsystem.createMoveIntakeInCommand())));
 
 
         /////////////////////////////
@@ -248,6 +267,7 @@ public class RobotContainer {
         m_operatorController.leftTrigger().whileTrue(m_shooterSubsystem.createRunDefaultRpmCommand());
 
         PropertyManager.printDynamicProperties();
+        // PropertyManager.purgeExtraKeys();
     }
 
 
