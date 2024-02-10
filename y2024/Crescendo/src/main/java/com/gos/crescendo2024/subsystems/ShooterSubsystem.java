@@ -3,7 +3,6 @@ package com.gos.crescendo2024.subsystems;
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
-import com.gos.lib.properties.feedforward.SimpleMotorFeedForwardProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
@@ -13,7 +12,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
@@ -53,9 +51,6 @@ public class ShooterSubsystem extends SubsystemBase {
             .addD(0.0)
             .addFF(0.000174)
             .build();
-
-//        SimpleMotorFeedforward ff;
-//        ff.calculate()
 
         m_shooterMotorLeader.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorLeader.setSmartCurrentLimit(60);

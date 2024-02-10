@@ -24,18 +24,12 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.Measure;
-import edu.wpi.first.units.MutableMeasure;
-import edu.wpi.first.units.Unit;
-import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.SingleJointedArmSimWrapper;
@@ -60,7 +54,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntriesPivot;
     private final SparkMaxAlerts m_armPivotMotorErrorAlerts;
 
-    private final ArmFeedForwardProperty m_wpiFeedForward;
     private final SparkPIDController m_sparkPidController;
     private final PidProperty m_sparkPidProperties;
     private final ProfiledPIDController m_profilePID;
@@ -70,7 +63,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
     private SingleJointedArmSimWrapper m_pivotSimulator;
 
     private final SpeakerLookupTable m_speakerTable;
-
 
     public ArmPivotSubsystem() {
         m_pivotMotor = new SimableCANSparkMax(Constants.ARM_PIVOT, CANSparkLowLevel.MotorType.kBrushless);
@@ -101,8 +93,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
         m_speakerTable = new SpeakerLookupTable();
 
-//        m_sysidLog.motor("Pivot").
-
         m_sparkPidController = m_pivotMotor.getPIDController();
         if (USE_ABSOLUTE_ENCODER) {
             m_sparkPidController.setFeedbackDevice(m_pivotAbsEncoder);
@@ -123,7 +113,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
         m_wpiFeedForward = new ArmFeedForwardProperty("Arm Pivot Profile ff", false)
             .addKs(0)
             .addKff(0)
-            .addKs(0)
             .addKg(0.9);
 
         m_networkTableEntriesPivot = new LoggingUtil("Arm Pivot Subsystem");
@@ -250,30 +239,25 @@ public class ArmPivotSubsystem extends SubsystemBase {
     // Command Factories
     /////////////////////////////////////
 
+
     public Command createPivotUsingSpeakerTableCommand(Supplier<Pose2d> roboMan) {
         return this.runEnd(() -> this.pivotUsingSpeakerLookupTable(roboMan), this::stopArmMotor).withName("pivot from robot pose");
     }
 
-    public Command createMoveArmToAngleCommand(DoubleSupplier angleSuppler) {
-        return runOnce(this::resetProfiledPidController)
-            .andThen(runEnd(() -> moveArmToAngle(angleSuppler.getAsDouble()), this::stopArmMotor))
-            .withName("arm to " + angleSuppler.getAsDouble());
-    }
-
     public Command createMoveArmToAngleCommand(double goalAngle) {
-        return createMoveArmToAngleCommand(() -> goalAngle);
+        return runEnd(() -> moveArmToAngle(goalAngle), this::stopArmMotor).withName("arm to " + goalAngle);
     }
 
     public Command createMoveArmToGroundIntakeAngleCommand() {
-        return createMoveArmToAngleCommand(ARM_INTAKE_ANGLE::getValue).withName("arm to ground intake angle");
+        return runEnd(() -> moveArmToAngle(ARM_INTAKE_ANGLE.getValue()), this::stopArmMotor).withName("arm to ground intake angle");
     }
 
     public Command createMoveArmToAmpAngleCommand() {
-        return createMoveArmToAngleCommand(ARM_AMP_ANGLE::getValue).withName("arm to amp angle");
+        return runEnd(() -> moveArmToAngle(ARM_AMP_ANGLE.getValue()), this::stopArmMotor).withName("arm to amp angle");
     }
 
     public Command createMoveArmToDefaultSpeakerAngleCommand() {
-        return createMoveArmToAngleCommand(ARM_DEFAULT_SPEAKER_ANGLE::getValue).withName("arm to default speaker angle");
+        return runEnd(() -> moveArmToAngle(ARM_DEFAULT_SPEAKER_ANGLE.getValue()), this::stopArmMotor).withName("arm to default speaker angle");
     }
 
     public Command createSyncRelativeEncoderCommand() {
@@ -291,20 +275,5 @@ public class ArmPivotSubsystem extends SubsystemBase {
                     m_followMotor.setIdleMode(CANSparkBase.IdleMode.kBrake);
                 })
             .ignoringDisable(true).withName("Pivot to Coast");
-    }
-
-    public double getVelocity() {
-        return m_pivotMotorEncoder.getVelocity();
-    }
-
-    public void setVoltage(double volts) {
-        m_pivotMotor.setVoltage(volts);
-    }
-
-    public double getMotorVoltage() {
-        if (RobotBase.isSimulation()) {
-            return m_pivotMotor.getAppliedOutput() * 12;
-        }
-        return m_pivotMotor.getBusVoltage();
     }
 }

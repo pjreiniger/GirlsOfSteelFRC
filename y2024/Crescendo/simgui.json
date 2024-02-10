@@ -33,6 +33,14 @@
       "/Shuffleboard/PP Paths/StraightLinePath": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
+      "/Shuffleboard/SysId/Arm SysId Dynamic Backward": "Command",
+      "/Shuffleboard/SysId/Arm SysId Dynamic Forward": "Command",
+      "/Shuffleboard/SysId/Arm SysId Quasistatic Backward": "Command",
+      "/Shuffleboard/SysId/Arm SysId Quasistatic Forward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Dynamic Backward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Dynamic Forward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Quasistatic Backward": "Command",
+      "/Shuffleboard/SysId/Shooter SysId Quasistatic Forward": "Command",
       "/Shuffleboard/sysid commands/Pivot Sysid: Dynamic Forward": "Command",
       "/Shuffleboard/sysid commands/Pivot Sysid: Dynamic Reverse": "Command",
       "/Shuffleboard/sysid commands/Pivot Sysid: Quasistatic Forward": "Command",
@@ -41,6 +49,7 @@
       "/Shuffleboard/sysid commands/Shooter Sysid: Dynamic Reverse": "Command",
       "/Shuffleboard/sysid commands/Shooter Sysid: Quasistatic Forward": "Command",
       "/Shuffleboard/sysid commands/Shooter Sysid: Quasistatic Reverse": "Command",
+      "/Shuffleboard/test commands/Arm Resync Encoder": "Command",
       "/Shuffleboard/test commands/Arm to 0": "Command",
       "/Shuffleboard/test commands/Arm to 30": "Command",
       "/Shuffleboard/test commands/Arm to 45": "Command",
@@ -56,6 +65,9 @@
       "/Shuffleboard/test commands/Auto-Shoot in Speaker": "Command",
       "/Shuffleboard/test commands/Chassis Push": "Command",
       "/Shuffleboard/test commands/Chassis Set Pose Origin": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Bottom": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid": "Command",
+      "/Shuffleboard/test commands/Chassis Set Pose Subwoofer Top": "Command",
       "/Shuffleboard/test commands/Chassis chase note": "Command",
       "/Shuffleboard/test commands/Chassis drive to amp": "Command",
       "/Shuffleboard/test commands/Chassis drive to speaker": "Command",
@@ -107,7 +119,9 @@
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/ParallelRaceGroup": "Command",
       "/SmartDashboard/SendableChooser[1]": "String Chooser",
+      "/SmartDashboard/VisionSystemSim-AprilTag1/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-GamePieceSim/Sim Field": "Field2d",
+      "/SmartDashboard/VisionSystemSim-ObjectDetection/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-aprilTagsSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d",
       "/SmartDashboard/VisionSystemSim-vision/Sim Field": "Field2d"
@@ -118,47 +132,32 @@
           "visible": true
         }
       },
-      "/Shuffleboard/sysid commands/Pivot Sysid: Dynamic Forward": {
+      "/Shuffleboard/SysId/Arm SysId Dynamic Backward": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/sysid commands/Pivot Sysid: Dynamic Reverse": {
+      "/Shuffleboard/SysId/Arm SysId Dynamic Forward": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/sysid commands/Pivot Sysid: Quasistatic Forward": {
+      "/Shuffleboard/SysId/Arm SysId Quasistatic Backward": {
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/sysid commands/Pivot Sysid: Quasistatic Reverse": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/sysid commands/Shooter Sysid: Dynamic Forward": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/sysid commands/Shooter Sysid: Dynamic Reverse": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/sysid commands/Shooter Sysid: Quasistatic Forward": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/sysid commands/Shooter Sysid: Quasistatic Reverse": {
+      "/Shuffleboard/SysId/Arm SysId Quasistatic Forward": {
         "window": {
           "visible": true
         }
       },
       "/Shuffleboard/test commands/Arm to 0": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/test commands/Arm to 45": {
         "window": {
           "visible": true
         }
@@ -179,11 +178,6 @@
         }
       },
       "/Shuffleboard/test commands/Shooter RPM: 4000": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/Shuffleboard/test commands/arm to 45": {
         "window": {
           "visible": true
         }
@@ -476,15 +470,16 @@
     },
     "Server": {
       "open": true
-    },
-    "visible": true
+    }
   },
   "Plot": {
     "Plot <0>": {
       "plots": [
         {
           "axis": [
-            {},
+            {
+              "autoFit": true
+            },
             {
               "autoFit": true
             }
@@ -495,7 +490,7 @@
             0.0,
             0.8500000238418579
           ],
-          "height": 338,
+          "height": 466,
           "series": [
             {
               "color": [
@@ -509,8 +504,8 @@
             {
               "color": [
                 0.8666667342185974,
-                0.5176470875740051,
-                0.32156863808631897,
+                0.32156869769096375,
+                0.32156869769096375,
                 1.0
               ],
               "id": "NT:/Arm Pivot Subsystem/Rel Encoder Velocity",
@@ -543,6 +538,16 @@
                 1.0
               ],
               "id": "NT:/Arm Pivot Subsystem/Output"
+            },
+            {
+              "color": [
+                0.5764706134796143,
+                0.4705882668495178,
+                0.3764706254005432,
+                1.0
+              ],
+              "id": "NT:/Arm Pivot Subsystem/Setpoint Velocity",
+              "yAxis": 1
             }
           ],
           "yaxis2": true
@@ -598,7 +603,10 @@
             }
           ]
         }
-      ]
+      ],
+      "window": {
+        "visible": false
+      }
     }
   }
 }

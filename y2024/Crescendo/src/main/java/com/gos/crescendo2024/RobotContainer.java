@@ -86,10 +86,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("MoveArmToSpeakerAngle", m_armPivotSubsystem.createMoveArmToDefaultSpeakerAngleCommand());
         NamedCommands.registerCommand("ShooterDefaultRpm", m_shooterSubsystem.createRunDefaultRpmCommand());
         m_autonomousFactory = new Autos();
-        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_autonomousFactory);
-
-        m_pivotSysId = new ArmPivotSysId(m_armPivotSubsystem);
-        m_shooterSysId = new ShooterSysId(m_shooterSubsystem);
+        m_ledSubsystem = new LedManagerSubsystem(m_intakeSubsystem, m_armPivotSubsystem, m_chassisSubsystem, m_shooterSubsystem);
 
         // Configure the trigger bindings
         configureBindings();
@@ -108,21 +105,6 @@ public class RobotContainer {
         PathPlannerUtils.createTrajectoriesShuffleboardTab(m_chassisSubsystem);
 
         PhotonCamera.setVersionCheckEnabled(false); // TODO turn back on when we have the cameras hooked up
-    }
-
-    private void createSysIdCommands() {
-        ShuffleboardTab shuffleboardTab = Shuffleboard.getTab("sysid commands");
-
-        shuffleboardTab.add("Pivot Sysid: Quasistatic Forward", m_pivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Quasi Forward"));
-        shuffleboardTab.add("Pivot Sysid: Quasistatic Reverse", m_pivotSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Quasi Reverse"));
-        shuffleboardTab.add("Pivot Sysid: Dynamic Forward", m_pivotSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Dynamic Forward"));
-        shuffleboardTab.add("Pivot Sysid: Dynamic Reverse", m_pivotSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Dynamic Reverse"));
-
-
-        shuffleboardTab.add("Shooter Sysid: Quasistatic Forward", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kForward).withName("Quasi Forward"));
-        shuffleboardTab.add("Shooter Sysid: Quasistatic Reverse", m_shooterSysId.sysIdQuasistatic(SysIdRoutine.Direction.kReverse).withName("Quasi Reverse"));
-        shuffleboardTab.add("Shooter Sysid: Dynamic Forward", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kForward).withName("Dynamic Forward"));
-        shuffleboardTab.add("Shooter Sysid: Dynamic Reverse", m_shooterSysId.sysIdDynamic(SysIdRoutine.Direction.kReverse).withName("Dynamic Reverse"));
     }
 
     private void createTestCommands() {
