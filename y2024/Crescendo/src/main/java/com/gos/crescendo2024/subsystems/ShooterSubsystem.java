@@ -27,7 +27,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static final GosDoubleProperty DEFAULT_SHOOTER_RPM = new GosDoubleProperty(false, "ShooterDefaultRpm", 4000);
     private static final GosDoubleProperty SHOOTER_SPEED = new GosDoubleProperty(false, "ShooterSpeed", 0.5);
-    private static final double ALLOWABLE_ERROR = 70;
+    private static final double ALLOWABLE_ERROR = 125;
 
     private final SimableCANSparkMax m_shooterMotorLeader;
     private final SimableCANSparkMax m_shooterMotorFollower;
@@ -60,7 +60,7 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterMotorFollower.restoreFactoryDefaults();
         m_shooterMotorFollower.setIdleMode(CANSparkMax.IdleMode.kCoast);
         m_shooterMotorFollower.setSmartCurrentLimit(60);
-        m_shooterMotorFollower.follow(m_shooterMotorLeader, true);
+        m_shooterMotorFollower.follow(m_shooterMotorLeader, false);
         m_shooterMotorFollower.burnFlash();
 
         m_shooterMotorErrorAlerts = new SparkMaxAlerts(m_shooterMotorLeader, "shooter motor");
@@ -132,6 +132,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return Math.abs(error) < ALLOWABLE_ERROR;
     }
 
+    public void clearStickyFaults() {
+        m_shooterMotorLeader.clearFaults();
+        m_shooterMotorFollower.clearFaults();
+    }
 
     /////////////////////////////////////
     // Command Factories

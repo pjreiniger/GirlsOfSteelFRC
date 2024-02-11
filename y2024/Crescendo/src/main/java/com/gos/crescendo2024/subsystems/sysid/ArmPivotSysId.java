@@ -32,8 +32,7 @@ public class ArmPivotSysId {
             new SysIdRoutine.Config(
                 Units.Volts.of(.25).per(Units.Seconds.of(1.0)),
                 Units.Volts.of(2.5),
-                Units.Seconds.of(10.0)
-            ),
+                Units.Seconds.of(10.0)),
             new SysIdRoutine.Mechanism(this::setVoltage, this::logMotors, armPivot)
         );
     }
