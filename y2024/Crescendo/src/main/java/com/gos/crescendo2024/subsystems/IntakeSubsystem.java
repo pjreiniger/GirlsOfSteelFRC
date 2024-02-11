@@ -4,8 +4,6 @@ package com.gos.crescendo2024.subsystems;
 import com.gos.crescendo2024.Constants;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
-import com.gos.lib.properties.GosIntProperty;
-import com.gos.lib.properties.HeavyIntegerProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
@@ -16,16 +14,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private static final GosDoubleProperty INTAKE_OUT_SPEED = new GosDoubleProperty(false, "Intake_Out_Speed", -1);
-    private static final GosDoubleProperty INTAKE_IN_SPEED = new GosDoubleProperty(false, "Intake_In_Speed", 1);
-    private static final GosIntProperty CLAW_CURRENT_LIMIT = new GosIntProperty(false, "ClawCurrentLimit", 25);
+    private static final GosDoubleProperty INTAKE_OUT_SPEED = new GosDoubleProperty(true, "Intake_Out_Speed", -1);
+    private static final GosDoubleProperty INTAKE_IN_SPEED = new GosDoubleProperty(true, "Intake_In_Speed", 1);
 
     private final SimableCANSparkMax m_intakeMotor;
     private final RelativeEncoder m_intakeEncoder;
     private final DigitalInput m_photoelectricSensor;
     private final LoggingUtil m_networkTableEntries;
     private final SparkMaxAlerts m_intakeAlert;
-    private final HeavyIntegerProperty m_currentLimit;
 
     public IntakeSubsystem() {
         m_intakeMotor = new SimableCANSparkMax(Constants.INTAKE_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
@@ -38,10 +34,6 @@ public class IntakeSubsystem extends SubsystemBase {
         m_intakeEncoder = m_intakeMotor.getEncoder();
         m_intakeAlert = new SparkMaxAlerts(m_intakeMotor, "Intake Motor");
 
-
-        m_currentLimit = new HeavyIntegerProperty(m_intakeMotor::setSmartCurrentLimit, CLAW_CURRENT_LIMIT);
-
-
         m_photoelectricSensor = new DigitalInput(Constants.INTAKE_SENSOR);
 
         m_networkTableEntries = new LoggingUtil("Intake Subsystem");
@@ -53,7 +45,6 @@ public class IntakeSubsystem extends SubsystemBase {
     public void periodic() {
         m_networkTableEntries.updateLogs();
         m_intakeAlert.checkAlerts();
-        m_currentLimit.updateIfChanged();
 
     }
 

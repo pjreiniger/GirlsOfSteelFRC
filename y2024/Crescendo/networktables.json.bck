@@ -130,7 +130,7 @@
   {
     "name": "/Preferences/Arm Pivot.mm.kp",
     "type": "double",
-    "value": 0.2,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -202,7 +202,7 @@
   {
     "name": "/Preferences/Arm Pivot Profile ff.aff.kff",
     "type": "double",
-    "value": 2.0,
+    "value": 2.5,
     "properties": {
       "persistent": true
     }
@@ -354,7 +354,7 @@
   {
     "name": "/Preferences/Arm Pivot Profile ff.aff.ks",
     "type": "double",
-    "value": -0.0024712,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -387,6 +387,30 @@
     "name": "/Preferences/Arm Profile PID.mm.max_acceleration",
     "type": "double",
     "value": 50.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/arm spike top angle",
+    "type": "double",
+    "value": 32.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/arm spike middle angle",
+    "type": "double",
+    "value": 32.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/arm spike bottom angle",
+    "type": "double",
+    "value": 32.0,
     "properties": {
       "persistent": true
     }

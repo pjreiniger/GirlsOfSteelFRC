@@ -75,6 +75,7 @@
       "/Shuffleboard/test commands/Chassis to -45": "Command",
       "/Shuffleboard/test commands/Chassis to 45": "Command",
       "/Shuffleboard/test commands/Chassis to 90": "Command",
+      "/Shuffleboard/test commands/Clear Sticky Faults": "Command",
       "/Shuffleboard/test commands/David Drive": "Command",
       "/Shuffleboard/test commands/Floor Pickup": "Command",
       "/Shuffleboard/test commands/Intake Piece": "Command",
@@ -470,7 +471,8 @@
     },
     "Server": {
       "open": true
-    }
+    },
+    "visible": true
   },
   "Plot": {
     "Plot <0>": {
