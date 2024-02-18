@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import static edu.wpi.first.units.MutableMeasure.mutable;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
-import static edu.wpi.first.units.Units.Rotations;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Volts;
 
 public class ArmPivotSysId {
@@ -23,8 +21,8 @@ public class ArmPivotSysId {
     private final ArmPivotSubsystem m_armPivot;
 
     private final MutableMeasure<Voltage> m_appliedVoltage = mutable(Volts.of(0));
-    private final MutableMeasure<Angle> m_angle = mutable(Rotations.of(0));
-    private final MutableMeasure<Velocity<Angle>> m_velocity = mutable(RotationsPerSecond.of(0));
+    private final MutableMeasure<Angle> m_angle = mutable(Degrees.of(0));
+    private final MutableMeasure<Velocity<Angle>> m_velocity = mutable(DegreesPerSecond.of(0));
 
     public ArmPivotSysId(ArmPivotSubsystem armPivot) {
         m_armPivot = armPivot;

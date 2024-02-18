@@ -15,43 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class GoSField {
-    @SuppressWarnings("PMD.DataClass")
-    public static class CameraObject {
-        private final Transform3d m_robotToCamera;
-        private final FieldObject2d m_estimatedPosition;
-        private final FieldObject2d m_detectedTags;
-
-        public CameraObject(Transform3d robotToCamera, GoSField field, String cameraName) {
-            m_robotToCamera = robotToCamera;
-            m_estimatedPosition = field.m_field.getObject(cameraName + ": EstimatedPosition");
-            m_detectedTags = field.m_field.getObject(cameraName + ": DetectedTags");
-        }
-
-        public void setEstimate(Optional<EstimatedRobotPose> maybeEstimate) {
-            if (maybeEstimate.isPresent()) {
-                EstimatedRobotPose estimatedRobotPose = maybeEstimate.get();
-                Pose3d pose = estimatedRobotPose.estimatedPose;
-
-                List<Pose2d> estimatedTagPoses = new ArrayList<>();
-                for (PhotonTrackedTarget targetUsed : estimatedRobotPose.targetsUsed) {
-                    estimatedTagPoses.add(pose
-                        .transformBy(m_robotToCamera)
-                        .transformBy(targetUsed.getBestCameraToTarget())
-                        .toPose2d());
-                }
-                m_estimatedPosition.setPose(pose.toPose2d());
-                m_detectedTags.setPoses(estimatedTagPoses);
-            } else {
-                m_estimatedPosition.setPoses();
-            }
-        }
-    }
-
     private final Field2d m_field;
     private final FieldObject2d m_currentTrajectoryObject;
     private final FieldObject2d m_trajectorySetpoint;
     private final FieldObject2d m_odometryObject;
-    private final FieldObject2d m_simulatedNotes;
     private final FieldObject2d m_detectedNotePoses;
 
     private final FieldObject2d m_futurePosition;
@@ -90,12 +57,12 @@ public class GoSField {
 
     public GoSField() {
         m_field = new Field2d();
+
         m_currentTrajectoryObject = m_field.getObject("Trajectory");
         m_detectedNotePoses = m_field.getObject("Notes");
         m_trajectorySetpoint = m_field.getObject("TrajectoryTargetPose");
         m_odometryObject = m_field.getObject("OldOdometry");
         m_futurePosition = m_field.getObject("futurePosition");
-        m_simulatedNotes = m_field.getObject("SimulatedNotes");
 
         List<Pose2d> tagPoses = new ArrayList<>();
         for (AprilTag tag : FieldConstants.TAG_LAYOUT.getTags()) {
@@ -132,10 +99,4 @@ public class GoSField {
     public void drawNotePoses(List<Pose2d> poses) {
         m_detectedNotePoses.setPoses(poses);
     }
-
-
-    public void addSimulatedNotes(List<Pose2d> notePoses) {
-        m_simulatedNotes.setPoses(notePoses);
-    }
-
 }
