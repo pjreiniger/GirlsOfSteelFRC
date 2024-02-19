@@ -132,6 +132,11 @@
       "/SmartDashboard/VisionSystemSim-vision/Sim Field": "Field2d"
     },
     "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Intake Subsystem/ParallelRaceGroup": {
         "window": {
           "visible": true

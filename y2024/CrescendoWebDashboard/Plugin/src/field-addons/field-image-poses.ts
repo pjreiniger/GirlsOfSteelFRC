@@ -7,9 +7,10 @@ import { FieldObjectApi } from '@frc-web-components/fwc/field-interfaces';
 
 export class FieldImagePoses extends LitElement {
   @property({ type: Array }) poses: Uint8Array | number[] = [];
-  @property({ type: String }) color = '#FFA500';
   @property({ type: String }) unit: string | null = 'inherit';
-  @property({ type: Number, attribute: 'line-width' }) lineWidth = 4;
+  @property({ type: String }) image = '';
+  @property({ type: Number }) width = 0.6;
+  @property({ type: Number }) length = 0.9;
   @property({ type: Number }) opacity = 0.7;
 
   @state() _poses: (Uint8Array | number[])[] = [];
@@ -21,16 +22,29 @@ export class FieldImagePoses extends LitElement {
     }
     console.log(this._poses)
     console.log("Done")
-//       this._poses = getPoses(this.poses);
   }
 
-  draw({ canvas, unit: parentUnit, xToPx, yToPx }: FieldObjectApi): void {
+  draw({
+    canvas,
+    unit: parentUnit,
+    rotationUnit: parentRotationUnit,
+    xToPx,
+    yToPx,
+    lengthToPx,
+    origin,
+  }: FieldObjectApi): void {
     const unit =
       this.unit === 'inherit' || this.unit === null ? parentUnit : this.unit;
 
-    canvas.lineWidth = this.lineWidth;
-    canvas.strokeStyle = this.color;
-    canvas.globalAlpha = this.opacity;
+//     canvas.lineWidth = this.lineWidth;
+//     canvas.strokeStyle = this.color;
+//     canvas.globalAlpha = this.opacity;
+
+    canvas.globalAlpha = Math.max(0, Math.min(1, this.opacity));
+    canvas.fillStyle = '#222';
+    canvas.strokeStyle = "purple";
+    canvas.lineWidth = lengthToPx(3, 'in');
+
     console.log("Drawing3...");
 
     if (this._poses.length > 1) {
