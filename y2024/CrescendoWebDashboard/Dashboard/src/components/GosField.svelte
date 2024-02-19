@@ -18,7 +18,7 @@
     color="orange"
     opacity="1"
     poses={$notes} />
-  <frc-field-path
+  <gos-field-image-poses
     color="pink"
     opacity="1"
     poses={$aprilTags} />
