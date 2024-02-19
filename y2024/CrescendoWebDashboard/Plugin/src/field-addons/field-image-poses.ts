@@ -8,12 +8,24 @@ import { FieldObjectApi } from '@frc-web-components/fwc/field-interfaces';
 export class FieldImagePoses extends LitElement {
   @property({ type: Array }) poses: Uint8Array | number[] = [];
   @property({ type: String }) unit: string | null = 'inherit';
+  @property({ type: String, attribute: 'rotation-unit' }) rotationUnit:
+    | string
+    | null = 'inherit';
   @property({ type: String }) image = '';
   @property({ type: Number }) width = 0.6;
   @property({ type: Number }) length = 0.9;
   @property({ type: Number }) opacity = 0.7;
 
   @state() _poses: (Uint8Array | number[])[] = [];
+  @state() _image: Image = undefined;
+
+  firstUpdated() {
+    const image = new Image();
+    image.src = this.image;
+    console.log(image);
+    this._image = image;
+
+  }
 
   updated(changedProps: Map<string, unknown>) {
     console.log("Updating... trying to get pose????" + changedProps.has('poses'))
@@ -35,27 +47,32 @@ export class FieldImagePoses extends LitElement {
   }: FieldObjectApi): void {
     const unit =
       this.unit === 'inherit' || this.unit === null ? parentUnit : this.unit;
-
-//     canvas.lineWidth = this.lineWidth;
-//     canvas.strokeStyle = this.color;
-//     canvas.globalAlpha = this.opacity;
+    const rotationUnit =
+      this.rotationUnit === 'inherit' || this.rotationUnit === null
+        ? parentRotationUnit
+        : this.rotationUnit;
 
     canvas.globalAlpha = Math.max(0, Math.min(1, this.opacity));
     canvas.fillStyle = '#222';
     canvas.strokeStyle = "purple";
-    canvas.lineWidth = lengthToPx(3, 'in');
+    
+    const imgWidth = lengthToPx(this.width, unit);
+    const imgHeight = lengthToPx(this.length, unit);
 
-    console.log("Drawing3...");
+    if (this._image) {
+      for (let i = 0; i < this._poses.length; i += 1) {
+        const pose = this._poses[i];
+        const [x, y] = pose;
+        const angle = rotationUnit === 'rad' ? pose[2] : pose[2] / (180 / Math.PI);
+        canvas.save();
+        
+        canvas.translate(xToPx(x, unit), yToPx(y, unit));
+        canvas.rotate(-angle);
+        canvas.translate(-xToPx(x, unit), -yToPx(y, unit));
+        canvas.drawImage(this._image, xToPx(x, unit) - imgWidth / 2, yToPx(y, unit) - imgHeight / 2, imgWidth, imgHeight)
 
-    if (this._poses.length > 1) {
-      for (let i = 0; i < this._poses.length - 1; i += 1) {
-        const [x1, y1] = this._poses[i];
-        const [x2, y2] = this._poses[i + 1];
-        canvas.moveTo(xToPx(x1, unit), yToPx(y1, unit));
-        canvas.lineTo(xToPx(x2, unit), yToPx(y2, unit));
+        canvas.restore();
       }
-
-      canvas.stroke();
     }
   }
 }
