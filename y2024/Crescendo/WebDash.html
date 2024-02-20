@@ -2,9 +2,10 @@
     tab-name="Drivers"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 ><frc-sendable-chooser
         source-provider="NetworkTables"
-        selected="leave wing"
+        selected="TwoNotesSpeaker"
         style="transform: translate(118px, 144px);"
         source-key="/SmartDashboard/Auto Chooser"
         options="[]"
@@ -63,7 +64,22 @@
         game="Crescendo"
         grid-size="1"
     >
-    </frc-field-wrapper></dashboard-tab><dashboard-tab
+    </frc-field-wrapper><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(304px, 246px);"
+        source-key="/Chassis/At Angle Setpoint"
+        label="Chassis Good"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(329px, 355px);"
+        source-key="/Arm Pivot Subsystem/Arm At Goal"
+        label="Arm Good"
+    ></frc-boolean-box><frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(281px, 447px);"
+        source-key="/Shooter Subsystem/Shooter At Goal"
+        label="Shooter Good"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
@@ -136,7 +152,6 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Value"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -167,7 +182,6 @@
         source-key="/SmartDashboard/super structure/PivotMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -198,7 +212,6 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Value"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -247,7 +260,7 @@
         <frc-line-chart-legend source-provider="NetworkTables"></frc-line-chart-legend>
         <frc-line-chart-axis
             source-provider="NetworkTables"
-            max="4000"
+            max="4200"
             lock-min=""
             lock-max=""
         ></frc-line-chart-axis>
@@ -267,7 +280,6 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -298,7 +310,6 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -323,7 +334,6 @@
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 ><frc-robot-command
         source-provider="NetworkTables"
         style="transform: translate(55px, 69px); width: 178px; height: 50px;"
@@ -351,7 +361,6 @@
         source-key="/Preferences/Intake_In_Speed"
         has-controls=""
         has-value=""
-        placeholder=""
         min="NaN"
         max="NaN"
         hascontrols=""
@@ -359,17 +368,17 @@
             slot="input"
             value="0"
             type="number"
-            id="vaadin-number-field-185"
+            id="vaadin-number-field-7"
             aria-labelledby="label-vaadin-number-field-205"
             aria-describedby=""
-            min="undefined"
-            max="undefined"
+            min="NaN"
+            max="NaN"
             step="any"
             tabindex="0"
         ><label
             slot="label"
             id="label-vaadin-number-field-205"
-            for="vaadin-number-field-185"
+            for="vaadin-number-field-7"
         >Label</label>
         <div
             slot="error-message"
@@ -432,4 +441,8 @@
         desiredstates="[0,0,0,0,0,0,0,0]"
         sizeleftright="4"
         sizefrontback="5"
-    ></frc-swerve-drivebase></dashboard-tab>
+    ></frc-swerve-drivebase><frc-robot-command
+        source-provider="NetworkTables"
+        source-key="/Shuffleboard/test commands/Chassis Set Pose Subwoofer Mid"
+        style="transform: translate(383px, 88px);"
+    ></frc-robot-command></dashboard-tab>
