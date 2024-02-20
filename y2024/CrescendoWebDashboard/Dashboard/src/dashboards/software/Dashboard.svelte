@@ -1,5 +1,6 @@
 <script lang="ts">
   import "@frc-web-components/fwc/components";
+  import "gos_2024_webdash_widgets/components";
 
   import Tabs from '../../components/Tabs.svelte';
 
