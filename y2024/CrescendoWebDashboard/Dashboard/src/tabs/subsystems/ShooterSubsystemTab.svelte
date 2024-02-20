@@ -45,11 +45,16 @@
   <frc-line-chart-axis
     lock-max=""
     lock-min=""
-    max="4000"
+    max="4200"
     source-provider="NetworkTables" />
   <frc-line-chart-data
     display-name="RPM"
     source-key="/Shooter Subsystem/Velocity (RPM)"
     source-provider="NetworkTables" />
 </frc-line-chart>
+
+<frc-boolean-box
+  label="Shooter At Goal"
+  source-key="/Shooter Subsystem/Shooter At Goal"
+  source-provider="NetworkTables" />
 

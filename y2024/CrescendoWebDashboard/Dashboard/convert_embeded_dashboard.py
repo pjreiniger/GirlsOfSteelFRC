@@ -4,7 +4,7 @@ import os
 
 def handle_tab(dashboard_tab):
     tab_name = dashboard_tab.get('tab-name')
-    output_file = os.path.join(r'src\tabs')
+    output_file = os.path.join('src/tabs')
 
     if tab_name == "Drivers":
         output_file = os.path.join(output_file, "DriverTab.svelte")

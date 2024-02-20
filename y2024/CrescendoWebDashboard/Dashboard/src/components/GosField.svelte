@@ -16,35 +16,35 @@
   crop-right=".9"
   game="Crescendo"
   rotation-unit="degrees">
-  <frc-field-robot 
+  <frc-field-robot
     opacity="0.1"
     pose={$predictedPose} />
-  <frc-field-robot 
+  <frc-field-robot
     color="orange"
     pose={$camera2PoseEstimate} />
   <gos-field-image-poses
-    opacity="1"
-    width="0.4"
-    length="0.4"
     image="field-images/notes.png"
-    poses={$notes} />
-  <gos-field-image-poses
-    opacity="1"
-    width="0.4"
     length="0.4"
+    opacity="1"
+    poses={$notes}
+    width="0.4" />
+  <gos-field-image-poses
     image="field-images/tag-blue.png"
-    poses={$aprilTags} />
-  <gos-field-image-poses
-    opacity="1"
-    width="0.4"
     length="0.4"
+    opacity="1"
+    poses={$aprilTags}
+    width="0.4" />
+  <gos-field-image-poses
     image="field-images/tag-orange.png"
-    poses={$camera1DetectedTags} />
+    length="0.4"
+    opacity="1"
+    poses={$camera1DetectedTags}
+    width="0.4" />
   <frc-field-path
     color="green"
     opacity="0.7"
     poses={$trajectory} />
-    
+
   <frc-field-robot pose={$robotPoseEstimation} />
 </frc-field>
 
