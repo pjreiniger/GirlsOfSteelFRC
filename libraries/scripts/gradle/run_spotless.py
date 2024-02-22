@@ -23,3 +23,7 @@ def run_smart_spotless(run_all_projects=True, auto_commit=True, commands=None):
 
     if auto_commit:
         commit_all_changes("Auto-Update: Ran spotless")
+
+if __name__ == "__main__":
+    # py -m libraries.scripts.gradle.run_spotless
+    run_smart_spotless(auto_commit=False)

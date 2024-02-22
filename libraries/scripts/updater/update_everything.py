@@ -31,9 +31,7 @@ def update_everything():
     else:
         run_all_replacements()
     update_bazelrio(ignore_cache=ignore_download_cache)
-    run_smart_spotless(
-        commands=["spotlessGroovyGradleApply", "spotlessMiscApply", "spotlessXmlApply"]
-    )
+    run_smart_spotless()
 
 
 if __name__ == "__main__":
