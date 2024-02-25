@@ -246,7 +246,6 @@ public class ArmPivotSubsystem extends SubsystemBase {
 
     public boolean isArmAtGoal() {
         double error = m_armGoalAngle - getAngle();
-        System.out.print(error + "  ");
         if (error > 360) {
             error = error - 360;
         }

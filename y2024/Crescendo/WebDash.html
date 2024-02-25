@@ -24,34 +24,9 @@
         label="Has Piece"
     ></frc-boolean-box>
 </dashboard-tab><dashboard-tab
-    tab-name="Pit"
-    slot="tab"
-    source-provider="NetworkTables"
-    source-key="/Shuffleboard/test commands/Arm to coast"
->
-    <frc-network-alerts
-        source-provider="NetworkTables"
-        style="transform: translate(688px, 152px);"
-        source-key="/SmartDashboard/Alerts"
-        errors="[]"
-        warnings="[]"
-        infos="[]"
-    ></frc-network-alerts>
-    <frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(1079px, 104px);"
-        source-key="/Shuffleboard/test commands/Arm to coast"
-    ></frc-robot-command>
-    <frc-robot-command
-        source-provider="NetworkTables"
-        style="transform: translate(1088px, 220px);"
-        source-key="/Shuffleboard/test commands/Chassis Push"
-    ></frc-robot-command>
-</dashboard-tab><dashboard-tab
     tab-name="Programmers Tab"
     slot="tab"
     source-provider="NetworkTables"
-    selected=""
 >
     <frc-robot-command
         source-provider="NetworkTables"
@@ -115,10 +90,15 @@
         source-key="/Chassis/At Angle Setpoint"
         label="Chassis At Goal"
     ></frc-boolean-box>
-</dashboard-tab><dashboard-tab
+    <frc-robot-command
+        source-provider="NetworkTables"
+        style="transform: translate(24px, 408px); width: 168px; height: 50px;"
+        source-key="/Shuffleboard/test commands/Teleop: Normal Swerve Drive"
+    ></frc-robot-command></dashboard-tab><dashboard-tab
     tab-name="Arm Pivot"
     slot="tab"
     source-provider="NetworkTables"
+    selected=""
 >
     <frc-line-chart
         chart-title="Line Chart"
@@ -200,7 +180,6 @@
         source-key="/Arm Pivot Subsystem/Rel Encoder Position"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -233,7 +212,6 @@
         min="NaN"
         max="NaN"
         readonly=""
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -266,9 +244,10 @@
         source-key="/Arm Pivot Subsystem/Abs Encoder Position"
         min="NaN"
         max="NaN"
+        placeholder=""
     ><input
             slot="input"
-            value="0"
+            value="1"
             type="number"
             id="vaadin-number-field-4"
             aria-labelledby="label-vaadin-number-field-689"
@@ -281,7 +260,7 @@
             slot="label"
             id="label-vaadin-number-field-689"
             for="vaadin-number-field-4"
-        >Abs Arm ANgle</label>
+        >Abs Arm Angle</label>
         <div
             slot="error-message"
             id="error-message-vaadin-number-field-453"
@@ -381,7 +360,6 @@
         source-key="/Shooter Subsystem/Velocity (RPM)"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -413,7 +391,6 @@
         source-key="/SmartDashboard/super structure/ShooterMotorPercentage"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -450,7 +427,6 @@
         style="transform: translate(466px, 551px);"
         min="NaN"
         max="NaN"
-        placeholder=""
     ><input
             slot="input"
             value="0"
@@ -472,7 +448,11 @@
             hidden=""
         ></div>
     </vaadin-number-field>
-</dashboard-tab><dashboard-tab
+    <frc-boolean-box
+        source-provider="NetworkTables"
+        style="transform: translate(468px, 51px);"
+        label="Piece In Shooter"
+    ></frc-boolean-box></dashboard-tab><dashboard-tab
     tab-name="Intake"
     slot="tab"
     source-provider="NetworkTables"
