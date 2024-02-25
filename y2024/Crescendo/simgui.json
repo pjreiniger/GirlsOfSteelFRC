@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "Addressable LEDs": {
+      "window": {
+        "visible": true
+      }
+    },
     "DIO": {
       "window": {
         "visible": true
@@ -27,12 +32,33 @@
       "/Shuffleboard/PP Paths/FourPieceTB_P2_TopToMiddle": "Command",
       "/Shuffleboard/PP Paths/FourPieceTB_P3_MiddleToBot": "Command",
       "/Shuffleboard/PP Paths/LeaveWing": "Command",
+      "/Shuffleboard/PP Paths/New TwoNoteSpeakerMiddle1pt2": "Command",
       "/Shuffleboard/PP Paths/OneNoteSpeakerAndLeaveWing": "Command",
       "/Shuffleboard/PP Paths/S-Curve Path": "Command",
       "/Shuffleboard/PP Paths/SplinePath": "Command",
       "/Shuffleboard/PP Paths/StraightLinePath": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft3Pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft3Pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft4Pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerLeft4Pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle0pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle0pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle1pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle1pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle2Pt3": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5Pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle5pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle6Pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerMiddle6Pt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerRight6Pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNoteSpeakerRight6Pt2": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt1": "Command",
       "/Shuffleboard/PP Paths/TwoNotesSpeakerOppSidePt2": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerRight7Pt1": "Command",
+      "/Shuffleboard/PP Paths/TwoNotesSpeakerRight7Pt2": "Command",
       "/Shuffleboard/SysId/Arm SysId Dynamic Backward": "Command",
       "/Shuffleboard/SysId/Arm SysId Dynamic Forward": "Command",
       "/Shuffleboard/SysId/Arm SysId Quasistatic Backward": "Command",
@@ -346,6 +372,12 @@
     }
   },
   "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "Transitory Values": {
+      "open": false
+    },
     "persistent": {
       "Preferences": {
         "open": true
