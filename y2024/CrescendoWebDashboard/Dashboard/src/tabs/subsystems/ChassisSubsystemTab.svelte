@@ -1,3 +1,8 @@
+<script lang="ts">
+  import "@frc-web-components/fwc/components";
+
+  import GosField from '../../components/GosField.svelte';
+</script>
 <ul>
   <li>
     <frc-robot-command
