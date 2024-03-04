@@ -4,23 +4,24 @@ import json
 
 
 def load_path(path_filename):
-    return {
-        "x": 1.0267819166183472,
-        "y": 4.359738826751709,
-        "heading": 0,
-        "isInitialGuess": False,
-        "translationConstrained": True,
-        "headingConstrained": True,
-        "controlIntervalCount": 40
-    }, {
-        "x": 7.480413436889648,
-        "y": 7.521584987640381,
-        "heading": 0,
-        "isInitialGuess": False,
-        "translationConstrained": True,
-        "headingConstrained": True,
-        "controlIntervalCount": 40
-    }
+    with open(path_filename, 'r') as f:
+        path_data = json.load(f)
+
+    # print(path_data)
+    output = []
+
+    for waypoint in path_data["waypoints"]:
+        print(waypoint)
+        output.append({
+            "x": waypoint['anchor']['x'],
+            "y": waypoint['anchor']['y'],
+            "heading": 0,
+            "isInitialGuess": False,
+            "translationConstrained": True,
+            "headingConstrained": True,
+            "controlIntervalCount": 40
+        })
+    return output
 
 
 def load_auto(pp_dir, auto_data):
@@ -66,9 +67,6 @@ def load_paths(pp_dir):
             if folder == "TwoPiece":
                 base = os.path.basename(f)
                 paths[os.path.splitext(base)[0]] = load_auto(pp_dir, auto_data)
-
-                if len(paths) == 1:
-                    return paths
 
 
     return paths

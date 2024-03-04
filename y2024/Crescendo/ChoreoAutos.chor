@@ -16,8 +16,8 @@
         "TwoNoteSpeakerMiddle1": {
             "waypoints": [
                 {
-                    "x": 1.0267819166183472,
-                    "y": 4.359738826751709,
+                    "x": 3.152620970006561,
+                    "y": 5.56,
                     "heading": 0,
                     "isInitialGuess": false,
                     "translationConstrained": true,
@@ -25,8 +25,140 @@
                     "controlIntervalCount": 40
                 },
                 {
-                    "x": 7.480413436889648,
-                    "y": 7.521584987640381,
+                    "x": 1.5950797094176201,
+                    "y": 5.56,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                }
+            ],
+            "trajectory": [],
+            "constraints": [
+                {
+                    "scope": [
+                        "first"
+                    ],
+                    "type": "StopPoint"
+                },
+                {
+                    "scope": [
+                        "last"
+                    ],
+                    "type": "StopPoint"
+                }
+            ],
+            "usesControlIntervalGuessing": true,
+            "defaultControlIntervalCount": 40,
+            "usesDefaultFieldObstacles": true,
+            "circleObstacles": []
+        },
+        "TwoNoteSpeakerMiddle2": {
+            "waypoints": [
+                {
+                    "x": 2.21575404634404,
+                    "y": 3.7826002042874274,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
+                {
+                    "x": 4.637910675584104,
+                    "y": 3.7826002042874274,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
+                {
+                    "x": 6.994553301087623,
+                    "y": 4.080302727627994,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                }
+            ],
+            "trajectory": [],
+            "constraints": [
+                {
+                    "scope": [
+                        "first"
+                    ],
+                    "type": "StopPoint"
+                },
+                {
+                    "scope": [
+                        "last"
+                    ],
+                    "type": "StopPoint"
+                }
+            ],
+            "usesControlIntervalGuessing": true,
+            "defaultControlIntervalCount": 40,
+            "usesDefaultFieldObstacles": true,
+            "circleObstacles": []
+        },
+        "TwoNoteSpeakerRight6": {
+            "waypoints": [
+                {
+                    "x": 1.3959954881393342,
+                    "y": 3.946551915928368,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
+                {
+                    "x": 5.846113375536308,
+                    "y": 1.206216164215495,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                }
+            ],
+            "trajectory": [],
+            "constraints": [
+                {
+                    "scope": [
+                        "first"
+                    ],
+                    "type": "StopPoint"
+                },
+                {
+                    "scope": [
+                        "last"
+                    ],
+                    "type": "StopPoint"
+                }
+            ],
+            "usesControlIntervalGuessing": true,
+            "defaultControlIntervalCount": 40,
+            "usesDefaultFieldObstacles": true,
+            "circleObstacles": []
+        },
+        "TwoNotesSpeakerRight7": {
+            "waypoints": [
+                {
+                    "x": 1.9839896290262855,
+                    "y": 3.3725858401140054,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
+                {
+                    "x": 6.6658719337410135,
+                    "y": 0.8080477216589235,
                     "heading": 0,
                     "isInitialGuess": false,
                     "translationConstrained": true,
