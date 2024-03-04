@@ -1,28 +1,38 @@
 
+import os
 import json
 
 
-def load_paths(pp_autos_dir):
-    paths = {}
-
-    path = {}
-    path["waypoints"] = [{
-        "x":  1.0267819166183472,
+def load_path(path_filename):
+    return {
+        "x": 1.0267819166183472,
         "y": 4.359738826751709,
         "heading": 0,
         "isInitialGuess": False,
         "translationConstrained": True,
         "headingConstrained": True,
-        "controlIntervalCount": 40,
-    },{
-        "x":  7.480413436889648,
+        "controlIntervalCount": 40
+    }, {
+        "x": 7.480413436889648,
         "y": 7.521584987640381,
         "heading": 0,
         "isInitialGuess": False,
         "translationConstrained": True,
         "headingConstrained": True,
-        "controlIntervalCount": 40,
-    }]
+        "controlIntervalCount": 40
+    }
+
+
+def load_auto(pp_dir, auto_data):
+    path = {}
+    waypoints = None
+
+    for command in auto_data["command"]["data"]["commands"]:
+        if command["type"] == "path":
+            path_file = os.path.join(pp_dir, "paths", command['data']['pathName'] + ".path")
+            waypoints = load_path(path_file)
+
+    path["waypoints"] = waypoints
     path["trajectory"] = []
     path["constraints"] = [
         {
@@ -40,15 +50,34 @@ def load_paths(pp_autos_dir):
     path["usesDefaultFieldObstacles"] =  True
     path["circleObstacles"] =  []
 
-    paths["New Path"] = path
+    return path
+
+
+def load_paths(pp_dir):
+    paths = {}
+
+    for root, _, files in os.walk(os.path.join(pp_dir, "autos")):
+        for f in files:
+            full_file = os.path.join(root, f)
+            with open(full_file, 'r') as ifs:
+                auto_data = json.load(ifs)
+            folder = auto_data["folder"]
+
+            if folder == "TwoPiece":
+                base = os.path.basename(f)
+                paths[os.path.splitext(base)[0]] = load_auto(pp_dir, auto_data)
+
+                if len(paths) == 1:
+                    return paths
+
 
     return paths
 
 def main():
-    pp_autos_dir = r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\src\main\deploy\pathplanner\autos'
+    pp_dir = r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\src\main\deploy\pathplanner'
     choreo_config = r"C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\ChoreoAutos.chor"
 
-    paths = load_paths(pp_autos_dir)
+    paths = load_paths(pp_dir)
 
     config = {}
 
