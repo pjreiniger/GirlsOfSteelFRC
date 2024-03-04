@@ -16,6 +16,15 @@
         "TwoNoteSpeakerMiddle1": {
             "waypoints": [
                 {
+                    "x": 1.3160154641111295,
+                    "y": 5.56,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
+                {
                     "x": 3.152620970006561,
                     "y": 5.56,
                     "heading": 0,
@@ -56,6 +65,15 @@
         },
         "TwoNoteSpeakerMiddle2": {
             "waypoints": [
+                {
+                    "x": 1.3211271852889754,
+                    "y": 5.52870983292987,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
                 {
                     "x": 2.291006242747955,
                     "y": 4.255590195640653,
@@ -116,6 +134,15 @@
         "TwoNoteSpeakerRight6": {
             "waypoints": [
                 {
+                    "x": 0.7019699576222576,
+                    "y": 4.3850900124160495,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
+                {
                     "x": 7.766690569044476,
                     "y": 2.3772998187936465,
                     "heading": 0,
@@ -165,6 +192,24 @@
         },
         "TwoNotesSpeakerRight7": {
             "waypoints": [
+                {
+                    "x": 0.7019699576222576,
+                    "y": 4.3850900124160495,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
+                {
+                    "x": 8.635333424513004,
+                    "y": 0.5920165686485226,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
                 {
                     "x": 1.9839896290262855,
                     "y": 3.3725858401140054,

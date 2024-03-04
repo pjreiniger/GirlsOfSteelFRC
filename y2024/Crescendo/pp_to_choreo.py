@@ -7,11 +7,9 @@ def load_path(path_filename):
     with open(path_filename, 'r') as f:
         path_data = json.load(f)
 
-    # print(path_data)
     output = []
 
     for waypoint in path_data["waypoints"]:
-        print(waypoint)
         output.append({
             "x": waypoint['anchor']['x'],
             "y": waypoint['anchor']['y'],
@@ -24,14 +22,41 @@ def load_path(path_filename):
     return output
 
 
+def __handle_command(pp_dir, command, indent):
+    command_type = command["type"]
+    waypoints = []
+
+    if command_type in ["named"]:
+        return []
+    if command_type == "deadline":
+        for subcommand in command["data"]["commands"]:
+            waypoints.extend(__handle_command(pp_dir, subcommand, indent + "  "))
+
+        return waypoints
+    if command_type == "race":
+        for subcommand in command["data"]["commands"]:
+            waypoints.extend(__handle_command(pp_dir, subcommand, indent + "  "))
+
+        return waypoints
+
+    if command_type != "path":
+        raise Exception(command_type)
+
+    path_file = os.path.join(pp_dir, "paths", command['data']['pathName'] + ".path")
+    print(f"{indent}Loading path {path_file}")
+    path_waypoints = load_path(path_file)
+    waypoints.extend(path_waypoints)
+
+    return waypoints
+
+
 def load_auto(pp_dir, auto_data):
     path = {}
     waypoints = []
 
     for command in auto_data["command"]["data"]["commands"]:
-        if command["type"] == "path":
-            path_file = os.path.join(pp_dir, "paths", command['data']['pathName'] + ".path")
-            waypoints.extend(load_path(path_file))
+        waypoints.extend(__handle_command(pp_dir, command, ""))
+        # if command["type"] == "path":
 
     path["waypoints"] = waypoints
     path["trajectory"] = []
