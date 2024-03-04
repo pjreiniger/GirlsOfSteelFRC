@@ -26,7 +26,9 @@ import static com.gos.crescendo2024.FieldConstants.StagingLocations.CENTERLINE_T
 import static com.gos.crescendo2024.FieldConstants.StagingLocations.SPIKE_TRANSLATIONS;
 
 public class ObjectDetection {
-    private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(11), Units.inchesToMeters(15)), new Rotation3d(0, 0, 0));
+    private static final Transform3d ROBOT_TO_CAMERA = new Transform3d(
+        new Translation3d(Units.inchesToMeters(12), Units.inchesToMeters(11), Units.inchesToMeters(15)),
+        new Rotation3d(Math.toRadians(0), Math.toRadians(30), Math.toRadians(0)));
 
     private final PhotonCamera m_photonCamera;
 
@@ -83,6 +85,7 @@ public class ObjectDetection {
         List<Pose2d> objectLocationsList = new ArrayList<>();
         PhotonPipelineResult lastestResult = m_photonCamera.getLatestResult();
         for (PhotonTrackedTarget result : lastestResult.getTargets()) {
+            Rotation2d yaw = Rotation2d.fromDegrees(-result.getYaw());
             double distance = calculateDistanceToTarget(
                 ROBOT_TO_CAMERA.getZ(),
                 0,

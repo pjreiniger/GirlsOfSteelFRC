@@ -27,6 +27,11 @@ public class CombinedCommands {
             .alongWith(shooter.createSetRPMCommand(4000));
     }
 
+    public static Command prepareSpeakerShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter, double angle) {
+        return armPivot.createMoveArmToAngleCommand(angle)
+            .alongWith(shooter.createSetRPMCommand(4000));
+    }
+
     public static Command prepareAmpShot(ArmPivotSubsystem armPivot, ShooterSubsystem shooter) {
         return armPivot.createMoveArmToAmpAngleCommand()
             .alongWith(shooter.createSetRPMCommand(800))
@@ -50,4 +55,11 @@ public class CombinedCommands {
         },
             () -> controller.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0));
     }
+
+//    public static Command vibrateIfReadyToShootPleaseChangeName(ChassisSubsystem chassis, ArmPivotSubsystem arm, ShooterSubsystem shooter, CommandXboxController controller) {
+//        return Commands.runEnd(() -> {
+//            boolean isReady =
+//        })
+//    }
+
 }

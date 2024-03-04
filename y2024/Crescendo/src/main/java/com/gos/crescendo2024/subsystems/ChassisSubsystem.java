@@ -7,11 +7,13 @@ package com.gos.crescendo2024.subsystems;
 
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.gos.crescendo2024.AllianceFlipper;
 import com.gos.crescendo2024.AprilTagDetection;
 import com.gos.crescendo2024.Constants;
 import com.gos.crescendo2024.FieldConstants;
 import com.gos.crescendo2024.GoSField;
 import com.gos.crescendo2024.ObjectDetection;
+import com.gos.crescendo2024.commands.BaseTeleopSwerve;
 import com.gos.lib.GetAllianceUtil;
 import com.gos.lib.logging.LoggingUtil;
 import com.gos.lib.properties.GosDoubleProperty;
@@ -35,6 +37,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -60,6 +63,8 @@ public class ChassisSubsystem extends SubsystemBase {
         }
     }
 
+    private static final boolean USE_APRIL_TAGS = true;
+
     private final RevSwerveChassis m_swerveDrive;
     private final Pigeon2 m_gyro;
 
@@ -71,12 +76,18 @@ public class ChassisSubsystem extends SubsystemBase {
 
     private final ObjectDetection m_objectDetectionSubsystem;
 
-    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Velocity", 48);
-    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Acceleration", 48);
-    private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Angular Velocity", 180);
-    private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(Constants.DEFAULT_CONSTANT_PROPERTIES, "Chassis On the Fly Max Angular Acceleration", 180);
+    private final GosDoubleProperty m_driveToPointMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Velocity", 48);
+    private final GosDoubleProperty m_driveToPointMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Acceleration", 48);
+    private final GosDoubleProperty m_angularMaxVelocity = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Velocity", 180);
+    private final GosDoubleProperty m_angularMaxAcceleration = new GosDoubleProperty(false, "Chassis On the Fly Max Angular Acceleration", 180);
+    private final GosDoubleProperty m_translationJoystickDampening = new GosDoubleProperty(false, "TranslationJoystickDampening", .5);
+    private final GosDoubleProperty m_rotationJoystickDampening = new GosDoubleProperty(false, "RotationJoystickDampening", .7);
+
+
 
     private final LoggingUtil m_logging;
+
+    private boolean m_isSlowTeleop;
 
     public ChassisSubsystem() {
         m_gyro = new Pigeon2(Constants.PIGEON_PORT);
@@ -146,7 +157,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public double getDistanceToSpeaker() {
-        Pose2d speaker = FieldConstants.Speaker.CENTER_SPEAKER_OPENING;
+        Pose2d speaker = AllianceFlipper.maybeFlip(FieldConstants.Speaker.CENTER_SPEAKER_OPENING);
         Translation2d roboManTranslation = getPose().getTranslation();
         return roboManTranslation.getDistance(speaker.getTranslation());
     }
@@ -179,7 +190,7 @@ public class ChassisSubsystem extends SubsystemBase {
         m_field.setFuturePose(getFuturePose(0.3));
 
         Optional<EstimatedRobotPose> cameraResult = m_photonVisionSubsystem.getEstimateGlobalPose(m_swerveDrive.getEstimatedPosition());
-        if (cameraResult.isPresent()) {
+        if (USE_APRIL_TAGS && cameraResult.isPresent() && !BaseTeleopSwerve.RED_DRIVING_BROKEN.getValue() && !DriverStation.isAutonomousEnabled()) {
             EstimatedRobotPose camPose = cameraResult.get();
             Pose2d camEstPose = camPose.estimatedPose.toPose2d();
             m_swerveDrive.addVisionMeasurement(camEstPose, camPose.timestampSeconds, m_photonVisionSubsystem.getEstimationStdDevs(camEstPose));
@@ -195,7 +206,13 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void teleopDrive(double xPercent, double yPercent, double rotPercent, boolean fieldRelative) {
-        m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
+        if (m_isSlowTeleop) {
+            m_swerveDrive.driveWithJoysticks(xPercent * m_translationJoystickDampening.getValue(), yPercent * m_translationJoystickDampening.getValue(),
+                rotPercent * m_rotationJoystickDampening.getValue(), fieldRelative);
+        } else {
+            m_swerveDrive.driveWithJoysticks(xPercent, yPercent, rotPercent, fieldRelative);
+        }
+
     }
 
     public Pose2d getPose() {
@@ -219,7 +236,7 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void turnToAngleWithVelocity(double xVel, double yVel, double angle) {
-        double angleCurrentDegree = m_swerveDrive.getOdometryPosition().getRotation().getDegrees();
+        double angleCurrentDegree = getPose().getRotation().getDegrees();
         double steerVelocity = m_turnAnglePIDVelocity.calculate(angleCurrentDegree, angle);
         ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(xVel, yVel, steerVelocity, getPose().getRotation());
 
@@ -249,7 +266,12 @@ public class ChassisSubsystem extends SubsystemBase {
     }
 
     public void davidDrive(double x, double y, double angle) {
-        turnToAngleWithVelocity(x, y, angle);
+        if (m_isSlowTeleop) {
+            turnToAngleWithVelocity(x * m_translationJoystickDampening.getValue(), y * m_translationJoystickDampening.getValue(),
+                angle);
+        } else {
+            turnToAngleWithVelocity(x, y, angle);
+        }
     }
 
     public Pose2d getFuturePose() {
@@ -329,6 +351,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return createDriveToPointNoFlipCommand(endPoint).withName("Drive to " + endPoint);
     }
 
+    public Command createDriveToPointMaybeFlippedCommand(Pose2d endPoint) {
+        return defer(() -> createDriveToPointNoFlipCommand(AllianceFlipper.maybeFlip(endPoint))).withName("Drive to " + endPoint);
+    }
+
     public Command createResetPoseCommand(Pose2d pose) {
         return runOnce(() -> resetOdometry(pose))
             .ignoringDisable(true)
@@ -340,6 +366,10 @@ public class ChassisSubsystem extends SubsystemBase {
         return run(() -> {
             m_swerveDrive.setModuleStates(state);
         }).withName("Chassis Push Forward");
+    }
+
+    public Command setIsSlowMode(boolean setBoolean) {
+        return runOnce(() -> m_isSlowTeleop = setBoolean);
     }
 
     public Command createChaseNoteCommand() {
