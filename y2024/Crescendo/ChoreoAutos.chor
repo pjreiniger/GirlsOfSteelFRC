@@ -57,6 +57,15 @@
         "TwoNoteSpeakerMiddle2": {
             "waypoints": [
                 {
+                    "x": 2.291006242747955,
+                    "y": 4.255590195640653,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
+                {
                     "x": 2.21575404634404,
                     "y": 3.7826002042874274,
                     "heading": 0,
@@ -106,6 +115,15 @@
         },
         "TwoNoteSpeakerRight6": {
             "waypoints": [
+                {
+                    "x": 7.766690569044476,
+                    "y": 2.3772998187936465,
+                    "heading": 0,
+                    "isInitialGuess": false,
+                    "translationConstrained": true,
+                    "headingConstrained": true,
+                    "controlIntervalCount": 40
+                },
                 {
                     "x": 1.3959954881393342,
                     "y": 3.946551915928368,

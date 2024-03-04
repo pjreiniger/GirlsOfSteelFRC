@@ -26,12 +26,12 @@ def load_path(path_filename):
 
 def load_auto(pp_dir, auto_data):
     path = {}
-    waypoints = None
+    waypoints = []
 
     for command in auto_data["command"]["data"]["commands"]:
         if command["type"] == "path":
             path_file = os.path.join(pp_dir, "paths", command['data']['pathName'] + ".path")
-            waypoints = load_path(path_file)
+            waypoints.extend(load_path(path_file))
 
     path["waypoints"] = waypoints
     path["trajectory"] = []
