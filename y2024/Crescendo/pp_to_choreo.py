@@ -1,41 +1,74 @@
 
 import os
 import json
+import math
 
 
-def load_path(path_filename):
+def load_path(path_filename, waypoints, indent):
     with open(path_filename, 'r') as f:
         path_data = json.load(f)
 
-    output = []
+    path_waypoints = path_data["waypoints"]
 
-    for waypoint in path_data["waypoints"]:
-        output.append({
-            "x": waypoint['anchor']['x'],
-            "y": waypoint['anchor']['y'],
-            "heading": 0,
+    if waypoints:
+        if path_waypoints[0]['anchor']["x"] == waypoints[-1]["x"] and path_waypoints[0]['anchor']["y"] == waypoints[-1]["y"]:
+            path_waypoints.pop(0)
+        else:
+            print(f"{indent}The don't match!")
+            raise
+
+    for path_waypoint in path_waypoints:
+        print(f"{indent}{path_waypoint}")
+
+        point_x = path_waypoint['anchor']['x']
+        point_y = path_waypoint['anchor']['y']
+
+        heading = 0
+        if path_waypoint['nextControl']:
+            next_control = path_waypoint['nextControl']
+            control_x = next_control["x"]
+            control_y = next_control['y']
+            heading = math.atan2(control_y - point_y, control_x - point_x)
+            print(math.degrees(heading))
+
+        if heading == 0 and path_waypoint['prevControl']:
+            next_control = path_waypoint['prevControl']
+            control_x = next_control["x"]
+            control_y = next_control['y']
+            heading = math.atan2(control_y - point_y, control_x - point_x)
+            print(math.degrees(heading))
+
+        waypoints.append({
+            "x": point_x,
+            "y": point_y,
+            "heading": heading,
             "isInitialGuess": False,
             "translationConstrained": True,
             "headingConstrained": True,
             "controlIntervalCount": 40
         })
-    return output
+
+    goalEndState = path_data["goalEndState"]
+    waypoints[-1]["heading"] = math.radians(goalEndState["rotation"])
+
+    return waypoints
 
 
-def __handle_command(pp_dir, command, indent):
+def __handle_command(pp_dir, command, waypoints, indent):
     command_type = command["type"]
-    waypoints = []
 
     if command_type in ["named"]:
         return []
     if command_type == "deadline":
+        print(f"{indent}Deadline Command:")
         for subcommand in command["data"]["commands"]:
-            waypoints.extend(__handle_command(pp_dir, subcommand, indent + "  "))
+            __handle_command(pp_dir, subcommand, waypoints, indent + "  ")
 
         return waypoints
     if command_type == "race":
+        print(f"{indent}Race Command:")
         for subcommand in command["data"]["commands"]:
-            waypoints.extend(__handle_command(pp_dir, subcommand, indent + "  "))
+            __handle_command(pp_dir, subcommand, waypoints, indent + "  ")
 
         return waypoints
 
@@ -44,10 +77,7 @@ def __handle_command(pp_dir, command, indent):
 
     path_file = os.path.join(pp_dir, "paths", command['data']['pathName'] + ".path")
     print(f"{indent}Loading path {path_file}")
-    path_waypoints = load_path(path_file)
-    waypoints.extend(path_waypoints)
-
-    return waypoints
+    load_path(path_file, waypoints, indent + "  ")
 
 
 def load_auto(pp_dir, auto_data):
@@ -55,8 +85,7 @@ def load_auto(pp_dir, auto_data):
     waypoints = []
 
     for command in auto_data["command"]["data"]["commands"]:
-        waypoints.extend(__handle_command(pp_dir, command, ""))
-        # if command["type"] == "path":
+        __handle_command(pp_dir, command, waypoints, "  ")
 
     path["waypoints"] = waypoints
     path["trajectory"] = []
@@ -90,8 +119,11 @@ def load_paths(pp_dir):
             folder = auto_data["folder"]
 
             if folder == "TwoPiece":
+                print(f"Loading {full_file}")
                 base = os.path.basename(f)
                 paths[os.path.splitext(base)[0]] = load_auto(pp_dir, auto_data)
+            else:
+                print(f"Skipping {full_file}")
 
 
     return paths
