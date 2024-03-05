@@ -86,6 +86,22 @@
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        1,
+                        2
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        2,
+                        3
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
                 }
             ],
             "usesControlIntervalGuessing": false,
