@@ -102,15 +102,16 @@ def load_auto(pp_dir, auto_data):
     for i in range(1, len(waypoints) - 1):
         path["constraints"].append(dict(scope=[i], type="StopPoint"))
 
-    path['constraints'].append(
-        {
-            "scope": [
-                0,
-                1
-            ],
-            "type": "MaxVelocity",
-            "velocity": 1.2
-        })
+    for i in range(1, len(waypoints)):
+        path['constraints'].append(
+            {
+                "scope": [
+                    i - 1,
+                    i
+                ],
+                "type": "MaxVelocity",
+                "velocity": 1.2
+            })
 
     path["usesControlIntervalGuessing"] =  False
     path["defaultControlIntervalCount"] =  100

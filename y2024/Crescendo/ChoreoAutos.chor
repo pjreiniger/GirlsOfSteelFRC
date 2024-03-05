@@ -273,6 +273,14 @@
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        1,
+                        2
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
                 }
             ],
             "usesControlIntervalGuessing": false,
@@ -370,6 +378,30 @@
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        1,
+                        2
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        2,
+                        3
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        3,
+                        4
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
                 }
             ],
             "usesControlIntervalGuessing": false,
@@ -452,6 +484,22 @@
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        1,
+                        2
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        2,
+                        3
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
                 }
             ],
             "usesControlIntervalGuessing": false,
@@ -531,6 +579,22 @@
                     "scope": [
                         0,
                         1
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        1,
+                        2
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
+                },
+                {
+                    "scope": [
+                        2,
+                        3
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1.2
