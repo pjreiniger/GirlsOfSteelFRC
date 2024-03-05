@@ -183,6 +183,18 @@
                         "last"
                     ],
                     "type": "StopPoint"
+                },
+                {
+                    "scope": [
+                        1
+                    ],
+                    "type": "StopPoint"
+                },
+                {
+                    "scope": [
+                        2
+                    ],
+                    "type": "StopPoint"
                 }
             ],
             "usesControlIntervalGuessing": true,

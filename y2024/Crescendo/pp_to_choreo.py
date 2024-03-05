@@ -100,6 +100,9 @@ def load_auto(pp_dir, auto_data):
         },
     ]
 
+    for waypoint in waypoints[1:-1]:
+        path["constraints"].append(dict(scope="1", type="StopPoint"))
+
     path["usesControlIntervalGuessing"] =  True
     path["defaultControlIntervalCount"] =  40
     path["usesDefaultFieldObstacles"] =  True
