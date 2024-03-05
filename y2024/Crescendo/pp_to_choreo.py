@@ -29,14 +29,12 @@ def load_path(path_filename, waypoints, indent):
             control_x = next_control["x"]
             control_y = next_control['y']
             heading = math.atan2(control_y - point_y, control_x - point_x)
-            print(math.degrees(heading))
 
         if heading == 0 and path_waypoint['prevControl']:
             next_control = path_waypoint['prevControl']
             control_x = next_control["x"]
             control_y = next_control['y']
             heading = math.atan2(control_y - point_y, control_x - point_x)
-            print(math.degrees(heading))
 
         waypoints.append({
             "x": point_x,
@@ -100,8 +98,8 @@ def load_auto(pp_dir, auto_data):
         },
     ]
 
-    for waypoint in waypoints[1:-1]:
-        path["constraints"].append(dict(scope="1", type="StopPoint"))
+    for i in range(1, len(waypoints) - 1):
+        path["constraints"].append(dict(scope=[i], type="StopPoint"))
 
     path["usesControlIntervalGuessing"] =  True
     path["defaultControlIntervalCount"] =  40
@@ -121,10 +119,12 @@ def load_paths(pp_dir):
                 auto_data = json.load(ifs)
             folder = auto_data["folder"]
 
-            if folder == "TwoPiece":
+            if folder != "TwoPieceExperimental":
                 print(f"Loading {full_file}")
                 base = os.path.basename(f)
-                paths[os.path.splitext(base)[0]] = load_auto(pp_dir, auto_data)
+                maybe_path = load_auto(pp_dir, auto_data)
+                if maybe_path:
+                    paths[os.path.splitext(base)[0]] = maybe_path
             else:
                 print(f"Skipping {full_file}")
 
@@ -155,7 +155,7 @@ def main():
     config["robotConfiguration"] = robot_configuration
     config["paths"] = paths
     config["splitTrajectoriesAtStopPoints"] = True
-    config["usesObstacles"] = True
+    config["usesObstacles"] = False
 
     with open(choreo_config, 'w') as f:
         json.dump(config, f, indent=4)
