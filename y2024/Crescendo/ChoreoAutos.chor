@@ -3,8 +3,8 @@
     "robotConfiguration": {
         "mass": 74.08797700309194,
         "rotationalInertia": 8.259589028886236,
-        "motorMaxTorque": 1.0236966824644549,
-        "motorMaxVelocity": 5427.200000000001,
+        "motorMaxTorque": 1.162295081967213,
+        "motorMaxVelocity": 4800,
         "gearing": 4.71,
         "wheelbase": 0.6349996571001851,
         "trackWidth": 0.6349996571001851,
@@ -96,7 +96,7 @@
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 40
+                    "controlIntervalCount": 100
                 },
                 {
                     "x": 6.8,
@@ -105,7 +105,7 @@
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 40
+                    "controlIntervalCount": 100
                 }
             ],
             "trajectory": [],
@@ -122,10 +122,18 @@
                         "last"
                     ],
                     "type": "StopPoint"
+                },
+                {
+                    "scope": [
+                        0,
+                        1
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1.2
                 }
             ],
-            "usesControlIntervalGuessing": true,
-            "defaultControlIntervalCount": 40,
+            "usesControlIntervalGuessing": false,
+            "defaultControlIntervalCount": 100,
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],

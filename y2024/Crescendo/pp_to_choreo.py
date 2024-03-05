@@ -87,6 +87,7 @@ def load_auto(pp_dir, auto_data):
 
     path["waypoints"] = waypoints
     path["trajectory"] = []
+    path["trajectoryWaypoints"] = []
     path["constraints"] = [
         {
             "scope": ["first"],
@@ -105,6 +106,8 @@ def load_auto(pp_dir, auto_data):
     path["defaultControlIntervalCount"] =  40
     path["usesDefaultFieldObstacles"] =  True
     path["circleObstacles"] =  []
+    path["eventMarkers"] = []
+    path["isTrajectoryStale"] = True
 
     return path
 
@@ -119,7 +122,7 @@ def load_paths(pp_dir):
                 auto_data = json.load(ifs)
             folder = auto_data["folder"]
 
-            if folder != "TwoPieceExperimental":
+            if folder != "TwoPieceExperimental" and f != "JustShoot.auto":
                 print(f"Loading {full_file}")
                 base = os.path.basename(f)
                 maybe_path = load_auto(pp_dir, auto_data)
@@ -139,7 +142,7 @@ def main():
 
     config = {}
 
-    config["version"] = "v0.2.2"
+    config["version"] = "v0.3"
 
     robot_configuration = {}
     robot_configuration["mass"] =  74.08797700309194
