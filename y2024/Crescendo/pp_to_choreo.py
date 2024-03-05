@@ -110,7 +110,7 @@ def load_auto(pp_dir, auto_data):
                     i
                 ],
                 "type": "MaxVelocity",
-                "velocity": 1.2
+                "velocity": 1
             })
 
     path["usesControlIntervalGuessing"] =  False
