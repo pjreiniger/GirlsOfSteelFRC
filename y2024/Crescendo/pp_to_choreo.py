@@ -2,6 +2,8 @@
 import os
 import json
 import math
+import shutil
+import re
 
 
 def load_path(path_filename, waypoints, indent):
@@ -123,7 +125,12 @@ def load_auto(pp_dir, auto_data):
     return path
 
 
-def load_paths(pp_dir):
+def should_keep_auto(auto_data, f):
+    folder = auto_data["folder"]
+    return folder != "TwoPieceExperimental" and f != "JustShoot.auto" and not auto_data['choreoAuto']
+
+
+def load_autos(pp_dir):
     paths = {}
 
     for root, _, files in os.walk(os.path.join(pp_dir, "autos")):
@@ -131,9 +138,8 @@ def load_paths(pp_dir):
             full_file = os.path.join(root, f)
             with open(full_file, 'r') as ifs:
                 auto_data = json.load(ifs)
-            folder = auto_data["folder"]
 
-            if folder != "TwoPieceExperimental" and f != "JustShoot.auto":
+            if should_keep_auto(auto_data, f):
                 print(f"Loading {full_file}")
                 base = os.path.basename(f)
                 maybe_path = load_auto(pp_dir, auto_data)
@@ -145,11 +151,76 @@ def load_paths(pp_dir):
 
     return paths
 
+
+def make_choreo_autos(pp_dir, choreo_config):
+
+    # def __handle_command2(command, cmd_ctr, command_config):
+    #     print(command)
+    #     return cmd_ctr
+    #
+    for root, _, files in os.walk(os.path.join(pp_dir, "autos")):
+        for f in files:
+            full_file = os.path.join(root, f)
+            with open(full_file, 'r') as ifs:
+                auto_data = json.load(ifs)
+
+            if should_keep_auto(auto_data, f):
+                base = os.path.splitext(os.path.basename(f))[0]
+                choreo_file = os.path.join(root, base + "Choreo.auto")
+                shutil.copy(full_file, choreo_file)
+
+                with open(choreo_file, 'r') as ff:
+                    contents = ff.read()
+
+                contents = contents.replace('"choreoAuto": false', '"choreoAuto": true')
+                contents = re.sub('"folder": ".*"', '"folder": null', contents)
+
+                prev_contents = None
+                path_ctr = 1
+                while contents != prev_contents:
+                    prev_contents = contents
+                    contents = re.sub('"pathName": .*', f'"pathNameHACK": "{base}.{path_ctr}"', contents, count=1)
+                    path_ctr += 1
+                    print(f"RAN A REPLA {path_ctr}")
+
+
+                contents = contents.replace('pathNameHACK', 'pathName')
+                # start_idx = 0
+                # print(re.search('"pathName": .*', contents))
+
+                with open(choreo_file, 'w') as ff:
+                    ff.write(contents)
+
+    #
+    #             base = os.path.splitext(os.path.basename(f))[0]
+    #
+    #             config = {}
+    #             config['version'] = 1.0
+    #
+    #             starting_pose = {}
+    #             starting_pose["position"] = dict(x=0, y=0)
+    #             starting_pose["rotation"] = 0
+    #
+    #             config['startingPose'] = starting_pose
+    #             config["command"] = {}
+    #
+    #             cmd_ctr = 0
+    #             for command in auto_data["command"]["data"]["commands"]:
+    #                 cmd_ctr = __handle_command2(command, cmd_ctr, config["command"])
+    #
+    #             config['folder'] = None
+    #             config['choreoAuto'] = True
+    #
+    #             with open(os.path.join(root, base + "Choreo.auto"), 'w') as f:
+    #                 json.dump(config, f, indent=2)
+
+
+
 def main():
     pp_dir = r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\src\main\deploy\pathplanner'
     choreo_config = r"C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\ChoreoAutos.chor"
 
-    paths = load_paths(pp_dir)
+    paths = load_autos(pp_dir)
 
     config = {}
 
@@ -173,6 +244,9 @@ def main():
 
     with open(choreo_config, 'w') as f:
         json.dump(config, f, indent=4)
+
+
+    make_choreo_autos(pp_dir, config)
 
 
 
