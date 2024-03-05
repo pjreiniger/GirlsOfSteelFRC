@@ -43,7 +43,7 @@ def load_path(path_filename, waypoints, indent):
             "isInitialGuess": False,
             "translationConstrained": True,
             "headingConstrained": True,
-            "controlIntervalCount": 40
+            "controlIntervalCount": 100
         })
 
     goalEndState = path_data["goalEndState"]
@@ -102,8 +102,18 @@ def load_auto(pp_dir, auto_data):
     for i in range(1, len(waypoints) - 1):
         path["constraints"].append(dict(scope=[i], type="StopPoint"))
 
-    path["usesControlIntervalGuessing"] =  True
-    path["defaultControlIntervalCount"] =  40
+    path['constraints'].append(
+        {
+            "scope": [
+                0,
+                1
+            ],
+            "type": "MaxVelocity",
+            "velocity": 1.2
+        })
+
+    path["usesControlIntervalGuessing"] =  False
+    path["defaultControlIntervalCount"] =  100
     path["usesDefaultFieldObstacles"] =  True
     path["circleObstacles"] =  []
     path["eventMarkers"] = []
