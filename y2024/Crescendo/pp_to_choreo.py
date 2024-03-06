@@ -217,8 +217,9 @@ def make_choreo_autos(pp_dir, choreo_config):
 
 
 def main():
-    pp_dir = r'C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\src\main\deploy\pathplanner'
-    choreo_config = r"C:\Users\PJ\git\gos\GirlsOfSteelFRC\y2024\Crescendo\ChoreoAutos.chor"
+    crescendo_dir = os.path.dirname(os.path.realpath(__file__))
+    pp_dir = os.path.join(crescendo_dir, "src", "main", "deploy", "pathplanner")
+    choreo_config = os.path.join("ChoreoAutos.chor")
 
     paths = load_autos(pp_dir)
 
