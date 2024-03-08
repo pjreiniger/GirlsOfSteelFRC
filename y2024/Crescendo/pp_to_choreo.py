@@ -185,41 +185,15 @@ def make_choreo_autos(pp_dir, choreo_config):
 
 
                 contents = contents.replace('pathNameHACK', 'pathName')
-                # start_idx = 0
-                # print(re.search('"pathName": .*', contents))
 
                 with open(choreo_file, 'w') as ff:
                     ff.write(contents)
-
-    #
-    #             base = os.path.splitext(os.path.basename(f))[0]
-    #
-    #             config = {}
-    #             config['version'] = 1.0
-    #
-    #             starting_pose = {}
-    #             starting_pose["position"] = dict(x=0, y=0)
-    #             starting_pose["rotation"] = 0
-    #
-    #             config['startingPose'] = starting_pose
-    #             config["command"] = {}
-    #
-    #             cmd_ctr = 0
-    #             for command in auto_data["command"]["data"]["commands"]:
-    #                 cmd_ctr = __handle_command2(command, cmd_ctr, config["command"])
-    #
-    #             config['folder'] = None
-    #             config['choreoAuto'] = True
-    #
-    #             with open(os.path.join(root, base + "Choreo.auto"), 'w') as f:
-    #                 json.dump(config, f, indent=2)
-
 
 
 def main():
     crescendo_dir = os.path.dirname(os.path.realpath(__file__))
     pp_dir = os.path.join(crescendo_dir, "src", "main", "deploy", "pathplanner")
-    choreo_config = os.path.join("ChoreoAutos.chor")
+    choreo_config = os.path.join(crescendo_dir, "ChoreoAutos.chor")
 
     paths = load_autos(pp_dir)
 
@@ -244,7 +218,9 @@ def main():
     config["usesObstacles"] = False
 
     with open(choreo_config, 'w') as f:
-        json.dump(config, f, indent=4)
+        config_as_string = json.dumps(config, indent=4)
+        config_as_string = config_as_string.replace('"heading": 0.0,', '"heading": 0,')
+        f.write(config_as_string)
 
 
     make_choreo_autos(pp_dir, config)

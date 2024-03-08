@@ -34,30 +34,12 @@
                     "controlIntervalCount": 200
                 },
                 {
-                    "x": 1.9753358364105225,
-                    "y": 6.05435848236084,
-                    "heading": 0,
-                    "isInitialGuess": false,
-                    "translationConstrained": true,
-                    "headingConstrained": false,
-                    "controlIntervalCount": 200
-                },
-                {
                     "x": 2.36,
                     "y": 5.54,
                     "heading": 0,
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 200
-                },
-                {
-                    "x": 2.1312625408172607,
-                    "y": 4.728981971740723,
-                    "heading": 0,
-                    "isInitialGuess": false,
-                    "translationConstrained": true,
-                    "headingConstrained": false,
                     "controlIntervalCount": 200
                 },
                 {
@@ -93,7 +75,7 @@
                 },
                 {
                     "scope": [
-                        3
+                        2
                     ],
                     "type": "StopPoint"
                 },
@@ -108,15 +90,15 @@
                 {
                     "scope": [
                         1,
-                        3
+                        2
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1
                 },
                 {
                     "scope": [
-                        3,
-                        5
+                        2,
+                        3
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1
@@ -193,15 +175,6 @@
                     "controlIntervalCount": 200
                 },
                 {
-                    "x": 4.743034362792969,
-                    "y": 1.9807742834091187,
-                    "heading": 0,
-                    "isInitialGuess": false,
-                    "translationConstrained": true,
-                    "headingConstrained": false,
-                    "controlIntervalCount": 200
-                },
-                {
                     "x": 6.526042161499081,
                     "y": 1.347327274807222,
                     "heading": 0,
@@ -229,7 +202,7 @@
                 {
                     "scope": [
                         0,
-                        2
+                        1
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1
@@ -329,8 +302,8 @@
                     "controlIntervalCount": 200
                 },
                 {
-                    "x": 2.5015883445739746,
-                    "y": 4.339165210723877,
+                    "x": 2.291006242747955,
+                    "y": 4.255590195640653,
                     "heading": -0.49567350756638917,
                     "isInitialGuess": false,
                     "translationConstrained": true,
@@ -347,9 +320,9 @@
                     "controlIntervalCount": 200
                 },
                 {
-                    "x": 3.7879834175109863,
-                    "y": 3.0137884616851807,
-                    "heading": 0.3671739914515452,
+                    "x": 4.637910675584104,
+                    "y": 3.7826002042874274,
+                    "heading": 0.9401702129269036,
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
@@ -382,6 +355,12 @@
                 },
                 {
                     "scope": [
+                        1
+                    ],
+                    "type": "StopPoint"
+                },
+                {
+                    "scope": [
                         2
                     ],
                     "type": "StopPoint"
@@ -396,6 +375,14 @@
                     "scope": [
                         0,
                         1
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1
+                },
+                {
+                    "scope": [
+                        1,
+                        2
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1
@@ -436,30 +423,12 @@
                     "controlIntervalCount": 200
                 },
                 {
-                    "x": 4.606598377227783,
-                    "y": 1.376558542251587,
-                    "heading": 0,
-                    "isInitialGuess": false,
-                    "translationConstrained": true,
-                    "headingConstrained": false,
-                    "controlIntervalCount": 200
-                },
-                {
                     "x": 7.766690569044476,
                     "y": 2.3772998187936465,
                     "heading": 0.05708078240626405,
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 200
-                },
-                {
-                    "x": 4.372708320617676,
-                    "y": 1.3960493803024292,
-                    "heading": 0,
-                    "isInitialGuess": false,
-                    "translationConstrained": true,
-                    "headingConstrained": false,
                     "controlIntervalCount": 200
                 },
                 {
@@ -498,36 +467,36 @@
                 },
                 {
                     "scope": [
-                        2
+                        1
                     ],
                     "type": "StopPoint"
                 },
                 {
                     "scope": [
-                        4
+                        2
                     ],
                     "type": "StopPoint"
                 },
                 {
                     "scope": [
                         0,
-                        2
-                    ],
-                    "type": "MaxVelocity",
-                    "velocity": 2.5
-                },
-                {
-                    "scope": [
-                        2,
-                        4
+                        1
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1
                 },
                 {
                     "scope": [
-                        4,
-                        5
+                        1,
+                        2
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1
+                },
+                {
+                    "scope": [
+                        2,
+                        3
                     ],
                     "type": "MaxVelocity",
                     "velocity": 1
@@ -549,16 +518,7 @@
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 25
-                },
-                {
-                    "x": 5.405722618103027,
-                    "y": 1.3570677042007446,
-                    "heading": 0,
-                    "isInitialGuess": false,
-                    "translationConstrained": true,
-                    "headingConstrained": false,
-                    "controlIntervalCount": 14
+                    "controlIntervalCount": 200
                 },
                 {
                     "x": 8.635333424513004,
@@ -567,7 +527,7 @@
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 28
+                    "controlIntervalCount": 200
                 },
                 {
                     "x": 1.9839896290262855,
@@ -576,20 +536,11 @@
                     "isInitialGuess": false,
                     "translationConstrained": true,
                     "headingConstrained": true,
-                    "controlIntervalCount": 21
+                    "controlIntervalCount": 200
                 },
                 {
-                    "x": 5.849735736846924,
-                    "y": 1.632006287574768,
-                    "heading": 0,
-                    "isInitialGuess": false,
-                    "translationConstrained": true,
-                    "headingConstrained": false,
-                    "controlIntervalCount": 10
-                },
-                {
-                    "x": 7.601544380187988,
-                    "y": 2.377119541168213,
+                    "x": 6.6658719337410135,
+                    "y": 0.8080477216589235,
                     "heading": 0,
                     "isInitialGuess": false,
                     "translationConstrained": true,
@@ -614,23 +565,31 @@
                 },
                 {
                     "scope": [
-                        2
+                        1
                     ],
                     "type": "StopPoint"
                 },
                 {
                     "scope": [
-                        3
+                        2
                     ],
                     "type": "StopPoint"
                 },
                 {
                     "scope": [
                         0,
+                        1
+                    ],
+                    "type": "MaxVelocity",
+                    "velocity": 1
+                },
+                {
+                    "scope": [
+                        1,
                         2
                     ],
                     "type": "MaxVelocity",
-                    "velocity": 2
+                    "velocity": 1
                 },
                 {
                     "scope": [
@@ -638,23 +597,15 @@
                         3
                     ],
                     "type": "MaxVelocity",
-                    "velocity": 2
-                },
-                {
-                    "scope": [
-                        3,
-                        5
-                    ],
-                    "type": "MaxVelocity",
-                    "velocity": 2
+                    "velocity": 1
                 }
             ],
-            "usesControlIntervalGuessing": true,
+            "usesControlIntervalGuessing": false,
             "defaultControlIntervalCount": 200,
             "usesDefaultFieldObstacles": true,
             "circleObstacles": [],
             "eventMarkers": [],
-            "isTrajectoryStale": false
+            "isTrajectoryStale": true
         }
     },
     "splitTrajectoriesAtStopPoints": true,
