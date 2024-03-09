@@ -1,5 +1,6 @@
 package com.gos.crescendo2024.commands;
 
+import com.ctre.phoenix.led.CANdle;
 import com.gos.crescendo2024.AllianceFlipper;
 import com.gos.crescendo2024.subsystems.ChassisSubsystem;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -18,6 +19,9 @@ public class TurnToPointSwerveDrive extends BaseTeleopSwerve {
         m_unflippedPoint = point;
         m_faceButt = faceButt;
         m_supplier = supplier;
+        CANdle candle = new CANdle(0);
+        candle.configLEDType(CANdle.LEDStripType.BRG);
+        candle.setLEDs(0, 0, 0, 0, 10)
     }
 
     @Override
