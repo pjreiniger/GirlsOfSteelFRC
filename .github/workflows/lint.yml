@@ -11,7 +11,7 @@ jobs:
   lint_python:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: psf/black@stable
         with:
           version: "23.1.0"
@@ -24,10 +24,10 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
       - name: Run Linter
         run: python libraries/linters/gradlerio_versions/lint_gradlerio_versions.py
