@@ -27,6 +27,16 @@
       "groupId": "com.gos.lib.rev",
       "artifactId": "GirlsOfSteelLibRev",
       "version": "$VERSION"
+    },
+    {
+      "groupId": "com.gos.lib.photonvision",
+      "artifactId": "GirlsOfSteelLibPhotonVision",
+      "version": "$VERSION"
+    },
+    {
+      "groupId": "com.gos.lib.pathing",
+      "artifactId": "GirlsOfSteelLibPathing",
+      "version": "$VERSION"
     }
   ],
   "jniDependencies": [],

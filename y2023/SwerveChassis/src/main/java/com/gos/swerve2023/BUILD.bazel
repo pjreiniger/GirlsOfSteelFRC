@@ -1,4 +1,4 @@
-load("//build_scripts/bazel:java_rules.bzl", "gos_java_library", "gos_java_robot")
+load("//build_scripts/bazel:java_rules.bzl", "gos_java_robot")
 
 gos_java_robot(
     name = "swerve2023",

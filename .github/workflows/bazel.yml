@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
+        platform: [ubuntu-22.04, macos-12, windows-2022]
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
 
   buildifier:
     name: "buildifier"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Set up Go 1.15.x
         uses: actions/setup-go@v2
@@ -60,7 +60,7 @@ jobs:
 
   unused_deps:
     name: "unused_deps"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Set up Go 1.15.x
         uses: actions/setup-go@v2
