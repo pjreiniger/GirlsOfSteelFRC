@@ -12,7 +12,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkFlex;
 import com.revrobotics.SparkPIDController;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
@@ -85,7 +88,10 @@ public class ShooterSubsystem extends SubsystemBase {
         m_networkTableEntries.addBoolean("Is Piece in Shooter", this::isPieceInShooter);
 
         if (RobotBase.isSimulation()) {
-            FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1.0, 0.01);
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            LinearSystem<N1, N1, N1> plant =
+                LinearSystemId.createFlywheelSystem(gearbox, 0.01, 1.0);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
             this.m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim, new RevMotorControllerSimWrapper(this.m_shooterMotorLeader), RevEncoderSimWrapper.create(this.m_shooterMotorLeader));
         }
 

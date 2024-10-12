@@ -16,25 +16,25 @@ public class SimpleMotorFeedForwardProperty extends BaseFeedForwardProperty {
 
     public SimpleMotorFeedForwardProperty addKff(double defaultValue) {
         m_properties.add(createDoubleProperty("kff", defaultValue,
-            (v) -> m_feedForward = new SimpleMotorFeedforward(m_feedForward.ks, v, m_feedForward.ka)));
+            (v) -> m_feedForward = new SimpleMotorFeedforward(m_feedForward.getKs(), v, m_feedForward.getKa())));
         return this;
     }
 
     public SimpleMotorFeedForwardProperty addKs(double defaultValue) {
         m_properties.add(createDoubleProperty("ks", defaultValue,
-            (v) -> m_feedForward = new SimpleMotorFeedforward(v, m_feedForward.kv, m_feedForward.ka)));
+            (v) -> m_feedForward = new SimpleMotorFeedforward(v, m_feedForward.getKv(), m_feedForward.getKa())));
         return this;
     }
 
 
     public SimpleMotorFeedForwardProperty addKa(double defaultValue) {
         m_properties.add(createDoubleProperty("ka", defaultValue,
-            (v) -> m_feedForward = new SimpleMotorFeedforward(m_feedForward.ks, m_feedForward.kv, v)));
+            (v) -> m_feedForward = new SimpleMotorFeedforward(m_feedForward.getKs(), m_feedForward.getKv(), v)));
         return this;
     }
 
     public double calculate(double velocity) {
-        return m_feedForward.calculate(velocity);
+        return m_feedForward.calculate(velocity, 0);
     }
 
     public double calculate(double velocity, double acceleration) {
@@ -42,15 +42,15 @@ public class SimpleMotorFeedForwardProperty extends BaseFeedForwardProperty {
     }
 
     public double getKs() {
-        return m_feedForward.ks;
+        return m_feedForward.getKs();
     }
 
     public double getKFf() {
-        return m_feedForward.kv;
+        return m_feedForward.getKv();
     }
 
     public double getKa() {
-        return m_feedForward.ka;
+        return m_feedForward.getKa();
     }
 
 }
