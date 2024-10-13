@@ -29,10 +29,13 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.json.simple.parser.ParseException;
 import org.snobotv2.module_wrappers.navx.NavxWrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
+
+import java.io.IOException;
 
 // Drive train
 @SuppressWarnings({"PMD.TooManyMethods", "PMD.TooManyFields"})
@@ -157,7 +160,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     public Command createPathFollowingCommand(String pathName) {
-        return AutoBuilder.followPath(PathPlannerPath.fromPathFile(pathName));
+        try {
+            return AutoBuilder.followPath(PathPlannerPath.fromPathFile(pathName));
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

@@ -41,5 +41,16 @@ public class SimpleMotorFeedForwardPropertyTest extends BasePropertiesTest {
         // Check calculations
         assertEquals(8 + 9 * 2 + 7 * 1.5, property.calculate(2, 1.5));
         assertEquals(-8 + 9 * -3 + 7 * 2, property.calculate(-3, 2));
+
+        // MutAngularVelocity currentVelocity = DegreesPerSecond.mutable(0);
+        // MutAngularVelocity goalVelocity = DegreesPerSecond.mutable(0);
+
+        // currentVelocity.mut_replace(DegreesPerSecond.of(2));
+        // goalVelocity.mut_replace(DegreesPerSecond.of(2 + 1.5 * 0.02));
+        // assertEquals(Volts.of(8 + 9 * 2 + 7 * 1.5), property.calculate(currentVelocity, goalVelocity));
+
+        // currentVelocity.mut_replace(DegreesPerSecond.of(-3));
+        // goalVelocity.mut_replace(DegreesPerSecond.of(-3 + -1.5 * 0.2));
+        // assertEquals(Volts.of(-8 + 9 * -3 + 7 * 2), property.calculate(currentVelocity, goalVelocity));
     }
 }

@@ -9,6 +9,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.system.LinearSystem;
+import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
@@ -89,7 +92,10 @@ public class Shooter extends SubsystemBase {
 
         if (RobotBase.isSimulation()) {
 
-            FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getVex775Pro(2), 1.66, .008);
+            DCMotor gearbox = DCMotor.getVex775Pro(2);
+            LinearSystem<N1, N1, N1> plant =
+                LinearSystemId.createFlywheelSystem(gearbox, .008, 1.66);
+            FlywheelSim flywheelSim = new FlywheelSim(plant, gearbox);
             m_simulator = new FlywheelSimWrapper(flywheelSim,
                     new RevMotorControllerSimWrapper(m_master),
                     RevEncoderSimWrapper.create(m_master));

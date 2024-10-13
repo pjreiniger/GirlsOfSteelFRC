@@ -40,10 +40,14 @@ public class ArmFeedForwardProperty extends BaseFeedForwardProperty {
         return this;
     }
 
+    @SuppressWarnings("removal")
+    @Deprecated(forRemoval = true, since = "2025")
     public double calculate(double positionRadians, double velocity) {
         return m_feedForward.calculate(positionRadians, velocity);
     }
 
+    @SuppressWarnings("removal")
+    @Deprecated(forRemoval = true, since = "2025")
     public double calculate(double positionRadians, double velocityRadPerSec, double accelRadPerSecSquared) {
         return m_feedForward.calculate(positionRadians, velocityRadPerSec, accelRadPerSecSquared);
     }

@@ -40,10 +40,14 @@ public class ElevatorFeedForwardProperty extends BaseFeedForwardProperty {
         return this;
     }
 
+    @SuppressWarnings("removal")
+    @Deprecated(forRemoval = true, since = "2025")
     public double calculate(double velocity, double acceleration) {
         return m_feedForward.calculate(velocity, acceleration);
     }
 
+    @SuppressWarnings("removal")
+    @Deprecated(forRemoval = true, since = "2025")
     public double calculate(double velocity) {
         return m_feedForward.calculate(velocity);
     }

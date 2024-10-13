@@ -12,7 +12,10 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkPIDController;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import com.scra.mepi.rapid_react.Constants;
@@ -70,7 +73,10 @@ public class ShooterSubsytem extends SubsystemBase {
         m_shooterMotor.burnFlash();
 
         if (RobotBase.isSimulation()) {
-            FlywheelSim shooterFlywheelSim = new FlywheelSim(DCMotor.getNeo550(2), 1, 0.01);
+            DCMotor gearbox = DCMotor.getNeo550(2);
+            LinearSystem<N1, N1, N1> plant =
+                LinearSystemId.createFlywheelSystem(gearbox, 0.01, 1.0);
+            FlywheelSim shooterFlywheelSim = new FlywheelSim(plant, gearbox);
             m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim,
                 new RevMotorControllerSimWrapper(m_shooterMotor),
                 RevEncoderSimWrapper.create(m_shooterMotor));

@@ -8,24 +8,26 @@ import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPLTVController;
 import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.ReplanningConfig;
-import com.revrobotics.CANSparkMax;
+import com.pathplanner.lib.path.Waypoint;
 import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SimableCANSparkMax;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -34,14 +36,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import org.json.simple.parser.ParseException;
 import org.photonvision.EstimatedRobotPose;
 import org.snobotv2.module_wrappers.phoenix6.Pigeon2Wrapper;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
 import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+
+import static edu.wpi.first.units.Units.DegreesPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 
 @SuppressWarnings("PMD.GodClass")
@@ -175,12 +182,21 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
         m_leaderRightMotorErrorAlert = new SparkMaxAlerts(m_leaderRight, "right chassis motor ");
         m_followerRightMotorErrorAlert = new SparkMaxAlerts(m_followerRight, "right chassis motor ");
 
-        AutoBuilder.configureRamsete(
+
+        RobotConfig config;
+        try {
+            config = RobotConfig.fromGUISettings();
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        AutoBuilder.configure(
             this::getPose, // Robot pose supplier
             this::resetOdometry,
             this::getChassisSpeed,
             this::setChassisSpeed,
-            new ReplanningConfig(),
+            new PPLTVController(0.02),
+            config,
             GetAllianceUtil::isRedAlliance,
             this
         );
@@ -278,7 +294,9 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     public void turnToAngle(double angleGoal) {
         SmartDashboard.putNumber("goal angle chassis pid", angleGoal);
         double steerVoltage = m_turnAnglePID.calculate(m_odometry.getPoseMeters().getRotation().getDegrees(), angleGoal);
-        steerVoltage += m_turnAnglePIDFFProperty.calculate(m_turnAnglePID.getSetpoint().velocity);
+        AngularVelocity currentVelocity = DegreesPerSecond.of(m_gyro.getRate());
+        AngularVelocity goalVelocity = DegreesPerSecond.of(m_turnAnglePID.getSetpoint().velocity);
+        steerVoltage += m_turnAnglePIDFFProperty.calculate(currentVelocity, goalVelocity).in(Volts);
 
         m_gyroAngleGoalVelocityEntry.setNumber(m_turnAnglePID.getSetpoint().velocity);
 
@@ -370,10 +388,11 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     @Override
     public Command createDriveToPointNoFlipCommand(Pose2d start, Pose2d end, boolean reverse) {
-        List<Translation2d> bezierPoints = PathPlannerPath.bezierFromPoses(start, end);
+        List<Waypoint> bezierPoints = PathPlannerPath.waypointsFromPoses(start, end);
         PathPlannerPath path = new PathPlannerPath(
             bezierPoints,
             new PathConstraints(m_onTheFlyMaxVelocity.getValue(), m_onTheFlyMaxAcceleration.getValue(), 0, 0),
+            null,
             new GoalEndState(0.0, Rotation2d.fromDegrees(0)) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
         );
 
