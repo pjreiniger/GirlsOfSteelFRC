@@ -3,7 +3,7 @@
   "name": "SnobotSim",
   "version": "2024.02.25-17",
   "uuid": "403fe130-d404-11ee-b94b-5f4c12167830",
-  "frcYear": "2024",
+  "frcYear": "2025",
   "mavenUrls": ["https://raw.githubusercontent.com/snobotsim/maven_repo/master/release"],
   "jsonUrl": "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json",
   "javaDependencies": [
