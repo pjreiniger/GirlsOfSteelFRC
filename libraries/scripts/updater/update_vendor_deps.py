@@ -19,7 +19,7 @@ def download_latest_vendordeps(ignore_cache):
     # fmt: off
     vendor_dep_urls = {}
     vendor_dep_urls["navx_frc.json"] = f"https://dev.studica.com/releases/2025/NavX-2025.1.1-beta-1.json"
-    vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc{year}-beta-latest.json"
+    vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc2025-beta-latest.json"
     vendor_dep_urls["Phoenix6.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc2025-beta-latest.json"
     vendor_dep_urls["REVLib.json"] = f"https://software-metadata.revrobotics.com/REVLib-{year}.json"
     vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
