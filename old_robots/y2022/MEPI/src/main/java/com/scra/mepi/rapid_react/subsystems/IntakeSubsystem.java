@@ -4,27 +4,30 @@
 
 package com.scra.mepi.rapid_react.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private final CANSparkMax m_motor = new CANSparkMax(6, MotorType.kBrushless);
+    private final SparkMax m_motor = new SparkMax(6, MotorType.kBrushless);
     private final DoubleSolenoid m_solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 6);
 
     /**
      * Creates a new IntakeSubsystem.
      */
     public IntakeSubsystem() {
-        m_motor.restoreFactoryDefaults();
-        m_motor.setInverted(true);
-        m_motor.setSmartCurrentLimit(50);
+        SparkMaxConfig motorConfig = new SparkMaxConfig();
+        motorConfig.inverted(true);
+        motorConfig.smartCurrentLimit(50);
         retract();
 
-        m_motor.burnFlash();
+        m_motor.configure(motorConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public void set(double speed) {

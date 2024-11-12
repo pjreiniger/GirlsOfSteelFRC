@@ -15,18 +15,18 @@ CACHE_DIRECTORY = os.path.join(tempfile.gettempdir(), "gos_vendor_cache")
 
 
 def download_latest_vendordeps(ignore_cache):
-    year = "2024"
+    year = "2025"
     # fmt: off
     vendor_dep_urls = {}
-    vendor_dep_urls["navx_frc.json"] = f"https://dev.studica.com/releases/2025/NavX-2025.1.1-beta-1.json"
-    vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc2025-beta-latest.json"
-    vendor_dep_urls["Phoenix6.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc2025-beta-latest.json"
+    # vendor_dep_urls["navx_frc.json"] = f"https://dev.studica.com/releases/2025/NavX-2025.1.1-beta-1.json"
+    # vendor_dep_urls["Phoenix.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc2025-beta-latest.json"
+    # vendor_dep_urls["Phoenix6.json"] = f"https://maven.ctr-electronics.com/release/com/ctre/phoenix6/latest/Phoenix6-frc2025-beta-latest.json"
     vendor_dep_urls["REVLib.json"] = f"https://software-metadata.revrobotics.com/REVLib-{year}.json"
-    vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/release/SnobotSim.json"
-    vendor_dep_urls["PhotonLib-json-1.0.json"] = "https://maven.photonvision.org/repository/internal/org/photonvision/photonlib-json/1.0/photonlib-json-1.0.json"
-    vendor_dep_urls["PathplannerLib.json"] = "https://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib-beta.json"
-    vendor_dep_urls["ChoreoLib.json"] = "https://sleipnirgroup.github.io/ChoreoLib/dep/ChoreoLib2025Beta.json"
-    vendor_dep_urls["WPILibNewCommands.json"] = f"https://raw.githubusercontent.com/wpilibsuite/allwpilib/{PINNED_VSCODE_WPILIB_COMMITISH}/wpilibNewCommands/WPILibNewCommands.json"
+    # vendor_dep_urls["SnobotSim.json"] = "http://raw.githubusercontent.com/snobotsim/maven_repo/master/development/SnobotSim.json"
+    # vendor_dep_urls["PhotonLib-json-1.0.json"] = "https://maven.photonvision.org/repository/internal/org/photonvision/photonlib-json/1.0/photonlib-json-1.0.json"
+    # vendor_dep_urls["PathplannerLib.json"] = "https://3015rangerrobotics.github.io/pathplannerlib/PathplannerLib-beta.json"
+    # vendor_dep_urls["ChoreoLib.json"] = "https://sleipnirgroup.github.io/ChoreoLib/dep/ChoreoLib2025Beta.json"
+    # vendor_dep_urls["WPILibNewCommands.json"] = f"https://raw.githubusercontent.com/wpilibsuite/allwpilib/{PINNED_VSCODE_WPILIB_COMMITISH}/wpilibNewCommands/WPILibNewCommands.json"
     # fmt: on
 
     vendor_files = []

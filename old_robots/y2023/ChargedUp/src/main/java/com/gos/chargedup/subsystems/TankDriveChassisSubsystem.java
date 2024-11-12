@@ -14,11 +14,16 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkPIDController;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -75,10 +80,10 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
 
     //Chassis and motors
-    private final SimableCANSparkMax m_leaderLeft;
-    private final SimableCANSparkMax m_followerLeft;
-    private final SimableCANSparkMax m_leaderRight;
-    private final SimableCANSparkMax m_followerRight;
+    private final SparkMax m_leaderLeft;
+    private final SparkMax m_followerLeft;
+    private final SparkMax m_leaderRight;
+    private final SparkMax m_followerRight;
 
     private final DifferentialDrive m_drive;
 
@@ -92,8 +97,8 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
 
     private final DifferentialDrivePoseEstimator m_poseEstimator;
 
-    private final SparkPIDController m_leftPIDcontroller;
-    private final SparkPIDController m_rightPIDcontroller;
+    private final SparkClosedLoopController m_leftPIDcontroller;
+    private final SparkClosedLoopController m_rightPIDcontroller;
 
     private final PidProperty m_leftPIDProperties;
     private final PidProperty m_rightPIDProperties;
@@ -112,25 +117,25 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     @SuppressWarnings({"PMD.NcssCount", "PMD.ExcessiveMethodLength"})
     public TankDriveChassisSubsystem() {
 
-        m_leaderLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_followerLeft = new SimableCANSparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_leaderRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_followerRight = new SimableCANSparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
+        m_leaderLeft = new SparkMax(Constants.DRIVE_LEFT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerLeft = new SparkMax(Constants.DRIVE_LEFT_FOLLOWER_SPARK, MotorType.kBrushless);
+        m_leaderRight = new SparkMax(Constants.DRIVE_RIGHT_LEADER_SPARK, MotorType.kBrushless);
+        m_followerRight = new SparkMax(Constants.DRIVE_RIGHT_FOLLOWER_SPARK, MotorType.kBrushless);
 
-        m_leaderLeft.restoreFactoryDefaults();
-        m_followerLeft.restoreFactoryDefaults();
-        m_leaderRight.restoreFactoryDefaults();
-        m_followerRight.restoreFactoryDefaults();
+        SparkMaxConfig leaderLeftConfig = new SparkMaxConfig();
+        SparkMaxConfig followerLeftConfig = new SparkMaxConfig();
+        SparkMaxConfig leaderRightConfig = new SparkMaxConfig();
+        SparkMaxConfig followerRightConfig = new SparkMaxConfig();
 
-        m_leaderLeft.setSmartCurrentLimit(60);
-        m_followerLeft.setSmartCurrentLimit(60);
-        m_leaderRight.setSmartCurrentLimit(60);
-        m_followerRight.setSmartCurrentLimit(60);
+        leaderLeftConfig.smartCurrentLimit(60);
+        followerLeftConfig.smartCurrentLimit(60);
+        leaderRightConfig.smartCurrentLimit(60);
+        followerRightConfig.smartCurrentLimit(60);
 
-        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        leaderLeftConfig.idleMode(IdleMode.kCoast);
+        followerLeftConfig.idleMode(IdleMode.kCoast);
+        leaderRightConfig.idleMode(IdleMode.kCoast);
+        followerRightConfig.idleMode(IdleMode.kCoast);
 
         if (Constants.IS_ROBOT_BLOSSOM) {
             m_leaderLeft.setInverted(true);
@@ -141,33 +146,33 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
             m_leaderRight.setInverted(true);
         }
 
-        m_followerLeft.follow(m_leaderLeft, false);
-        m_followerRight.follow(m_leaderRight, false);
+        followerLeftConfig.follow(m_leaderLeft, false);
+        followerRightConfig.follow(m_leaderRight, false);
 
         m_drive = new DifferentialDrive(m_leaderLeft, m_leaderRight);
 
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), 0, 0);
 
-        m_leftPIDcontroller = m_leaderLeft.getPIDController();
-        m_rightPIDcontroller = m_leaderRight.getPIDController();
+        m_leftPIDcontroller = m_leaderLeft.getClosedLoopController();
+        m_rightPIDcontroller = m_leaderRight.getClosedLoopController();
 
-        m_leftPIDProperties = setupPidValues(m_leftPIDcontroller);
-        m_rightPIDProperties = setupPidValues(m_rightPIDcontroller);
+        m_leftPIDProperties = setupPidValues(m_leaderLeft);
+        m_rightPIDProperties = setupPidValues(m_leaderRight);
 
         m_rightEncoder = m_leaderRight.getEncoder();
         m_leftEncoder = m_leaderLeft.getEncoder();
 
-        m_leftEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
-        m_rightEncoder.setPositionConversionFactor(ENCODER_CONSTANT);
+        leaderLeftConfig.encoder.positionConversionFactor(ENCODER_CONSTANT);
+        leaderRightConfig.encoder.positionConversionFactor(ENCODER_CONSTANT);
 
-        m_leftEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
-        m_rightEncoder.setVelocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        leaderLeftConfig.encoder.velocityConversionFactor(ENCODER_CONSTANT / 60.0);
+        leaderRightConfig.encoder.velocityConversionFactor(ENCODER_CONSTANT / 60.0);
 
-        m_leaderLeft.burnFlash();
-        m_followerLeft.burnFlash();
-        m_leaderRight.burnFlash();
-        m_followerRight.burnFlash();
+        m_leaderLeft.configure(leaderLeftConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+        m_followerLeft.configure(followerLeftConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+        m_leaderRight.configure(leaderRightConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+        m_followerRight.configure(followerRightConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
         m_poseEstimator = new DifferentialDrivePoseEstimator(
             K_DRIVE_KINEMATICS, m_gyro.getRotation2d(), 0.0, 0.0, new Pose2d());
@@ -218,9 +223,9 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
         }
     }
 
-    private PidProperty setupPidValues(SparkPIDController pidController) {
+    private PidProperty setupPidValues(SparkMax motor) {
         if (Constants.IS_ROBOT_BLOSSOM) {
-            return new RevPidPropertyBuilder("Chassis", true, pidController, 0)
+            return new RevPidPropertyBuilder("Chassis", true, motor, ClosedLoopSlot.kSlot0)
                 .addP(0.6)
                 .addI(0)
                 .addD(0)
@@ -230,7 +235,7 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
                 .build();
         }
         else {
-            return new RevPidPropertyBuilder("Chassis", false, pidController, 0)
+            return new RevPidPropertyBuilder("Chassis", false, motor, ClosedLoopSlot.kSlot0)
                 .addP(0)
                 .addI(0)
                 .addD(0)
@@ -273,8 +278,8 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     public void smartVelocityControl(double leftVelocity, double rightVelocity) {
-        m_leftPIDcontroller.setReference(leftVelocity, CANSparkMax.ControlType.kVelocity, 0);
-        m_rightPIDcontroller.setReference(rightVelocity, CANSparkMax.ControlType.kVelocity, 0);
+        m_leftPIDcontroller.setReference(leftVelocity, ControlType.kVelocity, 0);
+        m_rightPIDcontroller.setReference(rightVelocity, ControlType.kVelocity, 0);
     }
 
     @Override
@@ -400,18 +405,22 @@ public class TankDriveChassisSubsystem extends BaseChassis implements ChassisSub
     }
 
     public void drivetrainToBrakeMode() {
-        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(IdleMode.kBrake);
+        m_leaderLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followerLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_leaderRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followerRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
     }
 
     public void drivetrainToCoastMode() {
-        m_leaderLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerLeft.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_leaderRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_followerRight.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(IdleMode.kCoast);
+        m_leaderLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followerLeft.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_leaderRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        m_followerRight.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
     }
 

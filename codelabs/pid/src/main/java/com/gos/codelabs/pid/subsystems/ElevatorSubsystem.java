@@ -1,19 +1,20 @@
 package com.gos.codelabs.pid.subsystems;
 
 import com.gos.codelabs.pid.Constants;
+import com.gos.codelabs.pid.Constants.ElevatorSimConstants;
 import com.gos.lib.properties.GosDoubleProperty;
 import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkPIDController.ArbFFUnits;
-
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkClosedLoopController.ArbFFUnits;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.snobotv2.module_wrappers.rev.RevEncoderSimWrapper;
 import org.snobotv2.module_wrappers.rev.RevMotorControllerSimWrapper;
@@ -38,25 +39,25 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
 
-    private final SimableCANSparkMax m_liftMotor;
+    private final SparkMax m_liftMotor;
     private final RelativeEncoder m_liftEncoder;
     private final DigitalInput m_lowerLimitSwitch;
     private final DigitalInput m_upperLimitSwitch;
-    private final SparkPIDController m_pidController;
+    private final SparkClosedLoopController m_pidController;
     private final PidProperty m_pidProperty;
     private double m_desiredHeight;
 
     private ISimWrapper m_elevatorSim;
 
     public ElevatorSubsystem() {
-        m_liftMotor = new SimableCANSparkMax(Constants.CAN_LIFT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+        m_liftMotor = new SparkMax(Constants.CAN_LIFT_MOTOR, MotorType.kBrushless);
         m_liftEncoder = m_liftMotor.getEncoder();
-        m_pidController = m_liftMotor.getPIDController();
+        m_pidController = m_liftMotor.getClosedLoopController();
 
         m_lowerLimitSwitch = new DigitalInput(Constants.DIO_LIFT_LOWER_LIMIT);
         m_upperLimitSwitch = new DigitalInput(Constants.DIO_LIFT_UPPER_LIMIT);
 
-        m_pidProperty = new RevPidPropertyBuilder("Elevator", false, m_pidController, 0)
+        m_pidProperty = new RevPidPropertyBuilder("Elevator", false, m_liftMotor, ClosedLoopSlot.kSlot0)
                 .addP(0)
                 .addFF(0)
                 .addMaxAcceleration(0.1)
@@ -65,7 +66,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
         if (RobotBase.isSimulation()) {
             m_elevatorSim = new ElevatorSimWrapper(Constants.ElevatorSimConstants.createSim(),
-                    new RevMotorControllerSimWrapper(m_liftMotor),
+                    new RevMotorControllerSimWrapper(m_liftMotor, ElevatorSimConstants.ELEVATOR_GEARBOX),
                     RevEncoderSimWrapper.create(m_liftMotor));
         }
     }
@@ -81,7 +82,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public boolean goToPosition(double position) {
         m_desiredHeight = position;
-        m_pidController.setReference(position, CANSparkMax.ControlType.kSmartMotion, 0, GRAVITY_COMPENSATION.getValue(), ArbFFUnits.kPercentOut);
+        m_pidController.setReference(position, ControlType.kSmartMotion, 0, GRAVITY_COMPENSATION.getValue(), ArbFFUnits.kPercentOut);
         return false;
     }
 

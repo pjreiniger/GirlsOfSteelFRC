@@ -103,9 +103,9 @@ public final class Constants {
         public static ElevatorSim createSim() {
 
             LinearSystem<N2, N1, N2> plant = LinearSystemId.createElevatorSystem(
-                ElevatorSimConstants.ELEVATOR_GEARBOX,
-                ElevatorSimConstants.CARRIAGE_MASS,
-                ElevatorSimConstants.DRUM_RADIUS,
+                    ElevatorSimConstants.ELEVATOR_GEARBOX,
+                    ElevatorSimConstants.CARRIAGE_MASS,
+                    ElevatorSimConstants.DRUM_RADIUS,
                 ElevatorSimConstants.ELEVATOR_GEARING
             );
             return new ElevatorSim(

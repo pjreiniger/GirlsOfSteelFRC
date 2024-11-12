@@ -61,7 +61,7 @@ public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
 
         try {
             m_aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
-            m_photonPoseEstimator = new PhotonPoseEstimator(m_aprilTagFieldLayout, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_camera, ROBOT_TO_CAMERA);
+            m_photonPoseEstimator = new PhotonPoseEstimator(m_aprilTagFieldLayout, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, ROBOT_TO_CAMERA);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -117,16 +117,11 @@ public class PhotonVisionSubsystem extends SubsystemBase implements Vision {
         m_field.setBestGuesses(bestGuessPoses);
         m_field.setAltGuesses(altGuessPoses);
 
-        PhotonPipelineResult goodCameraResults = new PhotonPipelineResult(cameraResult.getLatencyMillis(), goodTargets);
-        goodCameraResults.setTimestampSeconds(cameraResult.getTimestampSeconds());
-
 
         //DEBUGGING:
         SmartDashboard.putNumber("Number of found targets (pre-filter): ", cameraResult.getTargets().size());
         SmartDashboard.putNumber("Number of good targets (post-filter): ", goodTargets.size());
 
-        Optional<EstimatedRobotPose> estimate = m_photonPoseEstimator.update(goodCameraResults);
-        m_field.setEstimate(estimate);
-        return estimate;
+        return Optional.empty();
     }
 }

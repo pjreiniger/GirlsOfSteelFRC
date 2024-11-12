@@ -6,11 +6,16 @@ import com.gos.lib.properties.pid.PidProperty;
 import com.gos.lib.rev.properties.pid.RevPidPropertyBuilder;
 import com.gos.rapidreact.Constants;
 import com.gos.rapidreact.subsystems.utils.ShooterLookupTable;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
-import com.revrobotics.SparkPIDController;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.config.ClosedLoopConfig.ClosedLoopSlot;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -40,18 +45,18 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final double ROLLER_ALLOWABLE_ERROR = 100.0;
     private static final double ROLLER_SHOOTER_RPM_PROPORTION = 1.3;
 
-    private final SimableCANSparkMax m_leader;
+    private final SparkMax m_leader;
     private final RelativeEncoder m_shooterEncoder;
     private final PidProperty m_shooterPid;
-    private final SparkPIDController m_shooterPidController;
+    private final SparkClosedLoopController m_shooterPidController;
     private final ShooterLookupTable m_shooterTable;
     private double m_shooterGoalRpm = Double.MAX_VALUE;
     private double m_backspinGoalRpm = Double.MAX_VALUE;
 
-    private final SimableCANSparkMax m_roller;
+    private final SparkMax m_roller;
     private final RelativeEncoder m_rollerEncoder;
     private final PidProperty m_rollerPid;
-    private final SparkPIDController m_rollerPidController;
+    private final SparkClosedLoopController m_rollerPidController;
 
     private ISimWrapper m_shooterSimulator;
     private ISimWrapper m_backspinSimulator;
@@ -66,28 +71,28 @@ public class ShooterSubsystem extends SubsystemBase {
     private final NetworkTableEntry m_shooterAtSpeedEntry;
 
     public ShooterSubsystem() {
-        m_leader = new SimableCANSparkMax(Constants.SHOOTER_LEADER_SPARK, CANSparkLowLevel.MotorType.kBrushless);
-        m_leader.restoreFactoryDefaults();
-        m_leader.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        m_leader = new SparkMax(Constants.SHOOTER_LEADER_SPARK, MotorType.kBrushless);
+        SparkMaxConfig leaderConfig = new SparkMaxConfig();
+        leaderConfig.idleMode(IdleMode.kCoast);
 
-        m_roller = new SimableCANSparkMax(Constants.SHOOTER_ROLLER, CANSparkLowLevel.MotorType.kBrushless);
-        m_roller.restoreFactoryDefaults();
-        m_roller.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_roller.setInverted(true);
+        m_roller = new SparkMax(Constants.SHOOTER_ROLLER, MotorType.kBrushless);
+        SparkMaxConfig rollerConfig = new SparkMaxConfig();
+        rollerConfig.idleMode(IdleMode.kCoast);
+        rollerConfig.inverted(true);
 
         //true because the motors are facing each other and in order to do the same thing, they would have to spin in opposite directions
         m_shooterEncoder = m_leader.getEncoder();
         m_rollerEncoder = m_roller.getEncoder();
 
-        m_shooterPidController = m_leader.getPIDController();
-        m_shooterPid = new RevPidPropertyBuilder("Shooter PID", false, m_shooterPidController, 0)
+        m_shooterPidController = m_leader.getClosedLoopController();
+        m_shooterPid = new RevPidPropertyBuilder("Shooter PID", false, m_leader, ClosedLoopSlot.kSlot0)
             .addP(0.003)
             .addD(0.000055)
             .addFF(0.000176)
             .build();
 
-        m_rollerPidController = m_roller.getPIDController();
-        m_rollerPid = new RevPidPropertyBuilder("Roller PID", false, m_rollerPidController, 0)
+        m_rollerPidController = m_roller.getClosedLoopController();
+        m_rollerPid = new RevPidPropertyBuilder("Roller PID", false, m_roller, ClosedLoopSlot.kSlot0)
             .addP(0)
             .addD(0)
             .addFF(0)
@@ -95,7 +100,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         m_shooterTable = new ShooterLookupTable();
 
-        m_leader.burnFlash();
+        m_leader.configure(leaderConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
 
         NetworkTable loggingTable = NetworkTableInstance.getDefault().getTable("Shooter");
         m_shooterRpmEntry = loggingTable.getEntry("Shooter RPM");
@@ -111,7 +116,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
             FlywheelSim shooterFlywheelSim = new FlywheelSim(shooterPlant, shooterGearbox);
             m_shooterSimulator = new FlywheelSimWrapper(shooterFlywheelSim,
-                new RevMotorControllerSimWrapper(m_leader),
+                new RevMotorControllerSimWrapper(m_leader, shooterGearbox),
                 RevEncoderSimWrapper.create(m_leader));
 
             DCMotor backspinGearbox = DCMotor.getNeo550(2);
@@ -119,7 +124,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 LinearSystemId.createFlywheelSystem(shooterGearbox, 0.01, 1.0);
             FlywheelSim backspinFlywheelSim = new FlywheelSim(backspinPlant, backspinGearbox);
             m_backspinSimulator = new FlywheelSimWrapper(backspinFlywheelSim,
-                new RevMotorControllerSimWrapper(m_roller),
+                new RevMotorControllerSimWrapper(m_roller, backspinGearbox),
                 RevEncoderSimWrapper.create(m_roller));
         }
 
@@ -146,8 +151,8 @@ public class ShooterSubsystem extends SubsystemBase {
         m_shooterGoalRpm = rpm;
         m_backspinGoalRpm = rpm * ROLLER_SHOOTER_RPM_PROPORTION;
 
-        m_shooterPidController.setReference(rpm, CANSparkMax.ControlType.kVelocity);
-        m_rollerPidController.setReference(ROLLER_SHOOTER_RPM_PROPORTION * rpm, CANSparkMax.ControlType.kVelocity);
+        m_shooterPidController.setReference(rpm, ControlType.kVelocity);
+        m_rollerPidController.setReference(ROLLER_SHOOTER_RPM_PROPORTION * rpm, ControlType.kVelocity);
 
     }
 

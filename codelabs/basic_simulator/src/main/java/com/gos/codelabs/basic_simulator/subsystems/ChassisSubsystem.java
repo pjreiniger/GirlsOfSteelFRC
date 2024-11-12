@@ -1,11 +1,16 @@
 package com.gos.codelabs.basic_simulator.subsystems;
 
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.SimableCANSparkMax;
 import com.gos.codelabs.basic_simulator.Constants;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -13,8 +18,6 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,10 +29,10 @@ import org.snobotv2.sim_wrappers.DifferentialDrivetrainSimWrapper;
 
 public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
-    private final SimableCANSparkMax m_leftDriveA;
-    private final SimableCANSparkMax m_leftDriveB;
-    private final SimableCANSparkMax m_rightDriveA;
-    private final SimableCANSparkMax m_rightDriveB;
+    private final SparkMax m_leftDriveA;
+    private final SparkMax m_leftDriveB;
+    private final SparkMax m_rightDriveA;
+    private final SparkMax m_rightDriveB;
 
     private final RelativeEncoder m_leftEncoder;
     private final RelativeEncoder m_rightEncoder;
@@ -79,14 +82,19 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
     }
 
     public ChassisSubsystem() {
+        SparkMaxConfig leftDriveAConfig = new SparkMaxConfig();
+        SparkMaxConfig leftDriveBConfig = new SparkMaxConfig();
+        SparkMaxConfig rightDriveAConfig = new SparkMaxConfig();
+        SparkMaxConfig rightDriveBConfig = new SparkMaxConfig();
 
-        m_leftDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_A, CANSparkLowLevel.MotorType.kBrushless);
-        m_leftDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_LEFT_B, CANSparkLowLevel.MotorType.kBrushless);
-        m_leftDriveB.follow(m_leftDriveA);
+        m_leftDriveA = new SparkMax(Constants.CAN_CHASSIS_LEFT_A, MotorType.kBrushless);
+        m_leftDriveB = new SparkMax(Constants.CAN_CHASSIS_LEFT_B, MotorType.kBrushless);
 
-        m_rightDriveA = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_A, CANSparkLowLevel.MotorType.kBrushless);
-        m_rightDriveB = new SimableCANSparkMax(Constants.CAN_CHASSIS_RIGHT_B, CANSparkLowLevel.MotorType.kBrushless);
-        m_rightDriveB.follow(m_rightDriveA);
+        leftDriveBConfig.follow(m_leftDriveA);
+
+        m_rightDriveA = new SparkMax(Constants.CAN_CHASSIS_RIGHT_A, MotorType.kBrushless);
+        m_rightDriveB = new SparkMax(Constants.CAN_CHASSIS_RIGHT_B, MotorType.kBrushless);
+        rightDriveBConfig.follow(m_rightDriveA);
         m_rightDriveA.setInverted(true);
 
         m_leftEncoder = m_leftDriveA.getEncoder();
@@ -103,8 +111,8 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
         if (RobotBase.isSimulation()) {
             m_simulator = new DifferentialDrivetrainSimWrapper(
                     DrivetrainConstants.createSim(),
-                    new RevMotorControllerSimWrapper(m_leftDriveA),
-                    new RevMotorControllerSimWrapper(m_rightDriveA),
+                    new RevMotorControllerSimWrapper(m_leftDriveA, DrivetrainConstants.DRIVE_GEARBOX),
+                    new RevMotorControllerSimWrapper(m_rightDriveA, DrivetrainConstants.DRIVE_GEARBOX),
                     RevEncoderSimWrapper.create(m_leftDriveA),
                     RevEncoderSimWrapper.create(m_rightDriveA),
                     new ADXRS450GyroWrapper(m_gyro));
@@ -112,6 +120,11 @@ public class ChassisSubsystem extends SubsystemBase implements AutoCloseable {
 
             m_differentialDrive.setSafetyEnabled(false);
         }
+
+        m_leftDriveA.configure(leftDriveAConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_leftDriveB.configure(leftDriveBConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_rightDriveA.configure(rightDriveAConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        m_rightDriveA.configure(rightDriveBConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     @Override

@@ -1,22 +1,26 @@
 package com.scra.mepi.rapid_react.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import com.scra.mepi.rapid_react.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HopperSubsystem extends SubsystemBase {
-    private final CANSparkMax m_hopperMotor;
+    private final SparkMax m_hopperMotor;
 
     /**
      * Creates a new HopperSubsystem.
      */
     public HopperSubsystem() {
-        m_hopperMotor = new CANSparkMax(Constants.HOPPER_SPARK, MotorType.kBrushless);
-        m_hopperMotor.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        m_hopperMotor.setSmartCurrentLimit(30);
-        m_hopperMotor.restoreFactoryDefaults();
-        m_hopperMotor.burnFlash();
+        m_hopperMotor = new SparkMax(Constants.HOPPER_SPARK, MotorType.kBrushless);
+        SparkMaxConfig hopperMotorConfig = new SparkMaxConfig();
+        hopperMotorConfig.idleMode(IdleMode.kCoast);
+        hopperMotorConfig.smartCurrentLimit(30);
+        m_hopperMotor.configure(hopperMotorConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     @Override

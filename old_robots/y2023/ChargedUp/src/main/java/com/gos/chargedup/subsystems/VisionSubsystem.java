@@ -34,7 +34,7 @@ public class VisionSubsystem implements Subsystem {
 
         try {
             AprilTagFieldLayout aprilTagFieldLayout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2023ChargedUp.m_resourceFile);
-            m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, m_camera, ROBOT_TO_CAMERA);
+            m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PhotonPoseEstimator.PoseStrategy.CLOSEST_TO_REFERENCE_POSE, ROBOT_TO_CAMERA);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -43,7 +43,7 @@ public class VisionSubsystem implements Subsystem {
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
         m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
 
-        Optional<EstimatedRobotPose> estimate = m_photonPoseEstimator.update();
+        Optional<EstimatedRobotPose> estimate = m_photonPoseEstimator.update(m_camera.getLatestResult());
         if (estimate.isPresent()) {
             EstimatedRobotPose pose = estimate.get();
             System.out.println("Got something at " + pose.estimatedPose + ", " + pose.timestampSeconds);

@@ -11,27 +11,12 @@
       }
     },
     "Other Devices": {
+      "Pigeon 2 (v6)[20]": {
+        "header": {
+          "open": true
+        }
+      },
       "SPARK MAX [25]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [4]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [5]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [6]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [8]": {
         "header": {
           "open": true
         }
@@ -427,6 +412,11 @@
       "/SmartDashboard/VisionSystemSim-objectDetectionSim/Sim Field": "Field2d"
     },
     "windows": {
+      "/Shuffleboard/test commands/Arm to 60": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/test commands/Auto: Go To AutonomousStart": {
         "window": {
           "visible": true

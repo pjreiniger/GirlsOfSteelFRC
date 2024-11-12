@@ -63,7 +63,7 @@ public class AprilTagCamera {
         m_multiTagStddev = multiTagStddev;
         m_field = new AprilTagCameraObject(field, m_cameraName);
 
-        m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_photonCamera, m_robotToCamera.getTransform());
+        m_photonPoseEstimator = new PhotonPoseEstimator(aprilTagLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, m_robotToCamera.getTransform());
         m_photonPoseEstimator.setMultiTagFallbackStrategy(PhotonPoseEstimator.PoseStrategy.LOWEST_AMBIGUITY);
 
         if (RobotBase.isSimulation()) {
@@ -88,9 +88,11 @@ public class AprilTagCamera {
     public void update(Pose2d prevEstimatedRobotPose) {
         Transform3d robotToCamera = m_robotToCamera.getTransform();
 
+        // List<PhotonPipelineResult> updates = m_photonCamera.getAllUnreadResults();
+
         m_photonPoseEstimator.setRobotToCameraTransform(robotToCamera);
         m_photonPoseEstimator.setReferencePose(prevEstimatedRobotPose);
-        m_maybeResult = m_photonPoseEstimator.update();
+        m_maybeResult = Optional.empty(); //m_photonPoseEstimator.update();
 
         if (m_maybeResult.isEmpty()) {
             m_field.clearCameraResult();
@@ -107,7 +109,7 @@ public class AprilTagCamera {
             m_field.setCameraResult(m_maybeResult.get().estimatedPose, aprilTags);
         }
 
-        m_lastPipelineResult = m_photonCamera.getLatestResult();
+        // m_lastPipelineResult = m_photonCamera.getAllUnreadResults();
 
         m_logger.updateLogs();
     }

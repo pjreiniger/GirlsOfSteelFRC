@@ -9,10 +9,13 @@ import com.gos.lib.properties.GosIntProperty;
 import com.gos.lib.properties.HeavyIntegerProperty;
 import com.gos.lib.rev.alerts.SparkMaxAlerts;
 import com.gos.lib.rev.checklists.SparkMaxMotorsMoveChecklist;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SimableCANSparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -28,7 +31,7 @@ public class ClawSubsystem extends SubsystemBase {
     private static final double AUTO_EJECTION_TIME = 0.5;
     private static final double AUTO_INTAKE_TIME = 0.5;
 
-    private final SimableCANSparkMax m_clawMotor;
+    private final SparkMax m_clawMotor;
     private final RelativeEncoder m_clawEncoder;
     private final SparkMaxAlerts m_clawMotorErrorAlerts;
     private final HeavyIntegerProperty m_currentLimit;
@@ -36,17 +39,21 @@ public class ClawSubsystem extends SubsystemBase {
     private final LoggingUtil m_networkTableEntries;
 
     public ClawSubsystem() {
-        m_clawMotor = new SimableCANSparkMax(Constants.CLAW_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
-        m_clawMotor.restoreFactoryDefaults();
+        m_clawMotor = new SparkMax(Constants.CLAW_MOTOR, MotorType.kBrushless);
+        SparkMaxConfig clawMotorConfig = new SparkMaxConfig();
 
         m_clawMotor.setInverted(true);
         m_clawEncoder = m_clawMotor.getEncoder();
-        m_clawMotor.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        m_clawMotor.setSmartCurrentLimit(10);
-        m_clawMotor.burnFlash();
+        clawMotorConfig.idleMode(IdleMode.kBrake);
+        clawMotorConfig.smartCurrentLimit(10);
+        m_clawMotor.configure(clawMotorConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
         m_clawMotorErrorAlerts = new SparkMaxAlerts(m_clawMotor, "claw motor");
 
-        m_currentLimit = new HeavyIntegerProperty(m_clawMotor::setSmartCurrentLimit, CLAW_CURRENT_LIMIT);
+        m_currentLimit = new HeavyIntegerProperty((x) -> {
+            SparkMaxConfig config = new SparkMaxConfig();
+            config.smartCurrentLimit(x);
+            m_clawMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        }, CLAW_CURRENT_LIMIT);
 
         m_networkTableEntries = new LoggingUtil("Claw Subsystem");
         m_networkTableEntries.addDouble("Current Amps", m_clawMotor::getOutputCurrent);
