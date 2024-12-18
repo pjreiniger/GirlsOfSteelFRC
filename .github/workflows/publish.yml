@@ -1,0 +1,15 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - uses: actions/checkout@v4
+      - id: foo
+        uses: pjreiniger/vendor-json-repo/add_vendordep@ef1dde7c3d2a0ffae1e2158db0fe7afb61c262b7
+        with:
+          token: ${{ secrets.AUTO_UPDATE_KEY }}
+          vendordep_file: rev.json
+          pr_title: "Update testing"
+          is_beta: true
