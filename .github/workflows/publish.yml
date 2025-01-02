@@ -7,11 +7,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: foo
-        uses: pjreiniger/vendor-json-repo/.github/actions/add_vendordep@d7950b3048d265d8613be32c0daf3173bebb9dcc
+        uses: pjreiniger/vendor-json-repo/.github/actions/add_vendordep@5dde961d6099fbaacb836ecd6edf03f622839f7a
         with:
-          token: ${{ secrets.AUTO_UPDATE_KEY }}
+          token: ${{ secrets.VENDORDEP_TOKEN }}
           vendordep_file: ../rev.json
           pr_title: "DO NOT LAND - testing auto-publish action"
-          pr_branch: "testing_update_v7"
+          pr_branch: "testing_update_v99"
           is_beta: true
           fork_organization: pjreiniger
