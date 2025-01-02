@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: foo
-        uses: pjreiniger/vendor-json-repo/.github/actions/add_vendordep@5dde961d6099fbaacb836ecd6edf03f622839f7a
+        uses: pjreiniger/vendor-json-repo/.github/actions/add_vendordep@2c27046afce9922a7ce0e86cc0c3f9f289762b57
         with:
           token: ${{ secrets.VENDORDEP_TOKEN }}
           vendordep_file: ../rev.json
