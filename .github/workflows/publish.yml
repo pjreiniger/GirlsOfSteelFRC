@@ -7,10 +7,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: foo
-        uses: pjreiniger/vendor-json-repo/.github/actions/add_vendordep@d2efa09522429f9c40ddc070d43facef6dbf108d
+        uses: pjreiniger/vendor-json-repo/.github/actions/add_vendordep@b8ba90a0d32cae32b9056f33143d1f76d90b0401
         with:
           token: ${{ secrets.AUTO_UPDATE_KEY }}
           vendordep_file: ../rev.json
           pr_title: "Update testing v1"
           pr_branch: "testing_update_v1"
           is_beta: true
+          fork_organization: pjreiniger/vendor-json-repo
