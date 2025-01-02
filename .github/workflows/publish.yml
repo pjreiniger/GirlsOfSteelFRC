@@ -14,4 +14,4 @@ jobs:
           pr_title: "Update testing v1"
           pr_branch: "testing_update_v1"
           is_beta: true
-          fork_organization: pjreiniger/vendor-json-repo
+          fork_organization: pjreiniger
