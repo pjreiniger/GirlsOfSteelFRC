@@ -9,7 +9,7 @@ jobs:
       - id: foo
         uses: pjreiniger/vendor-json-repo/.github/actions/add_vendordep@f8a51aa782f2399098aa661c12f120b8ac32acdd
         with:
-          token: ${{ secrets.AUTO_UPDATE_KEY }}
+          token: ${{ secrets.VENDORDEP_TOKEN }}
           vendordep_file: ../rev.json
           pr_title: "DO NOT LAND - testing auto-publish action"
           pr_branch: "testing_update_v2"
